@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.ProductMapper">
+	
+	<!-- <select id="selectProductList" resultType="product">
+ 		SELECT P.PRODUCTNO,P.PRODUCTNAME,PC.CATEGORYNAME,PS.SIZEKIND,PCO.COLORNAME,P.COST,P.PRICE,P.INQUANTITY,P.PRODUCTSTOCK,P.RECEIVINGDATE 
+        FROM PRODUCT P ,PRODUCTCATEGORY PC, PRODUCTCOLOR PCO, PRODUCTSIZE PS
+        WHERE P.PRODUCTNO = PC.PRODUCTNO(+) AND P.PRODUCTNO = PCO.PRODUCTNO(+) AND P.PRODUCTNO = PS.PRODUCTNO
+ 	</select> -->
+	<select id="selectProductList" resultType="product">
+ 		select pp.productphotono,p.categoryno,p.colorno,p.cost,p.inquantity,p.price,p.productname,p.productno,p.sizeno,to_char(p.receivngdate,'yyyy-mm-dd')as receivngdate 
+		from PRODUCT p ,productphoto pp where p.productno = pp.productno and pp.productphotono = 1
+ 	</select>
+	<select id="selectProductDTO" parameterType="String" resultType="product">
+		select p.categoryno,p.colorno,p.cost,p.inquantity,p.price,p.productname,p.productno,p.sizeno,to_char(p.receivngdate,'yyyy-mm-dd')as receivngdate 
+		from PRODUCT p where PRODUCTNO = to_char(${productno})
+	</select>
+	<select id="selectFilePath" parameterType="String" resultType="file">
+ 		select * from PRODUCTPHOTO where PRODUCTNO = #{productno}
+ 	</select>
+ 	<select id="selectProductNO" resultType="String">
+ 		select product_no.nextval from dual
+ 	</select>
+ 	<select id="selectFile" parameterType="map" resultType="String">
+ 		select photopath from PRODUCTPHOTO where PRODUCTNO = #{productno} and PRODUCTPHOTONO = #{productphotono}
+ 	</select>
+ 	<delete id="deleteProduct" parameterType="String">
+			DELETE FROM PRODUCT WHERE PRODUCTNO = #{INDEX}
+	</delete>
+	<!-- insertProduct -->
+	<!-- 
+	<insert id="insertProduct" parameterType="product">
+	insert into product(PRODUCTNO,PRODUCTNAME,RECEIVINGDATE,PRODUCTSTOCK,INQUANTITY,COST,PRICE,color,category,sizename) 
+	values(#{productno},#{productname},#{receivingdate},#{productstock},#{inquantity},#{cost},#{price},#{color},#{category},#{sizename}) 
+	</insert>
+	 -->
+	 <insert id="insertProduct" parameterType="product">
+		insert into
+		product(PRODUCTNO,PRODUCTNAME,RECEIVNGDATE,PRODUCTSTOCK,INQUANTITY,COST,PRICE,colorno,categoryno,sizeno)
+		values(#{productno},#{productname},TO_DATE(#{receivngdate},'yyyy-mm-dd'),#{productstock},#{inquantity},#{cost},#{price},#{colorno},#{categoryno},#{sizeno})
+	</insert>
+	<insert id="insertFileList" parameterType="file">
+ 		insert into PRODUCTPHOTO(productno,productphotono,photopath)
+ 		values(#{productno},#{productphotono},#{photopath})
+ 	</insert>
+ 	<select id="selectcategoryList" resultType="category">
+ 		SELECT * from productcategory
+ 	</select>
+ 	<!-- 
+	<insert id="insertCartProduct" parameterType="cart">
+      insert into cart(productname, colorno, quantity, sizeno, memberid, price,cartdate)
+      values(#{productname},#{colorno}, #{quantity} ,#{sizeno}, #{memberid},#{price},
+      sysdate)
+   </insert>
+    -->
+   <insert id="insertCartProduct" parameterType="cart">
+      insert into cart(productno, productname, colorno, quantity, sizeno, memberid, price,cartdate)
+      values(#{productno},#{productname},#{colorno}, #{quantity} ,#{sizeno}, #{memberid},#{price},
+      sysdate)
+   </insert>
+ 	<select id="selectCartProduct" parameterType="String"
+      resultType="cart">
+      select c.*,s.sizekind,co.colorname,pp.productphotono from cart c,sizes s,color co, productphoto pp
+      where c.memberid = 'A0001' and  c.sizeno= s.sizeno and c.colorno = co.colorno and c.productno = pp.productno
+   </select>
+ 	<delete id="deleteCart" parameterType="map">
+		delete from cart
+		where memberid = #{memberId} and productno = #{productno}
+	</delete>
+ 	<select id="selectCart" parameterType="cart" resultType="int">
+		select count(*) from cart c where memberid = #{memberid} and c.productname = to_char(#{productname}) and colorno = #{colorno} and sizeno = #{sizeno}
+	</select>
+ 	<select id="ProductDetailView" parameterType="String"
+		resultType="product">
+		select * from product where productname = #{productname} and rownum = 1
+	</select>
+	<select id="selectProductColorList" parameterType="String"
+      resultType="color">
+      SELECT c.colorno,c.colorname FROM color c WHERE c.colorno in (select p.colorno from product p where p.productname = #{productname})
+   </select>
+   <select id="selectProductSizesList" parameterType="String" resultType="sizes">
+      SELECT s.sizekind,s.sizeno FROM sizes s WHERE s.sizeno in (select p.sizeno from product p where p.productname = #{productname})
+   </select>
+ 	<select id="selectProductDetailList" parameterType="String" resultType="product">
+		select p1.*,pp.productphotono from productphoto pp,(SELECT ROW_NUMBER() OVER(PARTITION BY p.productname ORDER BY p.productname, p.productno) row_num, p.* FROM product p ORDER BY p.productname, p.productno) p1
+       where p1.row_num = 1 and categoryno = #{categoryno} and p1.productno = pp.productno
+ 	</select>
+ 	<select id="selectCartDTO" parameterType="cart" resultType="cart">
+      select c.*,s.sizekind,co.colorname from cart c,sizes s,color co
+      where c.memberid = #{memberid} and #{sizeno} = s.sizeno and #{colorno} = co.colorno and c.sizeno = #{sizeno} and c.colorno = #{colorno}  and c.productname = #{productname}
+   </select>
+ 	<update id="updateQuantity" parameterType="cart">
+      UPDATE cart c SET
+      c.quantity = c.quantity + #{quantity} , c.cartdate = sysdate
+      WHERE
+      memberid = #{memberid} and productname = #{productname} and colorno = #{colorno} and sizeno = #{sizeno}
+   </update>
+	<select id="selectColorList"  resultType="color">
+          select colorno,colorname from color
+   </select>
+   <select id="selectSizeList"  resultType="sizes">
+          select sizeno,sizekind from sizes
+   </select>
+    <select id="shopNewProductList" parameterType="string" resultType="product">
+     select p.PRODUCTNO, p.PRODUCTNAME, p.PRICE, p.RECEIVNGDATE,pp.productphotono from product p,productphoto pp
+     where RECEIVNGDATE between trunc(sysdate) - 30 and trunc(sysdate) and p.productno = pp.productno
+     order by RECEIVNGDATE asc
+    </select>
+    	
+      <select id="selectProductNo" parameterType="cart" resultType="String">
+	        select productno from product where sizeno = #{sizeno} and colorno = #{colorno} and productname = #{productname}
+	</select>
+	
+   <select id="selectproductsizelist" parameterType="product" resultType="sizes">
+	       select s.sizeno,s.sizekind from sizes s,(select p.sizeno from product p where colorno = #{colorno} and productname = #{productname}) ps where ps.sizeno = s.sizeno
+	</select>
+	<select id="shopBestProductList" parameterType="string" resultType="product">
+     	select p1.*,pp.productphotono from(select p.productno, p.productname, p.price, sum(m.orderquantity)
+		from memberorder m, product p 
+		where p.productno = m.productno 
+		group by p.productno, m.productno, p.productname, p.price
+		order by sum(m.orderquantity) desc)p1,productphoto pp
+        where p1.productno = pp.productno
+    </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
