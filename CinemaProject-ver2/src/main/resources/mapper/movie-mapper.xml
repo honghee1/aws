@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.MovieMapper">
+ 	<select id="selectMovieCode" resultType="String">
+ 		select "movie_code".nextval from dual
+ 	</select>
+	<insert id="insertMovie" parameterType="movie">
+		Insert into MOVIEDB (mcode,title,titleEng,directorNm,directorEnNm,actorNm,actorEnNm,company,nation,genre,rating,runtime,REPRLSDATE,KEYWORDS,PLOTTEXT,kmdbUrl,trailer) values(#{mcode},#{title},#{titleEng},#{directorNm},#{directorEnNm},#{actorNm},#{actorEnNm},#{company},#{nation},#{genre},#{rating},#{runtime},to_char(to_date(#{repRlsDate},'yyyymmdd'),'yyyymmdd'),#{keywords},#{plotText},#{kmdbUrl},#{trailer})
+ 	</insert>
+	<insert id="insertScreenMovie" parameterType="screenmovie">
+			insert into SCREEN_MOVIE(mcode,STARTDATE,ENDDATE) values(#{mcode},#{startdate},#{enddate}) 	
+ 	</insert>
+ 	<select id="selectAllMovieList" resultType="movie">
+  		SELECT to_char(sm.enddate,'yyyy-mm-dd') as enddate,to_char(sm.startdate,'yyyy-mm-dd') as startdate,m.mcode,title,titleEng,directorNm,directorEnNm,actorNm,actorEnNm,company,nation,genre,rating,runtime,to_char(REPRLSDATE,'yyyy-mm-dd') as REPRLSDATE,KEYWORDS,PLOTTEXT,kmdbUrl FROM MOVIEDB m,screen_movie sm WHERE m.mcode = sm.mcode(+)
+  	</select>
+ 	<select id="selectSYSDATEScreenMovie" resultType="screenmovie">
+  		select * from SCREEN_MOVIE
+  	</select>
+  	<!--상영작 상영예정작 찾기  -->
+ 	<!-- <select id="selectSYSDATEScreenMovie" resultType="screenmovie">
+  		select * from SCREEN_MOVIE WHERE ENDDATE > TO_CHAR(SYSDATE,'YYYYMMDD')
+  	</select> -->
+  	<select id="selectAllCinema" resultType="cinema">
+  		select * from "CINEMA"	
+  	</select>
+  	<select id="selectScreenList" parameterType="String" resultType="screen">
+  		select s.screencode,s.cinemacode,s.screenname from screen s WHERE s.cinemacode = #{cinemacode}
+  	</select>
+  	<select id="selectMovieDTO" parameterType="String"	resultType="movie">
+		select mcode,title,titleEng,directorNm,directorEnNm,actorNm,actorEnNm,
+		company,nation,genre,rating,runtime,to_char(REPRLSDATE,'yyyy-mm-dd')as repRlsDate,KEYWORDS,PLOTTEXT,
+		kmdbUrl,trailer from MOVIEDB where mcode = #{mcode}
+	</select>
+  	<select id="selectFilePath" parameterType="String"	resultType="file">
+		select * from "MOVIE_FILE" where mcode = #{mcode} ORDER BY fno
+	</select>
+  	<select id="selectFile" parameterType="map" resultType="String" >
+ 		select path from "MOVIE_FILE" where mcode = #{mcode} and "FNO" = #{fno}
+ 	</select>
+  	<select id="selectImageFile" parameterType="int" resultType="String">
+		select path from board_image where bi_no = #{fno}
+	</select>
+	<delete id="deleteMovie" parameterType="String">
+	delete from moviedb where mcode = #{index}
+	</delete>
+	<insert id="insertFileList" parameterType="file">
+ 		insert into movie_file(mcode,fno,path)
+ 		values(#{mcode},#{fno},#{path})
+ 	</insert>
+ 	<update id="updateMovie" parameterType="movie">
+ 		 update MOVIEDB set title = #{title}, titleEng = #{titleEng}, directorNm = #{directorNm}, directorEnNm = #{directorEnNm}, actorNm=#{actorNm}, actorEnNm = #{actorEnNm}, company = #{company}, nation = #{nation}, genre = #{genre},rating=#{rating},runtime=#{runtime},REPRLSDATE=#{repRlsDate},KEYWORDS=#{keywords},PLOTTEXT=#{plotText},kmdbUrl=#{kmdbUrl},trailer=#{trailer} WHERE mcode = #{mcode}
+ 	</update> 
+ 	<update id="updateScreenMovie" parameterType="screenmovie">
+ 		update screen_movie set startdate = #{startdate}, enddate = #{enddate}  WHERE mcode = #{mcode}
+ 	</update> 
+ 	<update id="updateFileList" parameterType="file">
+ 		update movie_file set mcode = #{mcode}, fno = #{fno},path = #{path} WHERE fno = #{fno} and mcode = #{mcode}
+ 	</update> 
+	 <select id="selectScreenMovieList" parameterType="String" resultType="screenmovie">
+		select screencode,mcode,to_char(enddate,'yyyy-mm-dd')as enddate,to_char(startdate,'yyyy-mm-dd')as startdate from screen_movie where mcode = #{mcode}
+	</select> 
+	 <select id="NowshowingMovieList" resultType="movie">
+		SELECT to_char(sm.enddate,'yyyy-mm-dd') as enddate,to_char(sm.startdate,'yyyy-mm-dd') as startdate,m.mcode,trailer,title,titleEng,directorNm,directorEnNm,actorNm,actorEnNm,company,nation,genre,rating,runtime,to_char(REPRLSDATE,'yyyy-mm-dd') as REPRLSDATE,"KEYWORDS",PLOTTEXT,kmdbUrl FROM MOVIEDB m,screen_movie sm WHERE m.mcode = sm.mcode(+) AND <![CDATA[startdate < TO_CHAR(SYSDATE,'YYYYMMDD')]]> AND <![CDATA[ENDDATE > TO_CHAR(SYSDATE,'YYYYMMDD')]]> 
+	</select> 
+	 <select id="ComingSoonMovieList" resultType="movie">
+		SELECT to_char(sm.enddate,'yyyy-mm-dd') as enddate,to_char(sm.startdate,'yyyy-mm-dd') 
+        as startdate,m.mcode,title,titleEng,directorNm,directorEnNm,actorNm,actorEnNm,company,nation,genre,rating,runtime,
+        to_char(REPRLSDATE,'yyyy-mm-dd') as REPRLSDATE,KEYWORDS,PLOTTEXT,kmdbUrl FROM MOVIEDB m,screen_movie sm
+        WHERE m.mcode = sm.mcode(+) 
+        AND  <![CDATA[startdate > TO_CHAR(SYSDATE,'YYYYMMDD')]]>
+        </select> 
+         <delete id="deleteFileList" parameterType="file">
+         DELETE FROM movie_file f WHERE f.fno = #{fno} and f.mcode = #{mcode}
+		</delete> 
+	<!--테스트  -->
+ 	<!--select sm.startdate,mdb.* from SCREEN_MOVIE sm,"MOVIEDB" mdb where mdb."mcode" = sm."mcode"(+);  -->
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

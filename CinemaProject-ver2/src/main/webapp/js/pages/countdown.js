@@ -1,0 +1,1 @@
+$(function(){var a=$(".clock").FlipClock(3600*24*99,{clockFace:"DailyCounter",countdown:true})});
