@@ -23,7 +23,7 @@
   		select * from SCREEN_MOVIE WHERE ENDDATE > TO_CHAR(SYSDATE,'YYYYMMDD')
   	</select> -->
   	<select id="selectAllCinema" resultType="cinema">
-  		select * from "CINEMA"	
+  		select * from CINEMA	
   	</select>
   	<select id="selectScreenList" parameterType="String" resultType="screen">
   		select s.screencode,s.cinemacode,s.screenname from screen s WHERE s.cinemacode = #{cinemacode}
@@ -34,7 +34,7 @@
 		kmdbUrl,trailer from MOVIEDB where mcode = #{mcode}
 	</select>
   	<select id="selectFilePath" parameterType="String"	resultType="file">
-		select * from "MOVIE_FILE" where mcode = #{mcode} ORDER BY fno
+		select * from MOVIE_FILE where mcode = #{mcode} ORDER BY fno
 	</select>
   	<select id="selectFile" parameterType="map" resultType="String" >
  		select path from "MOVIE_FILE" where mcode = #{mcode} and "FNO" = #{fno}

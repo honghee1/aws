@@ -20,10 +20,10 @@ $(function(){
 	 	console.log(popupY);
 	    s = "&releaseDts"+'='+$("#releaseDts").val();
 	    s += "&title"+'='+$("#title").val();
-	    console.log(s);
+	    console.log(s);94TY52485SP98PB338TU
 	       $.ajax({
-	          url : 'http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&detail=Y&ServiceKey=94TY52485SP98PB338TU'+s,
-	           type:'get',
+		      url : 'http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&detail=Y&ServiceKey=94TY52485SP98PB338TU'+s,
+	          type:'get',
 	          dataType:'json',
 	          success:function(r){
 	             console.log(r);

@@ -472,14 +472,13 @@ public class MainController {
 	@RequestMapping("/insert_movie.do")
 	public String insertMovie(HttpSession session, HttpServletResponse response, Model model, MovieDTO mdto,
 			String cinemacode, String name,String genre,String close) {
-		List<CinemaDTO> Cinemalist = movieservice.selectCinemaList();
-		System.out.println(mdto);
-		session.setAttribute("cinemacode", cinemacode);
-		session.setAttribute("name", name);
-		model.addAttribute("Cinemalist", Cinemalist);
-		model.addAttribute("mdto", mdto);
-		model.addAttribute("page", "hh/insert_movie.jsp");
-		model.addAttribute("pagetitle", "영화 등록 페이지");
+		
+		  List<CinemaDTO> Cinemalist = movieservice.selectCinemaList();
+		  System.out.println(mdto); session.setAttribute("cinemacode", cinemacode);
+		 session.setAttribute("name", name); model.addAttribute("Cinemalist",
+		  Cinemalist); model.addAttribute("mdto", mdto); model.addAttribute("page",
+		  "hh/insert_movie.jsp"); model.addAttribute("pagetitle", "영화 등록 페이지");
+		 
 		return "admin_index";
 	}
 	@RequestMapping("/insertmovie.do")
@@ -844,7 +843,6 @@ public class MainController {
 	
 	@RequestMapping("adminLogin.do")
 	public void adminMain(String adminId, String adminPasswd, HttpSession session, Model model, HttpServletResponse response) throws IOException {
-		System.out.println("23123123"+adminPasswd);
 		AdminDTO adto = service.adminLogin(adminId, adminPasswd);
 		System.out.println(adto);
 		model.addAttribute("page", "main_body.jsp");
