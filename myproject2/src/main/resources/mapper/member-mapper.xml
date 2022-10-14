@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.MemberMapper">
+	<select id="login" parameterType="map" resultType="member">
+		select user_email as userEmail, user_passwd as userPasswd, user_name as userName, 
+		user_nick as userNick, user_tel as userTel, user_address as address, user_point as point, user_birth as userBirth
+		from member where user_email = #{userEmail} and user_passwd = #{userPasswd}
+	</select>
+
+	<insert id="insertMember" parameterType="member">
+		insert into member values(#{userEmail}, #{userPasswd}, #{userName}, #{userNick}, #{userTel}
+		, #{address}, 1000, #{userBirth})
+	</insert>
+	
+	<update id="updateMember" parameterType="member">
+		update member set user_passwd = #{userPasswd}, user_name = #{userName}, user_nick = #{userNick}, 
+		user_tel = #{userTel}, user_address = #{address} where user_email = #{userEmail}
+	</update>
+	
+	<delete id="deleteMember" parameterType="String">
+		delete from member where user_email = #{userEmail} and user_passwd = #{userPasswd}
+	</delete>
+	
+	<select id="selectUserEmail" parameterType="map" resultType="member">
+		select user_email as userEmail, user_passwd as userPasswd, user_name as userName, 
+		user_nick as userNick, user_tel as userTel, user_address as address 
+		from member where user_name = #{userName} and user_tel = #{userTel}
+	</select>
+	
+	<select id="selectUserPasswd" parameterType="map" resultType="member">
+		select user_email as userEmail, user_passwd as userPasswd, user_name as userName, 
+		user_nick as userNick, user_tel as userTel, user_address as address from member 
+		where user_email = #{userEmail} and user_name = #{userName} and user_tel = #{userTel}
+	</select>
+	
+	
+	<update id="updatePasswd" parameterType="map">
+		update member set user_passwd = #{userPasswd} where user_email = #{userEmail} 
+	</update>
+	
+	<select id="selectAllMember" resultType="member">
+		select user_email as userEmail, user_passwd as userPasswd, user_name as userName, 
+		user_nick as userNick, user_tel as userTel, user_address as address, user_point as point, 
+		to_char(user_birth, 'yyyy-mm-dd') as userBirth from member
+	</select>
+	
+	<delete id="adminDeleteMember" parameterType="String">
+		delete from member where user_email = #{userEmail}
+	</delete>
+	
+	<select id="selectMemberProfile" parameterType="String" resultType="member">
+		select user_email as userEmail, user_passwd as userPasswd, user_name as userName, 
+		user_nick as userNick, user_tel as userTel, user_address as address, user_point as point, to_char(user_birth, 'yyyy-mm-dd') as userBirth from member
+		where user_email = #{userEmail}
+	</select>
+	
+	<update id="adminMemberUpdate" parameterType="member">
+		update member set user_passwd = #{userPasswd}, user_name = #{userName}, user_nick = #{userNick}, 
+		user_tel = #{userTel}, user_address = #{address} where user_email = #{userEmail}
+	</update>
+	
+	<select id="selectMembermypage" parameterType="String" resultType="member">
+		select user_email as userEmail, user_name as userName, user_nick as userNick,
+		user_tel as userTel, user_point as point
+		from member where user_email = #{userEmail}
+	</select>
+	
+	<select id="selectAdminView" resultType="admin">
+		select a.admin_id as adminId, a.admin_passwd as adminPasswd, a.admin_name as adminName, g.grade_name as gradeName from admin a, gradename g
+		where a.admin_grade = g.grade
+	</select>
+	
+	<insert id="adminInsert" parameterType="admin">
+		insert into admin values(#{adminId}, #{adminPasswd}, #{adminName}, #{grade})
+	</insert>
+	
+	<delete id="adminDelete" parameterType="String">
+		delete from admin where admin_id = #{adminId}
+	</delete>
+	
+	<select id="adminLogin" parameterType="map" resultType="admin">
+		select a.admin_id as adminId, a.admin_passwd as adminPasswd, a.admin_name as adminName, a.admin_grade as grade,
+		g.grade_name as gradeName from admin a, gradename g
+		where a.admin_grade = g.grade and a.admin_id = #{adminId} and a.admin_passwd = #{adminPasswd}
+	</select>
+</mapper>
+
+
+
+
+
+
+

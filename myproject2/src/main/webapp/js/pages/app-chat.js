@@ -1,0 +1,1 @@
+$(function(){$("#chat-app").slimScroll({height:"600px"})});

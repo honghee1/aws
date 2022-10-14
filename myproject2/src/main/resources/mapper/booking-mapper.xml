@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.BookingMapper">
+	<select id="selectMovieList" parameterType="map" resultType="booking">
+		select timecode, starttime, endtime, mcode, screencode,
+		(select screenname from screen where screencode = #{screenCode}) 
+		screenname from time t where moviedate = #{sdate} and screencode = #{screenCode} and mcode = #{mcode}
+	</select>
+	<select id="selectSeatType" parameterType="String" resultType="screen">
+		select s.*, (select distinct seattype from seat st where st.screencode = #{screenCode}) as seattype,
+		(select distinct 
+		(select seattag from seattype sp where sp.seattype = st.seattype)
+		from seat st where st.screencode = #{screenCode}) as seattag
+		from screen s where screencode = #{screenCode}
+	</select>
+	
+	<insert id="insertBooking" parameterType="map">
+		insert into booking values(BOOKING_PK_SEQ.NEXTVAL, #{id}, #{timeCode}, #{screenCode}, #{mcode}, #{totalPrice}, sysdate)
+	</insert>
+	
+	<select id="selectSeatcode" parameterType="map" resultType="String">
+		select seatcode from seat where screencode = #{screenCode} and seatno = #{seatNo}
+	</select>
+	
+	<insert id="insertBookedSeat" parameterType="map">
+		insert into booked_seats values(#{bookingCode}, #{seatCode}, #{screenCode})
+	</insert>
+	
+	<select id="selectBookingcode" resultType="String">
+		SELECT BOOKING_PK_SEQ.CURRVAL FROM DUAL
+		<!-- select bookingcode from booking where user_email = #{id} and timecode = #{timeCode} -->
+	</select>
+	
+	<select id="selectBookedSeat" parameterType="String" resultType="String">
+		select (select seatno from seat s where bs.seatcode = s.seatcode) as seatno
+		from booking b, booked_seats bs where b.bookingcode = bs.bookingcode and timecode = #{timeCode}
+	</select>
+	
+	<select id="selectAllSeat" parameterType="String" resultType="String">
+		select count(*) from seat where screencode = #{screenCode}
+	</select>
+	
+	<select id="selectMovieTime" parameterType="String" resultType="booking">
+		select t.*, (select title from moviedb db where t.mcode = db.mcode) as title from time t where timecode = #{timeCode}
+	</select>
+	
+	<select id="selectBookingResult" parameterType="String" resultType="booking">
+		select bk.bookingcode, bk.user_email as email, bk.totalprice,
+		(select 
+		(select cinemaname from cinema c where c.cinemacode = sc.cinemacode) from screen sc where sc.screencode = bk.screencode) as cinemaname,
+		(select screenname from screen sc where sc.screencode = bk.screencode) as screenname, 
+		(select starttime from time t where t.timecode = bk.timecode) as starttime, 
+		(select endtime from time t where t.timecode = bk.timecode) as endtime,
+		(select moviedate from time t where t.timecode = bk.timecode) as moviedate,
+		(select seatno from seat s where s.seatcode = bs.seatcode) as seatno, 
+		(select title from moviedb db where db.mcode = bk.mcode) as title
+		from booking bk, booked_seats bs where bk.bookingcode = bs.bookingcode and bk.bookingcode = #{bookingCode}
+	</select>
+	
+</mapper>
