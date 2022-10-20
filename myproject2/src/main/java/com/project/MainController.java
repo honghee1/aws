@@ -1329,7 +1329,7 @@ public class MainController {
 		
 		String arr[] = dto.getMcode().split(",");
 		dto.setMcode(arr[0]);
-		
+		System.out.println(dto);
 		int result = screenservice.insertScreenSchedule(dto);
 		
 		response.setContentType("text/html;charset=utf-8");

@@ -180,7 +180,7 @@
                 if(month.length < 2){
                     month = "0" + month;
                  }
-                 var data = "mcode=" + mcode + "&screenCode=" + screencode + "&sdate=" + y.substring(2, 4) + '/' + month + '/' + $(this).find(".movie-day").text();                
+                 var data = "mcode=" + mcode + "&screenCode=" + screencode + "&sdate=" + y.substring(2, 4) + '/' + month + '/' + $(this).find(".movie-day").text();
                 console.log(data);
                 
                 $.ajax({

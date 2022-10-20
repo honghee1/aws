@@ -79,7 +79,7 @@
 	</update>
 	
 	<insert id="insertScreenSchedule" parameterType="screen">
-		insert into time values(TIME_PK_SEQ.nextval, #{startTime}, #{endTime}, #{movieDate}, 1, #{screenCode}, #{mcode})
+		insert into time values((select TIME_nextval('select_TIMEcode') from dual), #{startTime}, #{endTime}, #{movieDate}, 1, #{screenCode}, #{mcode})
 	</insert>
 	
 	<select id="selectAllSeatType" resultType="screen">
