@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -84,7 +85,6 @@ public class MainController {
 	private ScreenService screenservice;
 	private BookingService bookingservice;
 	private NaverAPI naverAPI;
-	
 	
 	
 	public MainController(movieService movieservice, MemberService service, QnAService qnaservice,
@@ -359,7 +359,7 @@ public class MainController {
 			movieservice.updateMovie(dto, scdto);
 			// 파일 업로드
 			// 저장할 경로
-			String root = "c:\\fileUpload\\";
+			String root = "/var/lib/tomcat9/webapps/upload/";
 			File userRoot = new File(root);
 			if (!userRoot.exists())
 				userRoot.mkdirs();
@@ -384,7 +384,7 @@ public class MainController {
 					i++;
 					continue;
 				}
-				File uploadFile = new File(root + "\\" + originalFileName);
+				File uploadFile = new File(root  +"/"+ originalFileName);
 				movieservice.deleteFileList(mcode, i);
 				movieservice.insertFileList(new FileDTO(uploadFile, mcode, i));
 				i++;
@@ -402,7 +402,7 @@ public class MainController {
 					String originalFileName = f.getOriginalFilename();
 					if (f.getSize() == 0)
 						continue;
-					File uploadFile = new File(root + "\\" + originalFileName);
+					File uploadFile = new File(root +"/"+  originalFileName);
 					movieservice.insertFileList(new FileDTO(uploadFile, mcode, newfileindex[index]));
 					nf++;
 					try {
@@ -425,7 +425,7 @@ public class MainController {
 			String mcode = movieservice.insertMovie(dto, scdto);
 			// 파일 업로드
 			// 저장할 경로
-			String root = "c:\\fileUpload\\";
+			String root = "/var/lib/tomcat9/webapps/upload/";
 			File userRoot = new File(root);
 			if (!userRoot.exists())
 				userRoot.mkdirs();
@@ -436,7 +436,7 @@ public class MainController {
 				String originalFileName = f.getOriginalFilename();
 				if (f.getSize() == 0)
 					continue;
-				File uploadFile = new File(root + "\\" + originalFileName);
+				File uploadFile = new File(root +"/"+  originalFileName);
 				movieservice.insertFileList(new FileDTO(uploadFile, mcode, i));
 				i++;
 				try {

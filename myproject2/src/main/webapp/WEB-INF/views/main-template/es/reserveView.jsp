@@ -177,8 +177,10 @@
                 var mcode = $(".movie-list-active").find("input[name='mcode']").val();
                 var screencode = $(".screen-list-active").find("input[name='screencode']").val();
                 var y = year.toString();
-                var data = "mcode=" + mcode + "&screenCode=" + screencode + "&sdate=" + y.substring(2, 4) + '/0' + month + '/' + $(this).find(".movie-day").text();
-                
+                if(month.length < 2){
+                    month = "0" + month;
+                 }
+                 var data = "mcode=" + mcode + "&screenCode=" + screencode + "&sdate=" + y.substring(2, 4) + '/' + month + '/' + $(this).find(".movie-day").text();                
                 console.log(data);
                 
                 $.ajax({

@@ -63,8 +63,11 @@
 		select screencode,mcode,date_format(enddate,'%Y-%m-%d')as enddate,date_format(startdate,'%Y-%m-%d')as startdate from screen_movie where mcode = #{mcode}
 	</select> 
 	 <select id="NowshowingMovieList" resultType="movie">
-		SELECT date_format(sm.enddate,'%Y-%m-%d') as enddate,date_format(sm.startdate,'%Y-%m-%d') as startdate,m.mcode,trailer,title,titleEng,directorNm,directorEnNm,actorNm,actorEnNm,company,nation,genre,rating,runtime,date_format(REPRLSDATE,'%Y-%m-%d') as REPRLSDATE,`KEYWORDS`,PLOTTEXT,kmdbUrl FROM moviedb m LEFT OUTER JOIN screen_movie sm ON m.mcode = sm.mcode WHERE <![CDATA[startdate < TO_CHAR(SYSDATE,'YYYYMMDD')]]> AND <![CDATA[ENDDATE > TO_CHAR(SYSDATE,'YYYYMMDD')]]> 
-	</select> 
+	SELECT date_format(sm.enddate,'--') as enddate,date_format(sm.startdate,'--') as startdate,
+	m.mcode,trailer,title,titleEng,directorNm,directorEnNm,actorNm,actorEnNm,company,nation,genre,rating,runtime,
+	date_format(REPRLSDATE,'--') as REPRLSDATE,`KEYWORDS`,PLOTTEXT,kmdbUrl 
+	FROM moviedb m LEFT OUTER JOIN screen_movie sm ON m.mcode = sm.mcode WHERE 
+	<![CDATA[startdate < DATE_FORMAT(SYSDATE(),'%Y%m%d')]]> AND <![CDATA[ENDDATE > DATE_FORMAT(SYSDATE(),'%Y%m%d')]]>	</select> 
 	 <select id="ComingSoonMovieList" resultType="movie">
 		SELECT date_format(sm.enddate,'%Y-%m-%d') as enddate,date_format(sm.startdate,'%Y-%m-%d') 
         as startdate,m.mcode,title,titleEng,directorNm,directorEnNm,actorNm,actorEnNm,company,nation,genre,rating,runtime,

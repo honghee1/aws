@@ -13,7 +13,7 @@
 	</select>
 	
 	<select id="adminselectScreenList" parameterType="map" resultType="screen">
-		select * from(select ceil(rownum / 5) as pageNo, s.* from screen s where cinemacode = #{cinemacode} order by screencode asc) where pageNo = #{pageNo}
+		select @rownum:=@rownum+1 as no,s.* from screen s  where cinemacode = 20221001 limit 6
 	</select>
 	
 	<select id="selectAllSeat" parameterType="String" resultType="int">
@@ -68,10 +68,10 @@
 	</select>
 	
 	<select id="selectScreenMovie" parameterType="String" resultType="screen">
-		select 
+      select 
       (select runtime from moviedb md where md.mcode = sm.mcode) as runtime,
       (select title from moviedb md where md.mcode = sm.mcode) as title, 
-      sm.* from screen_movie sm where <![CDATA[startdate < sysdate]]> and enddate > sysdate
+      sm.* from screen_movie sm where <![CDATA[startdate < sysdate()]]> and enddate > sysdate()
 	</select>
 	
 	<update id="updateSchedule" parameterType="screen">
