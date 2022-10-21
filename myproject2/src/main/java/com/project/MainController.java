@@ -1055,8 +1055,8 @@ public class MainController {
 					+ "&partner_user_id=user_id&item_name=" + item
 					+ "&quantity=" + String.valueOf(count)
 					+ "&total_amount=" + price + "&tax_free_amount=" + price
-					+ "&approval_url=http://localhost:9999/approval.do?bookingCode=" + bookingCode
-					+ "&cancel_url=http://localhost:9999/cancel.do&fail_url=http://localhost:9999/cancel.do";
+					+ "&approval_url=http://15.165.77.144:8080/approval.do?bookingCode=" + bookingCode
+					+ "&cancel_url=http://15.165.77.144:8080/cancel.do&fail_url=http://15.165.77.144:8080/cancel.do";
 			
 			OutputStream os = con.getOutputStream();
 			DataOutputStream dos = new DataOutputStream(os);

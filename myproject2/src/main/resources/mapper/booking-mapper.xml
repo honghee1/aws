@@ -17,7 +17,7 @@
 	</select>
 	
 	<insert id="insertBooking" parameterType="map">
-		insert into booking values(BOOKING_PK_SEQ.NEXTVAL, #{id}, #{timeCode}, #{screenCode}, #{mcode}, #{totalPrice}, sysdate)
+		insert into booking values((SELECT BOOKING_nextval('select_bookingcode') FROM DUAL), #{id}, #{timeCode}, #{screenCode}, #{mcode}, #{totalPrice}, sysdate())
 	</insert>
 	
 	<select id="selectSeatcode" parameterType="map" resultType="String">
@@ -29,7 +29,7 @@
 	</insert>
 	
 	<select id="selectBookingcode" resultType="String">
-		SELECT BOOKING_PK_SEQ.CURRVAL FROM DUAL
+		SELECT BOOKING_nextval('select_bookingcode') FROM DUAL
 		<!-- select bookingcode from booking where user_email = #{id} and timecode = #{timeCode} -->
 	</select>
 	

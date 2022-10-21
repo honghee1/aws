@@ -68,9 +68,9 @@
 			<div class="row">
 				<p>Or via social</p>
 				<div class="social-btn-2">
-					<a class="fb" href="https://kauth.kakao.com/oauth/authorize?client_id=7a35d3038a1822b8222b982de5e2a288&redirect_uri=http://localhost:9999/login&response_type=code&scope=account_email" id="kakaoLogin">
+					<a class="fb" href="https://kauth.kakao.com/oauth/authorize?client_id=eaee1a53496951d5c0e620e3d23f5014&redirect_uri=http://15.165.77.144:8080/login&response_type=code&scope=account_email" id="kakaoLogin">
 					<i class="kakaoLogo"><img src="images/ico-kakao.png" style="width: 30px; height: 30px;"></i>kakao</a>
-					<a class="tw" href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=jgPU1Ccmjpw1Cg57ZBip&redirect_uri=http://localhost:9999/naverLogin.do" id="naver_id_login">
+					<a class="tw" href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=jgPU1Ccmjpw1Cg57ZBip&redirect_uri=http://15.165.77.144:8080/naverLogin.do" id="naver_id_login">
 					<i class="naverlogor"><img src="images/naver_icon1.png" style="width: 30px; height: 30px;"></i>naver</a>
 				</div>
 			</div>
