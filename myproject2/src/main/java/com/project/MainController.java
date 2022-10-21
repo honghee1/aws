@@ -1043,7 +1043,7 @@ public class MainController {
 			URL host = new URL("https://kapi.kakao.com/v1/payment/ready");
 			HttpURLConnection con = (HttpURLConnection) host.openConnection( );
 			con.setRequestMethod("POST");
-			con.setRequestProperty("Authorization", "KakaoAK 20b628f2f4f18d1afe51ffa334c781a6");
+			con.setRequestProperty("Authorization", "KakaoAK 7c80bdaf6195fbde0c8f9cb6da9451e1");
 			con.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 			con.setDoOutput(true);
 			
@@ -1093,7 +1093,7 @@ public class MainController {
 		System.out.println("approval 진입, bookingCode : " + bookingCode);
 		
 		try {
-			response.getWriter().write("<script>opener.document.location.href='parchaseResult.do?bookingCode="+bookingCode+"'; window.close(); </script>");
+			response.getWriter().write("<script>opener.document.location.href='parchaseResult.do?bookingCode="+ "12" +"'; window.close(); </script>");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
