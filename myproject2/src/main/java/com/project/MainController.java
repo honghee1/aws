@@ -501,13 +501,15 @@ public class MainController {
 		return "admin_index";
 	}
 	
+	
+	
 	@RequestMapping("/data.do")
 	public String data() {
 		return "data";
 	}
-	@RequestMapping("/test.do")
+	@RequestMapping("/testapi.do")
 	public String test() {
-		return "test";
+		return "testapi";
 	}
 	/*--------------------------------------------------------------------------------------------------*/
 
@@ -1097,6 +1099,9 @@ public class MainController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		
+		
 		
 	}
 	
