@@ -324,6 +324,12 @@ public class MainController {
 		model.addAttribute("tag", tag);
 		return "insertMovie_pop_list";
 	}
+	@RequestMapping("/insertMovie_pop.do")
+	public String insertMovie_pop(Model model,HttpServletResponse response, MovieDTO dto,String tag) {
+		System.out.println(tag);
+		model.addAttribute("tag", tag);
+		return "insertMovie_pop";
+	}
 
 	@RequestMapping("fileDown.do")
 	public void fileDown(int fno, String mcode, HttpServletResponse response) throws IOException {
@@ -500,6 +506,7 @@ public class MainController {
 		model.addAttribute("pagetitle", "영화 등록 페이지");
 		return "admin_index";
 	}
+	
 	
 	
 	

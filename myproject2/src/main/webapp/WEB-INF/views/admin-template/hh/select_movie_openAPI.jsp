@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <style type="text/css">
 h2 {
 	text-align: center;
@@ -34,92 +34,89 @@ td, th {
 	overflow: hidden;
 }
 </style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
+<script type="text/javascript">
 $(function() {
-	 console.log("sasdasd");
-    $(".search").click(function() {
-    var s;
-    s = '&'+$("#kind").val()+'='+$("#search").val();
-    console.log(s);
-       $.ajax({
-           url:'http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&detail=Y&ServiceKey=94TY52485SP98PB338TU'+s,
-          type:'get',
-          dataType:'json',
-          success:function(r){
-             console.log(r);
-             var tag = "<div id=test1>";
-                 tag += "<form id='form'  method='post' target=POP>";  
-                 
-             for(i=0;i<r.Data[0].Result.length;i++){
-                 tag += "<tr id=Line>";
-                tag += "<td name=title>"+r.Data[0].Result[i].title+"</td>";
-                tag += "<td name='titleEng'>"+r.Data[0].Result[i].titleEng+"</td>";
-                tag += "<td name='directorNm'>"+r.Data[0].Result[i].directors.director[0].directorNm+"</td>";
-                tag += "<td name='directorEnNm'>"+r.Data[0].Result[i].directors.director[0].directorEnNm+"</td>";
-                tag += "<td>";
-                for(y=0;y<r.Data[0].Result[i].actors.actor.length;y++){
-                   if(y>10)break;
-                   tag += r.Data[0].Result[i].actors.actor[y].actorNm + " ,";
-                }
-                tag += "</td>";
-                tag += "<td>";
-                for(y=0;y<r.Data[0].Result[i].actors.actor.length;y++){
-                   if(y>10)break;
-                   tag += r.Data[0].Result[i].actors.actor[y].actorEnNm + " ,";
-                }
-                tag += "</td>";
-                tag += "<td>"+r.Data[0].Result[i].company+"</td>";
-                tag += "<td>"+r.Data[0].Result[i].nation+"</td>";
-                tag += "<td>"+r.Data[0].Result[i].genre+"</td>";
-                tag += "<td>"+r.Data[0].Result[i].rating+"</td>";
-                tag += "<td>"+r.Data[0].Result[i].runtime+"</td>";
-                tag += "<td>"+r.Data[0].Result[i].repRlsDate+"</td>";
-                tag += "<td>"+r.Data[0].Result[i].keywords+"</td>";
-                tag += "<td>"+r.Data[0].Result[i].plots.plot[0].plotText+"</td>";
-                tag += "<td><button type=button class=window name=window1 >db에 저장하기</button></td>";
-                tag += "</tr>";
-          }
-                  tag += "</form>"; 
-                  tag += "</div>";  
-             $("tbody").html(tag);
-          },
-          error:function(xhr, textStaus, errorThrow){
-             console.log("code : ",xhr.status);
-             console.log("message : ",xhr.responseText);
-             console.log("error : ",errorThrow);
-             console.log("textStaus : ",textStaus);
-             var tag = "<tr><td colspan='6' style='text-align:center'>"
-                                     +xhr.responseText+"</td></tr>";
-             $("tbody").html(tag);
-          }
-       });
-    });
-    $(document).on('click', '.window', function() {
-	  	$("#form").attr('action','insertMovie_pop.do');
-		  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(0).text() + '" name=title>')); 
-		  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(1).text() + '" name=titleEng>')); 
-		  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(2).text() + '" name=directorNm>')); 
-		  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(3).text() + '" name=directorEnNm>')); 
-		  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(4).text() + '" name=actorNm>')); 
-		  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(5).text() + '" name=actorEnNm>')); 
-		  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(6).text() + '" name=company>')); 
-		  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(7).text() + '" name=nation>')); 
-		  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(8).text() + '" name=genre>')); 
-		  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(9).text() + '" name=rating>')); 
-		  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(10).text() + '" name=runtime>')); 
-		  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(11).text() + '" name=repRlsDate>')); 
-		  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(12).text() + '" name=keywords>')); 
-		  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(13).text() + '" name=plotText>')); 
-	  	window.open('','POP',"width=1400, height=1000, resizable=no, scrollbars=no, status=no;"); 
-	  	$("#form").submit();
-	  $(".t1").remove();
-	});
- });
+	$(".search").click(function() {
+var s;
+s = '&'+$("#kind").val()+'='+$("#search").val();
+var xhr = new XMLHttpRequest(); 
+var url = 'https://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&detail=Y&ServiceKey=94TY52485SP98PB338TU' + s; 
+var tag = ""; 
+var str = "";
+ /*상영월*/ xhr.open('GET', url ); 
+ xhr.onreadystatechange = function () { 
+	 if (this.readyState == 4) { 
+		 const json = this.responseText;
+		 const obj = JSON.parse(json);
+
+		 
+		 var tag = "<div id=test1>";
+         tag += "<form id='form'  method='post' target=POP>";  
+         
+     for(i=0;i<obj.Data[0].Result.length;i++){
+         tag += "<tr id=Line>";
+        tag += "<td name=title>"+obj.Data[0].Result[i].title+"</td>";
+        tag += "<td name='titleEng'>"+obj.Data[0].Result[i].titleEng+"</td>";
+        tag += "<td name='directorNm'>"+obj.Data[0].Result[i].directors.director[0].directorNm+"</td>";
+        tag += "<td name='directorEnNm'>"+obj.Data[0].Result[i].directors.director[0].directorEnNm+"</td>";
+        tag += "<td>";
+        for(y=0;y<obj.Data[0].Result[i].actors.actor.length;y++){
+           if(y>10)break;
+           tag += obj.Data[0].Result[i].actors.actor[y].actorNm + " ,";
+        }
+        tag += "</td>";
+        tag += "<td>";
+        for(y=0;y<obj.Data[0].Result[i].actors.actor.length;y++){
+           if(y>10)break;
+           tag += obj.Data[0].Result[i].actors.actor[y].actorEnNm + " ,";
+        }
+        tag += "</td>";
+        tag += "<td>"+obj.Data[0].Result[i].company+"</td>";
+        tag += "<td>"+obj.Data[0].Result[i].nation+"</td>";
+        tag += "<td>"+obj.Data[0].Result[i].genre+"</td>";
+        tag += "<td>"+obj.Data[0].Result[i].rating+"</td>";
+        tag += "<td>"+obj.Data[0].Result[i].runtime+"</td>";
+        tag += "<td>"+obj.Data[0].Result[i].repRlsDate+"</td>";
+        tag += "<td>"+obj.Data[0].Result[i].keywords+"</td>";
+        tag += "<td>"+obj.Data[0].Result[i].plots.plot[0].plotText+"</td>";
+        tag += "<td><button type=button class=window name=window1 >db에 저장하기</button></td>";
+        tag += "</tr>";
+  }
+          tag += "</form>"; 
+          tag += "</div>";  
+     $("tbody").html(tag);
+	 	}
+	 };
+	 	/* console.log(tag);
+	 	console.log(str);
+	    $("body").html(tag);  */
+	    xhr.send(''); 
+});
+	    $(document).on('click', '.window', function() {
+		  	$("#form").attr('action','insertMovie_pop.do');
+			  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(0).text() + '" name=title>')); 
+			  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(1).text() + '" name=titleEng>')); 
+			  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(2).text() + '" name=directorNm>')); 
+			  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(3).text() + '" name=directorEnNm>')); 
+			  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(4).text() + '" name=actorNm>')); 
+			  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(5).text() + '" name=actorEnNm>')); 
+			  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(6).text() + '" name=company>')); 
+			  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(7).text() + '" name=nation>')); 
+			  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(8).text() + '" name=genre>')); 
+			  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(9).text() + '" name=rating>')); 
+			  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(10).text() + '" name=runtime>')); 
+			  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(11).text() + '" name=repRlsDate>')); 
+			  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(12).text() + '" name=keywords>')); 
+			  $("#form").append($('<input type="hidden" class="t1" value="' + $(this).closest('tr').children().eq(13).text() + '" name=plotText>')); 
+		  	window.open('','POP',"width=1400, height=1000, resizable=no, scrollbars=no, status=no;"); 
+		  	$("#form").submit();
+		  $(".t1").remove();
+		});
+});
 </script>
 </head>
 <body>
-	<h2>영화 검색 페이지</h2>
+<h2>영화 검색 페이지</h2>
 	<div class="container">
 		<select id="kind">
 			<option value="title">영화 제목</option>
@@ -161,6 +158,5 @@ $(function() {
 		</div>
 
 	</div>
-
 </body>
 </html>
