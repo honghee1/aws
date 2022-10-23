@@ -10,6 +10,7 @@
 </script>
 <script>
 $(function(){
+	
 	$(".search_btn").click(function() {
 		 var s;
 		    var popupX = (window.screen.width / 2) - (1200 / 2);

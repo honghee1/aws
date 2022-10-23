@@ -253,8 +253,8 @@ position: relative;
   </style>
 <script type="text/javascript">
 $(function() {
-	$.ajax({
-        url :'http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=c4053f3ce9578a3bd43995348a0d499c&targetDt=20221023',
+	v$.ajax({
+        url : 'http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=20120101',
         type:'get',
        dataType:'json',
        success:function(r){
@@ -265,7 +265,20 @@ $(function() {
 
 	         
 });
-});
+/* $(function() {
+	var xhr = new XMLHttpRequest();
+	var url = '	http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=20120101';
+	xhr.open('GET', url ,true); 
+	
+	xhr.onreadystatechange = function () { 
+		if (this.readyState == 4) { 
+			alert('Status: '+this.status+'Headers: '+JSON.stringify(this.getAllResponseHeaders())+'Body: '+this.responseText); 
+			} }; 
+			xhr.send('');
+	
+
+	         
+}); */
 </script>
 </head>
 <body>
