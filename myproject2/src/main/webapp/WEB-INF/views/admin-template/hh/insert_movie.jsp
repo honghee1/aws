@@ -7,7 +7,6 @@
 <title>pop_title</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
-
 </script>
 <script>
 $(function(){
@@ -28,7 +27,6 @@ xhr.onreadystatechange = function () {
 	 if (this.readyState == 4) { 
 		 const json = this.responseText;
 		 const r = JSON.parse(json);
-
 		 
 		 console.log(r);
         console.log(r.TotalCount);
@@ -114,74 +112,54 @@ xhr.onreadystatechange = function () {
 	
 	$(document).on("change", "#imageFile1",function() {
 	    var file = event.target.files[0];
-
 	    var reader = new FileReader(); 
 	    reader.onload = function(e) {
-
 	        $("#preview1").attr("src", e.target.result);
 	    }
-
 	    reader.readAsDataURL(file);
 	});
 	$(document).on("change", "#imageFile2",function() {
 		console.log("asdasd")
 	    var file = event.target.files[0];
-
 	    var reader = new FileReader(); 
 	    reader.onload = function(e) {
-
 	        $("#preview2").attr("src", e.target.result);
 	    }
-
 	    reader.readAsDataURL(file);
 	});
 	$(document).on("change", "#imageFile3",function() {
 		console.log("asdas123d")
 	    var file = event.target.files[0];
-
 	    var reader = new FileReader(); 
 	    reader.onload = function(e) {
-
 	        $("#preview3").attr("src", e.target.result);
 	    }
-
 	    reader.readAsDataURL(file);
 	});
 	$(document).on("change", "#imageFile4",function() {
 		
 	    var file = event.target.files[0];
-
 	    var reader = new FileReader(); 
 	    reader.onload = function(e) {
-
 	        $("#preview4").attr("src", e.target.result);
 	    }
-
 	    reader.readAsDataURL(file);
 	}); 
 	$(document).on("change", "#imageFile5",function() {
-
 	    var file = event.target.files[0];
-
 	    var reader = new FileReader(); 
 	    reader.onload = function(e) {
-
 	        $("#preview5").attr("src", e.target.result);
 	    }
-
 	    reader.readAsDataURL(file);
 	});
 });
 function isImageFile(file) {
-
     var ext = file.name.split(".").pop().toLowerCase(); 
-
     return ($.inArray(ext, ["jpg", "jpeg", "gif", "png"]) === -1) ? false : true;
 }
 function isOverSize(file) {
-
     var maxSize = 15 * 1024 * 1024; 
-
     return (file.size > maxSize) ? true : false;
 }
 $(function(){
@@ -200,8 +178,6 @@ $(function(){
 		count--;
 	});
 });
-
-
 	var flag = 0;
 function search_hide_show(){
 	if(flag == 0){
@@ -214,28 +190,23 @@ function search_hide_show(){
 		flag=0;
 	}
 } 
-
 </script>
   <style>
     li {
       list-style: none;
     }
-
     img {
       width: 200px;
       height: 200px;
     }
-
     .real-upload {
       display: none;
     }
-
     .upload {
       width: 200px;
       height: 200px;
       background-color: antiquewhite;
     }
-
     .image-preview {
       width: 200px;
       height: 200px;
@@ -295,7 +266,6 @@ position: relative;
 	font-weight: 600;
 	
 }
-
 /* Border bottom effects */
 .form-input.border-bottom {
 	position: relative;

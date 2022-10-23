@@ -488,7 +488,7 @@ public class MainController {
 		session.setAttribute("cinemacode", cinemacode);
 		session.setAttribute("name", name);
 		model.addAttribute("Cinemalist", Cinemalist);
-		model.addAttribute("mdto", mdto);
+		model.addAttribute("movie", mdto);
 		model.addAttribute("title", "영화 등록 :: Hello Movie Cinema");
 		model.addAttribute("page", "hh/insert_movie.jsp");
 		model.addAttribute("pagetitle", "영화 등록 페이지");
