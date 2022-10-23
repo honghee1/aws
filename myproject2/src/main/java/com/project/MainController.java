@@ -353,11 +353,19 @@ public class MainController {
 		bos.close();
 		fis.close();
 	}
+	
 
 	@RequestMapping("/uploadmovie.do")
 	public String uploadmovie(Model model, MovieDTO dto, ScreenMovieDTO scdto, MultipartHttpServletRequest request,
 			String close, String update, int[] newfileindex, int[] oldfile) {
-		System.out.println(dto);
+		System.out.println("ㅁㄴㅇㅁㄴㅇ"+scdto);
+		System.out.println(scdto.getStartdate());
+		if(scdto.getStartdate().length()==0) {
+			scdto.setStartdate("0000-00-00");
+		}
+		if(scdto.getEnddate().length()==0) {
+			scdto.setEnddate("0000-00-00");
+		}
 		dto.setTrailer(dto.getTrailer().substring(dto.getTrailer().lastIndexOf("/")+1));
 		if (update != null) {
 			dto.setMcode(update);

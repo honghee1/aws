@@ -66,9 +66,12 @@ xhr.onreadystatechange = function () {
             tag += "<form id=test action=insert_movie.do?close=close method=post>";  
             
         for(i=0;i<r.Data[0].Result.length;i++){
-            tag += "<tr id=Line>";
-            tag += "<td><button id=data1 >선택하기</button></td>";
-           tag += "<td name=title>"+r.Data[0].Result[i].title+"</td>";
+          var title = r.Data[0].Result[i].title.replace('!HS', '');
+           title = title.replace('!HE', '');
+           title = title.replace(/ /g, "");
+           tag += "<tr id=Line>";
+           tag += "<td><button id=data1 >선택하기</button></td>";
+           tag += "<td name=title>"+title+"</td>";
            tag += "<td name='titleEng'>"+r.Data[0].Result[i].titleEng+"</td>";
            tag += "<td name='directorNm'>"+r.Data[0].Result[i].directors.director[0].directorNm+"</td>";
            tag += "<td name='directorEnNm'>"+r.Data[0].Result[i].directors.director[0].directorEnNm+"</td>";
@@ -100,6 +103,8 @@ xhr.onreadystatechange = function () {
        	 $("#form").append($('<input type="hidden" class="t1" value="'+tag+'" name=tag>'));
        	 window.open('','POP','width=1400, height=800, resizable=yes, scrollbars=yes, status=no,left='+popupX+', top='+popupY); 
        	 $("#form").submit();
+        }else if(r.TotalCount == 0){
+        	alert('검색 결과가 없습니다');
         }
        
 	 	}

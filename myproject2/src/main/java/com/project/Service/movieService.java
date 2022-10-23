@@ -88,6 +88,7 @@ public class movieService {
 	public String updateMovie(MovieDTO dto, ScreenMovieDTO scdto) {
 		String mcode = mapper.selectMovieCode();
 		mapper.updateMovie(dto);
+		System.out.println("A4"+scdto);
 		mapper.updateScreenMovie(scdto);
 		return mcode;
 	}
