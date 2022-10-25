@@ -75,6 +75,7 @@ $(document).on('click', '#data1', function() {
 	str2+="plotText="+$(this).closest('tr').children().eq(12).text()+"&";
 	str2+="keywords="+$(this).closest('tr').children().eq(13).text()+"&";
 	str2+="genre="+$(this).closest('tr').children().eq(14).text()+"&";
+	str2+="prodYear="+$(this).closest('tr').children().eq(15).text()+"&";
 	window.opener.location.href="insert_movie.do?"+str2;
 	self.close(); 
 

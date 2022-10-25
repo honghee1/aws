@@ -29,15 +29,15 @@ xhr.onreadystatechange = function () {
 		 const json = this.responseText;
 		 const r = JSON.parse(json);
 		 
-		 console.log(r);
-        console.log(r.TotalCount);
         if(r.TotalCount == 1){
+        console.log(r);
         var actorNm = "";
         var actorEnNm = "";
         var title = r.Data[0].Result[0].title.replace('!HS', '');
         title = title.replace('!HE', '');
         title = title.replace(/ /g, "");
         $('#movie_title_kr').val(title);
+        $('#mtitle').val(title);
         $('#movie_title_eng').val(r.Data[0].Result[0].titleEng);
         $('#directorNm').val(r.Data[0].Result[0].directors.director[0].directorNm);
         $('#directorEnNm').val(r.Data[0].Result[0].directors.director[0].directorEnNm);
@@ -62,6 +62,7 @@ xhr.onreadystatechange = function () {
         $('#keywords').val(r.Data[0].Result[0].keywords);
         $('#kmdbUrl').val(r.Data[0].Result[0].kmdbUrl);
         $('#plotText').val(r.Data[0].Result[0].plots.plot[0].plotText);
+        $('#prodYear').val(r.Data[0].Result[0].prodYear);
         }else if(r.TotalCount > 1){
        	 var tag = "<div id=test1>";
             tag += "<form id=test action=insert_movie.do?close=close method=post>";  
@@ -96,6 +97,7 @@ xhr.onreadystatechange = function () {
            tag += "<td style=display:none>" + r.Data[0].Result[i].plots.plot[0].plotText + "</td>";
            tag += "<td style=display:none>" + r.Data[0].Result[i].keywords + "</td>";
            tag += "<td style=display:none>" + r.Data[0].Result[i].genre + "</td>";
+           tag += "<td style=display:none>" + r.Data[0].Result[i].prodYear + "</td>";
            tag += "</tr>";
      }
              tag += "</form>"; 
@@ -196,8 +198,24 @@ function search_hide_show(){
 		flag=0;
 	}
 } 
+function naverAPIUserRating(){
+	var s = "&title"+'='+$("#mtitle").val();
+	s += "&prodYear="+$("#prodYear").val();
+	console.log(s);
+    $.ajax({
+       url : 'naver.do?'+s,
+       type:'get',
+       dataType:'json',
+       success:function(r){
+    	   console.log(r)
+    	   $("#Naver_User_Rating").val(r);
+    	   $("#Naver_User_Rating").text(r);
+       }
+})
+}
 </script>
   <style>
+  
     li {
       list-style: none;
     }
@@ -229,6 +247,13 @@ function search_hide_show(){
 	position: relative;
 	width: 200px;
 }
+    .form-group1 {
+	position: relative;
+	width: 200px;
+	display: flex;
+	justify-content: space-between;
+}
+
 .form-input {
 	position: relative;
 	font-family: "Source Sans Pro", sans-serif;
@@ -435,6 +460,11 @@ position: relative;
 	display: flex;
 	flex-wrap: wrap;
 	width: 33%;
+	flex-direction: column;
+	
+}
+.naver-UserRating{
+display: flex;
 }
   </style>
 </head>
@@ -509,7 +539,7 @@ position: relative;
 		<span class="border-bottom-animation left"></span>
 		</div>
 		<div class="form-group" style="width: 41%">
-		<input type="text" name="trailer" id="trailer" value="${requestScope.movie.trailer }" class="form-input border-bottom" placeholder="예고편 링크 예고편 링크 *유튜브 공유 버튼을 눌러 링크를 복사해주세요">
+		<input type="text" name="trailer" id="trailer" value="${requestScope.movie.trailer }" class="form-input border-bottom" placeholder="예고편 링크 *유튜브 공유 버튼을 눌러 링크를 복사해주세요">
 		<span class="border-bottom-animation left"></span>
 		</div>
 		<div class="form-group">
@@ -532,8 +562,21 @@ position: relative;
 		<div class="movie_flot_container">
 		<div class="form-group" >
 		<p>줄거리</p>
-		<textarea name="plotText"  id="plotText" rows="20" cols="65" name="plotText"  placeholder="${requestScope.movie.plotText }"></textarea>
+		<textarea name="plotText"  id="plotText" rows="15" cols="65" name="plotText"  placeholder="줄거리">${requestScope.movie.plotText }</textarea>
 		</div>
+		<p>네이버 평점 연결</p>
+		<div class="naver-UserRating">
+		<div class="form-group" >
+		<input type="text" name="mtitle" id="mtitle" value="${requestScope.movie.title }" class="form-input border-bottom" placeholder="제목(한)">
+		<span class="border-bottom-animation left"></span>
+		</div>
+		<div class="form-group" style="margin-left:30px; ">
+		<input type="text" name="prodYear" id="prodYear" value="${requestScope.prodYear }" class="form-input border-bottom" placeholder="제작 연도">
+		<span class="border-bottom-animation left"></span>
+		</div>
+		</div>
+		<a onclick="naverAPIUserRating()" href="#">검색</a>
+		<p id="Naver_User_Rating">${requestScope.userrating }</p>
 		</div>
 		
 		<section  class="layout">

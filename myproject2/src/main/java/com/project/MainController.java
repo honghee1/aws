@@ -34,6 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -57,6 +58,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.google.gson.JsonArray;
 import com.project.Service.BookingService;
 import com.project.Service.MemberService;
 import com.project.Service.NaverAPI;
@@ -493,12 +495,15 @@ public class MainController {
 
 	@RequestMapping("/insert_movie.do")
 	public String insertMovie(HttpSession session, HttpServletResponse response, Model model, MovieDTO mdto,
-			String cinemacode, String name,String genre,String close) {
+			String cinemacode, String name,String genre,String close,String prodYear) {
 		List<CinemaDTO> Cinemalist = movieservice.selectCinemaList();
+		String userrating = APIExamTranslateNMT(mdto.getTitle(),prodYear);
 		session.setAttribute("cinemacode", cinemacode);
 		session.setAttribute("name", name);
 		model.addAttribute("Cinemalist", Cinemalist);
 		model.addAttribute("movie", mdto);
+		model.addAttribute("userrating", userrating);
+		model.addAttribute("prodYear", prodYear);
 		model.addAttribute("title", "영화 등록 :: Hello Movie Cinema");
 		model.addAttribute("page", "hh/insert_movie.jsp");
 		model.addAttribute("pagetitle", "영화 등록 페이지");
@@ -519,33 +524,44 @@ public class MainController {
 	
 	
 	
-	
 	@RequestMapping("/data.do")
 	public String data() {
-		return "data";
+		return "admin_index";
 	}
-	@RequestMapping("/testapia.do")
-	public String test() {
-		return "testapi";
+	@RequestMapping("/naver.do")
+	public ResponseEntity<String> test(String title,String prodYear,Model model) {
+		String userrating = APIExamTranslateNMT(title,prodYear);
+		model.addAttribute("userrating", userrating);
+		model.addAttribute("page", "hh/insert_movie.jsp");
+		model.addAttribute("pagetitle", "영화 등록 페이지");
+		return ResponseEntity.ok(userrating);
 	}
-	@RequestMapping("/testapi.do")
-	public String APIExamTranslateNMT() {
+	public String APIExamTranslateNMT(String title,String prodYear) {
+		if(title != null) {
 		String clientId = "GV9zoyHoPYvom8CtrVnd"; //애플리케이션 클라이언트 아이디
         String clientSecret = "EPVwdRTl5I"; //애플리케이션 클라이언트 시크릿
-        String text = null;
+        String Movietitle = title;
+        String MovieprodYear = prodYear;
+        System.out.println(prodYear);
         try {
-            text = URLEncoder.encode("범죄도시", "UTF-8");
+        	Movietitle = URLEncoder.encode(title, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("검색어 인코딩 실패",e);
         }
-        String apiURL = "https://openapi.naver.com/v1/search/movie.json?query=" + text;    // JSON 결과
-        //String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text; // XML 결과
+        String apiURL = "https://openapi.naver.com/v1/search/movie.json?query="+ Movietitle+"&yearfrom="+MovieprodYear+"&yearto="+MovieprodYear;    // JSON 결과
         Map<String, String> requestHeaders = new HashMap<>();
         requestHeaders.put("X-Naver-Client-Id", clientId);
         requestHeaders.put("X-Naver-Client-Secret", clientSecret);
         String responseBody = get(apiURL,requestHeaders);
-        System.out.println(responseBody);
-		return "testapi";
+        JSONObject jObject = new JSONObject(responseBody);
+        JSONArray jsonArr = jObject.getJSONArray("items");
+        System.out.println(jsonArr);
+        JSONObject jsonObj = (JSONObject)jsonArr.get(0);
+		return jsonObj.getString("userRating");
+		}else {
+			System.out.println("123asd");
+			return"";
+		}
 	}
 	private static String get(String apiUrl, Map<String, String> requestHeaders){
         HttpURLConnection con = connect(apiUrl);

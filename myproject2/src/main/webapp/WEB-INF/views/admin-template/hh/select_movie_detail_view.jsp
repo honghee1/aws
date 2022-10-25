@@ -419,7 +419,7 @@ position: relative;
 		<div class="movie_flot_container">
 		<div class="form-group" >
 		<p>줄거리</p>
-		<textarea name="plotText"  id="plotText" rows="20" cols="65" name="plotText"  placeholder="${requestScope.movie.plotText }"></textarea>
+		<textarea name="plotText"  id="plotText" rows="20" cols="65" name="plotText"  placeholder="줄거리">${requestScope.movie.plotText }</textarea>
 		</div>
 		</div>
 		<section  class="layout">
