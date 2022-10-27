@@ -30,6 +30,7 @@ xhr.onreadystatechange = function () {
 		 const r = JSON.parse(json);
 		 
         if(r.TotalCount == 1){
+        	
         console.log(r);
         var actorNm = "";
         var actorEnNm = "";
@@ -63,6 +64,18 @@ xhr.onreadystatechange = function () {
         $('#kmdbUrl').val(r.Data[0].Result[0].kmdbUrl);
         $('#plotText').val(r.Data[0].Result[0].plots.plot[0].plotText);
         $('#prodYear').val(r.Data[0].Result[0].prodYear);
+        var s = "&title"+'='+title;
+    	s += "&prodYear="+r.Data[0].Result[0].prodYear;
+    	console.log(s);
+        $.ajax({
+           url : 'naver.do?'+s,
+           type:'get',
+           dataType:'json',
+           success:function(r){
+        	   console.log(r)
+        	   $("#userRating").val(r.items[0].userRating);
+           }
+    })
         }else if(r.TotalCount > 1){
        	 var tag = "<div id=test1>";
             tag += "<form id=test action=insert_movie.do?close=close method=post>";  
@@ -207,9 +220,51 @@ function naverAPIUserRating(){
        type:'get',
        dataType:'json',
        success:function(r){
-    	   console.log(r)
-    	   $("#Naver_User_Rating").val(r);
-    	   $("#Naver_User_Rating").text(r);
+    	   if(r.total == 1){
+        	   $("#userRating").val(r.items[0].userRating);
+        	   $("#prodYear").val(r.items[0].pubDate);
+    	   }else{
+    		   $.ajax({
+    		       url :'Naver_API_List.do',
+    		       data : JSON.stringify(r),		   
+    		       type:'post',
+    		       dataType:'text',
+    		       contentType:"application/json;charset=UTF-8",
+    		       success:function(r){
+    		    	 var popupX = (window.screen.width / 2) - (1200 / 2);
+    				 var popupY = (window.screen.height / 2) - (800 / 2);
+    		    	   const json = r;
+    		  		   const naver_api_list = JSON.parse(json);
+
+    		         	  var tag = "<div id=test1>";
+    		              tag += "<form id=test action=insert_movie.do?close=close method=post>";  
+    		              
+    		          for(i=0;i<naver_api_list.total;i++){
+    		             tag += "<tr id=Line>";
+    		             tag += "<td><input type='button' value='선택' id='data1'></td>";
+    		             tag += "<td id=titlename=title>"+naver_api_list.items[i].title+"</td>";
+    		             tag += "<td id=title name=title>"+naver_api_list.items[i].pubDate+"</td>";
+    		             tag += "<td id=title name=title>"+naver_api_list.items[i].userRating+"</td>";
+    		             tag += "<td id=title name=title><a id=Naver_Link href=#>"+naver_api_list.items[i].link+"</a></td>";
+    		             tag += "</tr>";
+    		       }
+    		               tag += "</form>"; 
+    		               tag += "</div>"
+    		         	 $("#form").attr('action','insertMovie_pop_list2.do');
+    		         	 $("#form").append($('<input type="hidden" class="t1" value="'+tag+'" name=tag>'));
+    		         	openWin = window.open('','POP','width=800, height=800, resizable=yes, scrollbars=yes, status=no,left='+popupX+', top='+popupY); 
+    		         	 $("#form").submit();   
+    		    	  
+    		         	/* $("#pInput").val(naver_api_list.items[0].title); */
+    		         	  /* window.name = "parentForm";  */         
+    		         	 /* openWin = window.open("Child.do","childForm", "width=570, height=350, resizable = no, scrollbars = no"); */
+    		         	 openWin.document.getElementById("#cInput").value = document.getElementById("#pInput").value;
+    		         	
+    		       }
+    		})
+    		   
+    	   }
+    	  
        }
 })
 }
@@ -469,6 +524,7 @@ display: flex;
   </style>
 </head>
 <body>
+ <br>    
 		<form id="file_form" action="uploadmovie.do" method="post" enctype="multipart/form-data">
 		<div class="search_container">
 		<div class="search_hide" style="width: 100%">
@@ -575,8 +631,12 @@ display: flex;
 		<span class="border-bottom-animation left"></span>
 		</div>
 		</div>
+		<div class="form-group">
+		<input type="text" name="userRating" id="userRating" value="" class="form-input border-bottom" placeholder="네이버 평점">
+		<span class="border-bottom-animation left"></span>
+		<br>
+		</div>
 		<a onclick="naverAPIUserRating()" href="#">검색</a>
-		<p id="Naver_User_Rating">${requestScope.userrating }</p>
 		</div>
 		
 		<section  class="layout">

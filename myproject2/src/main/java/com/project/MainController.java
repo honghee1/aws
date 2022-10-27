@@ -45,6 +45,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -328,6 +329,12 @@ public class MainController {
 		model.addAttribute("tag", tag);
 		return "insertMovie_pop_list";
 	}
+	@RequestMapping("/insertMovie_pop_list2.do")
+	public String insertMovie_pop_list2(Model model,HttpServletResponse response, MovieDTO dto,String tag) {
+		System.out.println("asd"+tag);
+		model.addAttribute("tag", tag);
+		return "insertMovie_pop_list2";
+	}
 	@RequestMapping("/insertMovie_pop.do")
 	public String insertMovie_pop(Model model,HttpServletResponse response, MovieDTO dto,String tag) {
 		System.out.println(tag);
@@ -497,7 +504,7 @@ public class MainController {
 	public String insertMovie(HttpSession session, HttpServletResponse response, Model model, MovieDTO mdto,
 			String cinemacode, String name,String genre,String close,String prodYear) {
 		List<CinemaDTO> Cinemalist = movieservice.selectCinemaList();
-		String userrating = APIExamTranslateNMT(mdto.getTitle(),prodYear);
+		JSONObject userrating = APIExamTranslateNMT(mdto.getTitle(),prodYear);
 		session.setAttribute("cinemacode", cinemacode);
 		session.setAttribute("name", name);
 		model.addAttribute("Cinemalist", Cinemalist);
@@ -523,26 +530,33 @@ public class MainController {
 	}
 	
 	
-	
-	@RequestMapping("/data.do")
-	public String data() {
-		return "admin_index";
+	@RequestMapping("/Child.do")
+	public String data(String tag) {
+		System.out.println(tag);
+		return "Child";
 	}
 	@RequestMapping("/naver.do")
 	public ResponseEntity<String> test(String title,String prodYear,Model model) {
-		String userrating = APIExamTranslateNMT(title,prodYear);
-		model.addAttribute("userrating", userrating);
-		model.addAttribute("page", "hh/insert_movie.jsp");
-		model.addAttribute("pagetitle", "영화 등록 페이지");
-		return ResponseEntity.ok(userrating);
+		System.out.println("123asd");
+		if(prodYear==null) {
+			prodYear="";
+		}
+		JSONObject userrating = APIExamTranslateNMT(title,prodYear);
+		String str = userrating.toString();
+		return ResponseEntity.ok(str);
 	}
-	public String APIExamTranslateNMT(String title,String prodYear) {
+	@RequestMapping("/Naver_API_List.do")
+	public ResponseEntity<String> test1(Model model,@RequestBody String param){
+		
+		return ResponseEntity.ok(param);
+	}
+	public JSONObject APIExamTranslateNMT(String title,String prodYear) {
 		if(title != null) {
 		String clientId = "GV9zoyHoPYvom8CtrVnd"; //애플리케이션 클라이언트 아이디
         String clientSecret = "EPVwdRTl5I"; //애플리케이션 클라이언트 시크릿
         String Movietitle = title;
         String MovieprodYear = prodYear;
-        System.out.println(prodYear);
+        System.out.println(prodYear+title);
         try {
         	Movietitle = URLEncoder.encode(title, "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -555,12 +569,10 @@ public class MainController {
         String responseBody = get(apiURL,requestHeaders);
         JSONObject jObject = new JSONObject(responseBody);
         JSONArray jsonArr = jObject.getJSONArray("items");
-        System.out.println(jsonArr);
-        JSONObject jsonObj = (JSONObject)jsonArr.get(0);
-		return jsonObj.getString("userRating");
+        System.out.println("123"+jsonArr);
+		return jObject;
 		}else {
-			System.out.println("123asd");
-			return"";
+			return null;
 		}
 	}
 	private static String get(String apiUrl, Map<String, String> requestHeaders){
