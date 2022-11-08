@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
     
 <!DOCTYPE html>
 <html>
@@ -78,16 +79,19 @@
 							<div class="rate">
 								<i class="ion-android-star"></i>
 								<p>
-									<span>8.1</span>/10<br>
-									<span class="rv">56 Reviews</span>
+									<span class="rv">네이버 영화 평점</span><br>
+									<span>${requestScope.ndto.user_rating }</span>/10<br>
 								</p>
 							</div>
 							<div class="rate-star">
 								<p>Rate This Movie:</p>
-								<i class="ion-ios-star"></i><i class="ion-ios-star"></i><i
-									class="ion-ios-star"></i><i class="ion-ios-star"></i><i
-									class="ion-ios-star"></i><i class="ion-ios-star"></i><i
-									class="ion-ios-star"></i><i class="ion-ios-star"></i><i
+								 <c:set var = "string1" value = "${requestScope.ndto.user_rating }"/>
+								 <c:set var="string2" value="${fn:substringBefore(string1, 
+                                            '.')}" />
+								 <c:forEach var="cnt" begin="1" end="${string2}" step="1">
+								<i class="ion-ios-star"></i>
+								</c:forEach>
+								<i
 									class="ion-ios-star-outline"></i>
 							</div>
 						</div>

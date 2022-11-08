@@ -6,8 +6,6 @@
 <meta charset="UTF-8">
 <title>pop_title</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script type="text/javascript">
-</script>
 <script>
 $(function(){
 	
@@ -38,7 +36,7 @@ xhr.onreadystatechange = function () {
         title = title.replace('!HE', '');
         title = title.replace(/ /g, "");
         $('#movie_title_kr').val(title);
-        $('#mtitle').val(title);
+        $('#naver_mtitle').val(title);
         $('#movie_title_eng').val(r.Data[0].Result[0].titleEng);
         $('#directorNm').val(r.Data[0].Result[0].directors.director[0].directorNm);
         $('#directorEnNm').val(r.Data[0].Result[0].directors.director[0].directorEnNm);
@@ -212,7 +210,7 @@ function search_hide_show(){
 	}
 } 
 function naverAPIUserRating(){
-	var s = "&title"+'='+$("#mtitle").val();
+	var s = "&title"+'='+$("#naver_mtitle").val();
 	s += "&prodYear="+$("#prodYear").val();
 	console.log(s);
     $.ajax({
@@ -242,7 +240,7 @@ function naverAPIUserRating(){
     		          for(i=0;i<naver_api_list.total;i++){
     		             tag += "<tr id=Line>";
     		             tag += "<td><input type='button' value='선택' id='data1'></td>";
-    		             tag += "<td id=titlename=title>"+naver_api_list.items[i].title+"</td>";
+    		             tag += "<td id=title name=title>"+naver_api_list.items[i].title+"</td>";
     		             tag += "<td id=title name=title>"+naver_api_list.items[i].pubDate+"</td>";
     		             tag += "<td id=title name=title>"+naver_api_list.items[i].userRating+"</td>";
     		             tag += "<td id=title name=title><a id=Naver_Link href=#>"+naver_api_list.items[i].link+"</a></td>";
@@ -258,7 +256,7 @@ function naverAPIUserRating(){
     		         	/* $("#pInput").val(naver_api_list.items[0].title); */
     		         	  /* window.name = "parentForm";  */         
     		         	 /* openWin = window.open("Child.do","childForm", "width=570, height=350, resizable = no, scrollbars = no"); */
-    		         	 openWin.document.getElementById("#cInput").value = document.getElementById("#pInput").value;
+    		         	/*  openWin.document.getElementById("#cInput").value = document.getElementById("#pInput").value; */
     		         	
     		       }
     		})
@@ -516,7 +514,6 @@ position: relative;
 	flex-wrap: wrap;
 	width: 33%;
 	flex-direction: column;
-	
 }
 .naver-UserRating{
 display: flex;
@@ -623,16 +620,16 @@ display: flex;
 		<p>네이버 평점 연결</p>
 		<div class="naver-UserRating">
 		<div class="form-group" >
-		<input type="text" name="mtitle" id="mtitle" value="${requestScope.movie.title }" class="form-input border-bottom" placeholder="제목(한)">
+		<input type="text" name="naver_mtitle" id="naver_mtitle" value="${requestScope.movie.title }" class="form-input border-bottom" placeholder="제목(한)">
 		<span class="border-bottom-animation left"></span>
 		</div>
 		<div class="form-group" style="margin-left:30px; ">
-		<input type="text" name="prodYear" id="prodYear" value="${requestScope.prodYear }" class="form-input border-bottom" placeholder="제작 연도">
+		<input type="text" name="pubDate" id="prodYear" value="${requestScope.prodYear }" class="form-input border-bottom" placeholder="제작 연도">
 		<span class="border-bottom-animation left"></span>
 		</div>
 		</div>
 		<div class="form-group">
-		<input type="text" name="userRating" id="userRating" value="" class="form-input border-bottom" placeholder="네이버 평점">
+		<input type="text" name="user_rating" id="userRating" value="" class="form-input border-bottom" placeholder="네이버 평점">
 		<span class="border-bottom-animation left"></span>
 		<br>
 		</div>

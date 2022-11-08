@@ -1,5 +1,6 @@
 package com.project.Service;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.project.dto.CinemaDTO;
 import com.project.dto.FileDTO;
 import com.project.dto.MovieDTO;
+import com.project.dto.NaverRatingDTO;
 import com.project.dto.ScreenDTO;
 import com.project.dto.ScreenMovieDTO;
 import com.project.mapper.MovieMapper;
@@ -22,10 +24,11 @@ public class movieService {
 		this.mapper = mapper;
 	}
 
-	public String insertMovie(MovieDTO dto, ScreenMovieDTO scdto) {
+	public String insertMovie(MovieDTO dto, ScreenMovieDTO scdto,NaverRatingDTO ndto) {
 		String mcode = mapper.selectMovieCode();
 		dto.setMcode(mcode);
 		scdto.setmcode(mcode);
+		ndto.setMCODE(mcode);
 		mapper.insertMovie(dto);
 		if (scdto.getStartdate() == null) {
 			scdto.setStartdate("");
@@ -34,6 +37,14 @@ public class movieService {
 			scdto.setEnddate("");
 		}
 		mapper.insertScreenMovie(scdto);
+		if(ndto.getNaver_mtitle()!=null) {
+			try {
+		mapper.insertNaverRating(ndto);
+			}catch (Exception e) {
+				System.out.println("중복된 값입니다");
+				return mcode; 
+			}
+		}
 		return mcode;
 	}
 
@@ -85,11 +96,11 @@ public class movieService {
 		return mapper.selectSYSDATEScreenMovie();
 	}
 
-	public String updateMovie(MovieDTO dto, ScreenMovieDTO scdto) {
+	public String updateMovie(MovieDTO dto, ScreenMovieDTO scdto,NaverRatingDTO ndto) {
 		String mcode = mapper.selectMovieCode();
 		mapper.updateMovie(dto);
-		System.out.println("A4"+scdto);
 		mapper.updateScreenMovie(scdto);
+		mapper.updateNaverRating(ndto);
 		return mcode;
 	}
 
@@ -119,6 +130,10 @@ public class movieService {
 		dto.setmcode(mcode);
 		return mapper.deleteFileList(dto);
 		
+	}
+
+	public NaverRatingDTO selectNaverRating(String mcode) {
+		return mapper.selectNaverRating(mcode);
 	}
 
 }

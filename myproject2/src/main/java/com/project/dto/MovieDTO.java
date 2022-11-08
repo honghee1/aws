@@ -25,6 +25,8 @@ public class MovieDTO {
 	private String startdate;
 	private String enddate;
 	
+	private String user_rating;
+	
 	private String path;
 	private String fileName;
 	private String type;
@@ -216,6 +218,13 @@ public class MovieDTO {
 	public void setFno(int fno) {
 		this.fno = fno;
 	}
+	public String getUser_rating() {
+		return user_rating;
+	}
+	
+	public void setUser_rating(String user_rating) {
+		this.user_rating = user_rating;
+	}
 
 	@Override
 	public String toString() {
@@ -223,9 +232,13 @@ public class MovieDTO {
 				+ ", directorEnNm=" + directorEnNm + ", actorNm=" + actorNm + ", actorEnNm=" + actorEnNm + ", company="
 				+ company + ", nation=" + nation + ", genre=" + genre + ", rating=" + rating + ", runtime=" + runtime
 				+ ", repRlsDate=" + repRlsDate + ", keywords=" + keywords + ", plotText=" + plotText + ", kmdbUrl="
-				+ kmdbUrl + ", trailer=" + trailer + ", startdate=" + startdate + ", enddate=" + enddate + ", path="
-				+ path + ", fileName=" + fileName + ", type=" + type + ", fno=" + fno + "]";
+				+ kmdbUrl + ", trailer=" + trailer + ", startdate=" + startdate + ", enddate=" + enddate
+				+ ", user_rating=" + user_rating + ", path=" + path + ", fileName=" + fileName + ", type=" + type
+				+ ", fno=" + fno + "]";
 	}
+
+
+	
 	
 
 	

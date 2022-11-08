@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.project.dto.CinemaDTO;
 import com.project.dto.FileDTO;
 import com.project.dto.MovieDTO;
+import com.project.dto.NaverRatingDTO;
 import com.project.dto.ScreenDTO;
 import com.project.dto.ScreenMovieDTO;
 @Mapper
@@ -33,4 +34,7 @@ public interface MovieMapper {
 	List<MovieDTO> ComingSoonMovieList();
 	int updateFileList(FileDTO fileDTO);
 	int deleteFileList(FileDTO dto);
+	void insertNaverRating(NaverRatingDTO ndto);
+	NaverRatingDTO selectNaverRating(String mcode);
+	void updateNaverRating(NaverRatingDTO ndto);
 }

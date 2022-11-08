@@ -99,6 +99,65 @@ $(function(){
 		count--;
 	});
 });
+function naverAPIUserRating(){
+	var s = "&title"+'='+$("#naver_mtitle").val();
+	s += "&prodYear="+$("#prodYear").val();
+	console.log(s);
+    $.ajax({
+       url : 'naver.do?'+s,
+       type:'get',
+       dataType:'json',
+       success:function(r){
+    	   console.log(r);
+    	   if(r.total == 1){
+        	   $("#userRating").val(r.items[0].userRating);
+        	   $("#prodYear").val(r.items[0].pubDate);
+    	   }else{
+    		   $.ajax({
+    		       url :'Naver_API_List.do',
+    		       data : JSON.stringify(r),		   
+    		       type:'post',
+    		       dataType:'text',
+    		       contentType:"application/json;charset=UTF-8",
+    		       success:function(r){
+    		    	   console.log(r)
+    		    	 var popupX = (window.screen.width / 2) - (1200 / 2);
+    				 var popupY = (window.screen.height / 2) - (800 / 2);
+    		    	   const json = r;
+    		  		   const naver_api_list = JSON.parse(json);
+
+    		         	  var tag = "<div id=test1>";
+    		              tag += "<form id=test action=insert_movie.do?close=close method=post>";  
+    		              
+    		          for(i=0;i<naver_api_list.total;i++){
+    		             tag += "<tr id=Line>";
+    		             tag += "<td><input type='button' value='선택' id='data1'></td>";
+    		             tag += "<td id=title name=title>"+naver_api_list.items[i].title+"</td>";
+    		             tag += "<td id=title name=title>"+naver_api_list.items[i].pubDate+"</td>";
+    		             tag += "<td id=title name=title>"+naver_api_list.items[i].userRating+"</td>";
+    		             tag += "<td id=title name=title><a id=Naver_Link href=#>"+naver_api_list.items[i].link+"</a></td>";
+    		             tag += "</tr>";
+    		       }
+    		               tag += "</form>"; 
+    		               tag += "</div>"
+    		         	 $("#form").attr('action','insertMovie_pop_list2.do');
+    		         	 $("#form").append($('<input type="hidden" class="t1" value="'+tag+'" name=tag>'));
+    		         	openWin = window.open('','POP','width=800, height=800, resizable=yes, scrollbars=yes, status=no,left='+popupX+', top='+popupY); 
+    		         	 $("#form").submit();   
+    		    	  
+    		         	/* $("#pInput").val(naver_api_list.items[0].title); */
+    		         	  /* window.name = "parentForm";  */         
+    		         	 /* openWin = window.open("Child.do","childForm", "width=570, height=350, resizable = no, scrollbars = no"); */
+    		         	 /* openWin.document.getElementById("#cInput").value = document.getElementById("#pInput").value; */
+    		         	
+    		       }
+    		})
+    		   
+    	   }
+    	  
+       }
+})
+}
 </script>
   <style>
  
@@ -136,6 +195,12 @@ $(function(){
     .form-group {
 	position: relative;
 	width: 200px;
+}
+ .form-group1 {
+	position: relative;
+	width: 200px;
+	display: flex;
+	justify-content: space-between;
 }
 .form-input {
 	position: relative;
@@ -301,6 +366,7 @@ position: relative;
 	display: flex;
 	flex-wrap: wrap;
 	width: 33%;
+	flex-direction: column;
 }
 .search_hide{
 	display: flex;
@@ -338,6 +404,9 @@ position: relative;
 	/* line-height: 30px; */ 
 	font-weight: bold;
 	margin-left: 10px;
+}
+.naver-UserRating{
+display: flex;
 }
   </style>
 </head>
@@ -421,7 +490,26 @@ position: relative;
 		<p>줄거리</p>
 		<textarea name="plotText"  id="plotText" rows="20" cols="65" name="plotText"  placeholder="줄거리">${requestScope.movie.plotText }</textarea>
 		</div>
+		<p>네이버 평점 연결</p>
+		<div class="naver-UserRating">
+		<div class="form-group" >
+		<input type="text" name="naver_mtitle" id="naver_mtitle" value="${requestScope.naver_rating.naver_mtitle }" class="form-input border-bottom" placeholder="제목(한)">
+		<span class="border-bottom-animation left"></span>
 		</div>
+		<div class="form-group" style="margin-left:30px; ">
+		<input type="text" name="pubDate" id="prodYear" value="${requestScope.naver_rating.pubDate }" class="form-input border-bottom" placeholder="제작 연도">
+		<span class="border-bottom-animation left"></span>
+		</div>
+		</div>
+		<div class="form-group">
+		<input type="text" name="user_rating" id="userRating" value="${requestScope.naver_rating.user_rating }" class="form-input border-bottom" placeholder="네이버 평점">
+		<span class="border-bottom-animation left"></span>
+		<br>
+		</div>
+		<a onclick="naverAPIUserRating()" href="#">검색</a>
+		</div>
+		
+		
 		<section  class="layout">
 		<br>
 		<div class="setimgcontainer">
@@ -438,7 +526,9 @@ position: relative;
 		<p><input type="hidden" name="update" value=${requestScope.movie.mcode }></p>
 		<p><button>저장</button></p><p><button>뒤로가기</button></p>
 		</section>
-			</div>
+		</div>
+	</form>
+	<form id='form'  method='post' target=POP>
 	</form>
 </body>
 </html>

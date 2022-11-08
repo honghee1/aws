@@ -28,7 +28,7 @@ $(function(){
 
 $(document).on('click', '#data1', function() {
 	console.log($(this).closest('tr').children().eq(1).text())
-	opener.document.getElementById("mtitle").value = $(this).closest('tr').children().eq(1).text();
+	opener.document.getElementById("naver_mtitle").value = $(this).closest('tr').children().eq(1).text();
 	opener.document.getElementById("prodYear").value = $(this).closest('tr').children().eq(2).text();
 	opener.document.getElementById("userRating").value = $(this).closest('tr').children().eq(3).text();
 	 self.close();

@@ -6,11 +6,17 @@
  	<select id="selectMovieCode" resultType="String">
  		select nextval('select_mcode') from dual
  	</select>
+ 	<select id="selectNaverRating" parameterType="String" resultType="naverRating">
+ 		select * from naver_user_rating where MCODE = #{MCODE}
+ 	</select>
 	<insert id="insertMovie" parameterType="movie">
 		Insert into moviedb (mcode,title,titleEng,directorNm,directorEnNm,actorNm,actorEnNm,company,nation,genre,rating,runtime,REPRLSDATE,KEYWORDS,PLOTTEXT,kmdbUrl,trailer) values(#{mcode},#{title},#{titleEng},#{directorNm},#{directorEnNm},#{actorNm},#{actorEnNm},#{company},#{nation},#{genre},#{rating},#{runtime},date_format(str_to_date(#{repRlsDate},'%Y%m%d'),'%Y%m%d'),#{keywords},#{plotText},#{kmdbUrl},#{trailer})
  	</insert>
 	<insert id="insertScreenMovie" parameterType="screenmovie">
 			insert into screen_movie(mcode,startdate,enddate) values(#{mcode},#{startdate},#{enddate}) 	
+ 	</insert>
+	<insert id="insertNaverRating" parameterType="naverRating">
+			insert into naver_user_rating(MCODE,pubDate,user_rating,naver_mtitle) values(#{MCODE},#{pubDate},#{user_rating},#{naver_mtitle}) 	
  	</insert>
  	<select id="selectAllMovieList" resultType="movie">
 	SELECT date_format(sm.enddate,'%Y-%m-%d') as enddate,date_format(sm.startdate,'%Y-%m-%d') as startdate,m.mcode,title,titleEng,directorNm,directorEnNm,actorNm,actorEnNm,company,nation,genre,rating,runtime,date_format(REPRLSDATE,'%Y-%m-%d') as 
@@ -55,6 +61,9 @@
  	</update> 
  	<update id="updateScreenMovie" parameterType="screenmovie">
  		update screen_movie set startdate = #{startdate}, enddate = #{enddate}  WHERE mcode = #{mcode}
+ 	</update> 
+ 	<update id="updateNaverRating" parameterType="naverRating">
+ 		update naver_user_rating set naver_mtitle = #{naver_mtitle}, pubDate = #{pubDate},user_rating= #{user_rating}  WHERE MCODE = #{MCODE}
  	</update> 
  	<update id="updateFileList" parameterType="file">
  		update movie_file set mcode = #{mcode}, fno = #{fno},path = #{path} WHERE fno = #{fno} and mcode = #{mcode}

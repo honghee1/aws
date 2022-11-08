@@ -73,6 +73,7 @@ import com.project.dto.CinemaDTO;
 import com.project.dto.FileDTO;
 import com.project.dto.MemberDTO;
 import com.project.dto.MovieDTO;
+import com.project.dto.NaverRatingDTO;
 import com.project.dto.QnADTO;
 import com.project.dto.ScreenDTO;
 import com.project.dto.ScreenMovieDTO;
@@ -266,8 +267,11 @@ public class MainController {
 		List<FileDTO> Filelist = movieservice.selectFilePath(mcode);
 		System.out.println(mcode);
 		MovieDTO moviedto= movieservice.selectMovieDTO(mcode); 
+		NaverRatingDTO ndto= movieservice.selectNaverRating(mcode);
+		System.out.println("123"+ndto);
 		System.out.println(moviedto);
 		model.addAttribute("moviedto", moviedto);
+		model.addAttribute("ndto", ndto);
 		model.addAttribute("Filelist", Filelist);
 		model.addAttribute("page", "hh/moviesingle.jsp");
 		return "main_index";
@@ -286,6 +290,11 @@ public class MainController {
 	public String blank(Model model, HttpServletResponse response) {
 		List<MovieDTO> NowShowingMovielist = movieservice.selectNowshowingMovieList();
 		System.out.println(NowShowingMovielist);
+		for(MovieDTO i : NowShowingMovielist) {
+			 i.setUser_rating(movieservice.selectNaverRating(i.getMcode()).getUser_rating(
+			 ));
+			 
+		}
 		model.addAttribute("NowShowingMovielist", NowShowingMovielist);
 		List<MovieDTO> ComingSoonMovieList = movieservice.selectComingSoonMovieList();
 		model.addAttribute("page", "main_body.jsp");
@@ -331,7 +340,7 @@ public class MainController {
 	}
 	@RequestMapping("/insertMovie_pop_list2.do")
 	public String insertMovie_pop_list2(Model model,HttpServletResponse response, MovieDTO dto,String tag) {
-		System.out.println("asd"+tag);
+		System.out.println("asd123asd5"+tag);
 		model.addAttribute("tag", tag);
 		return "insertMovie_pop_list2";
 	}
@@ -368,9 +377,7 @@ public class MainController {
 
 	@RequestMapping("/uploadmovie.do")
 	public String uploadmovie(Model model, MovieDTO dto, ScreenMovieDTO scdto, MultipartHttpServletRequest request,
-			String close, String update, int[] newfileindex, int[] oldfile) {
-		System.out.println("ㅁㄴㅇㅁㄴㅇ"+scdto);
-		System.out.println(scdto.getStartdate());
+			String close, String update, int[] newfileindex, int[] oldfile,NaverRatingDTO ndto) {
 		if(scdto.getStartdate().length()==0) {
 			scdto.setStartdate("0000-00-00");
 		}
@@ -381,7 +388,8 @@ public class MainController {
 		if (update != null) {
 			dto.setMcode(update);
 			scdto.setmcode(update);
-			movieservice.updateMovie(dto, scdto);
+			ndto.setMCODE(update);
+			movieservice.updateMovie(dto, scdto,ndto);
 			// 파일 업로드
 			// 저장할 경로
 			String root = "/var/lib/tomcat9/webapps/upload/";
@@ -447,7 +455,7 @@ public class MainController {
 			}
 			return "close";
 		} else {
-			String mcode = movieservice.insertMovie(dto, scdto);
+			String mcode = movieservice.insertMovie(dto, scdto,ndto);
 			// 파일 업로드
 			// 저장할 경로
 			String root = "/var/lib/tomcat9/webapps/upload/";
@@ -491,7 +499,9 @@ public class MainController {
 		MovieDTO dto = movieservice.selectMovieDTO(mcode);
 		List<FileDTO> Filelist = movieservice.selectFilePath(mcode);
 		ScreenMovieDTO scdto = movieservice.selectScreenMovieList(mcode);
+		NaverRatingDTO ndto = movieservice.selectNaverRating(mcode);
 		model.addAttribute("movie", dto);
+		model.addAttribute("naver_rating", ndto);
 		model.addAttribute("Filepath", Filelist);
 		model.addAttribute("scdto", scdto);
 		model.addAttribute("page", "hh/select_movie_detail_view.jsp");

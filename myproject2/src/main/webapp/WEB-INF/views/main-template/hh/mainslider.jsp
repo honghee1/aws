@@ -40,7 +40,7 @@
 									</div>
 									<div class="mv-details">
 										<p>
-											<i class="ion-android-star"></i><span>7.4</span>/10
+											<i class="ion-android-star"></i><span>${Movielist.user_rating }</span>/10
 										</p>
 										<ul class="mv-infor">
 											<li>Run Time: ${Movielist.runtime }</li>
