@@ -77,6 +77,8 @@ import com.project.dto.NaverRatingDTO;
 import com.project.dto.QnADTO;
 import com.project.dto.ScreenDTO;
 import com.project.dto.ScreenMovieDTO;
+import com.project.vo.Criteria;
+import com.project.vo.PageMaker;
 import com.project.vo.PaggingVO;
 import com.project.vo.Room;
 
@@ -293,7 +295,6 @@ public class MainController {
 		for(MovieDTO i : NowShowingMovielist) {
 			 i.setUser_rating(movieservice.selectNaverRating(i.getMcode()).getUser_rating(
 			 ));
-			 
 		}
 		model.addAttribute("NowShowingMovielist", NowShowingMovielist);
 		List<MovieDTO> ComingSoonMovieList = movieservice.selectComingSoonMovieList();
@@ -635,6 +636,24 @@ public class MainController {
             throw new RuntimeException("연결이 실패했습니다. : " + apiUrl, e);
         }
     }
+	
+	
+	@RequestMapping("/NowShowingMovieList.do")
+	public String moviegrid(Model model,Criteria cri) {
+		 PageMaker pageMaker = new PageMaker();
+		    pageMaker.setCri(cri);
+		    pageMaker.setTotalCount(movieservice.countNowShowingMovieListTotal());
+		    List<MovieDTO> NowShowingMovieList = movieservice.selectNowShowingMovieList(cri);
+		    for(MovieDTO i : NowShowingMovieList) {
+				 i.setUser_rating(movieservice.selectNaverRating(i.getMcode()).getUser_rating(
+				 ));
+			}
+		    
+		    model.addAttribute("NowShowingMovieList", NowShowingMovieList);
+		    model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("page", "hh/NowShowingMovieList.jsp");
+		return "main_index";
+	}
 	/*--------------------------------------------------------------------------------------------------*/
 
 	/*---------------------------------------------이동희------------------------------------------------*/

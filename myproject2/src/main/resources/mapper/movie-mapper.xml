@@ -77,6 +77,7 @@
 	date_format(REPRLSDATE,'--') as REPRLSDATE,`KEYWORDS`,PLOTTEXT,kmdbUrl 
 	FROM moviedb m LEFT OUTER JOIN screen_movie sm ON m.mcode = sm.mcode WHERE 
 	<![CDATA[startdate < DATE_FORMAT(SYSDATE(),'%Y%m%d')]]> AND <![CDATA[ENDDATE > DATE_FORMAT(SYSDATE(),'%Y%m%d')]]>	</select> 
+	
 	 <select id="ComingSoonMovieList" resultType="movie">
 		SELECT date_format(sm.enddate,'%Y-%m-%d') as enddate,date_format(sm.startdate,'%Y-%m-%d') 
         as startdate,m.mcode,title,titleEng,directorNm,directorEnNm,actorNm,actorEnNm,company,nation,genre,rating,runtime,
@@ -90,6 +91,14 @@
 	<!--테스트  -->
  	<!--select sm.startdate,mdb.* from SCREEN_MOVIE sm,"moviedb" mdb where mdb."mcode" = sm."mcode"(+);  -->
 	
+	
+	
+	<select id="selectNowShowingMovieList" parameterType="movie" resultType="movie">
+	SELECT m.* FROM moviedb m LEFT OUTER JOIN screen_movie sm ON m.mcode = sm.mcode where <![CDATA[startdate < DATE_FORMAT(SYSDATE(),'%Y%m%d')]]> AND <![CDATA[ENDDATE > DATE_FORMAT(SYSDATE(),'%Y%m%d')]]> ORDER BY mcode DESC LIMIT #{pageStart}, #{perPageNum}
+	</select> 
+	<select id="countNowShowingMovieListTotal" resultType="Integer">
+	SELECT count(*) FROM moviedb m LEFT OUTER JOIN screen_movie sm ON m.mcode = sm.mcode where <![CDATA[startdate < DATE_FORMAT(SYSDATE(),'%Y%m%d')]]> AND <![CDATA[ENDDATE > DATE_FORMAT(SYSDATE(),'%Y%m%d')]]>
+	</select> 
 </mapper>
 
 

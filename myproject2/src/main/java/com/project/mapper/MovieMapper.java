@@ -11,6 +11,7 @@ import com.project.dto.MovieDTO;
 import com.project.dto.NaverRatingDTO;
 import com.project.dto.ScreenDTO;
 import com.project.dto.ScreenMovieDTO;
+import com.project.vo.Criteria;
 @Mapper
 public interface MovieMapper {
 	String selectMovieCode();
@@ -37,4 +38,6 @@ public interface MovieMapper {
 	void insertNaverRating(NaverRatingDTO ndto);
 	NaverRatingDTO selectNaverRating(String mcode);
 	void updateNaverRating(NaverRatingDTO ndto);
+	List<MovieDTO> selectNowShowingMovieList(Criteria cri);
+	int countNowShowingMovieListTotal();
 }

@@ -119,9 +119,9 @@
 														src="fileDown.do?fno=${f.fno}&mcode=${f.mcode}" alt="" style="width: 115px; height: 100px;"></a>
 														</c:forEach> 
 													<div class="vd-it">
-														<img class="vd-img" src="images/uploads/image4.jpg" alt=""><a
+														<img class="vd-img" src="https://img.youtube.com/vi/${requestScope.moviedto.trailer }/0.jpg" alt="" style="width: 115px; height: 100px;"><a
 															class="fancybox-media hvr-grow"
-															href="${requestScope.moviedto.trailer }"><img
+															href="https://www.youtube.com/embed/${requestScope.moviedto.trailer }"><img
 															src="images/uploads/play-vd.png" alt=""></a>
 													</div>
 												</div>

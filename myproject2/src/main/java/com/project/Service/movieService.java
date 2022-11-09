@@ -14,6 +14,7 @@ import com.project.dto.NaverRatingDTO;
 import com.project.dto.ScreenDTO;
 import com.project.dto.ScreenMovieDTO;
 import com.project.mapper.MovieMapper;
+import com.project.vo.Criteria;
 
 @Service
 public class movieService {
@@ -135,5 +136,16 @@ public class movieService {
 	public NaverRatingDTO selectNaverRating(String mcode) {
 		return mapper.selectNaverRating(mcode);
 	}
+
+	
+	public List<MovieDTO> selectNowShowingMovieList(Criteria cri) {
+		return mapper.selectNowShowingMovieList(cri);
+	}
+
+	public int countNowShowingMovieListTotal() {
+		return mapper.countNowShowingMovieListTotal();
+	}
+	
+	
 
 }

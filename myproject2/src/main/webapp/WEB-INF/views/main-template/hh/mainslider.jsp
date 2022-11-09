@@ -18,7 +18,7 @@
 											class="orange"><a >&nbsp;${Movielist.keywords }&nbsp;</a></span>
 									</div>
 									<h1>
-										<a href="#">${Movielist.title }<br>
+										<a href="/moviesingle.do?mcode=${Movielist.mcode }">${Movielist.title }<br>
 											${Movielist.titleEng } <span>${Movielist.repRlsDate}</span></a>
 									</h1>
 									<div class="social-btn">
