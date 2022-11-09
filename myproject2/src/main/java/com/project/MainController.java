@@ -269,7 +269,12 @@ public class MainController {
 		List<FileDTO> Filelist = movieservice.selectFilePath(mcode);
 		System.out.println(mcode);
 		MovieDTO moviedto= movieservice.selectMovieDTO(mcode); 
-		NaverRatingDTO ndto= movieservice.selectNaverRating(mcode);
+		NaverRatingDTO ndto = null;
+		try {
+		    ndto = movieservice.selectNaverRating(mcode);
+		}catch (NullPointerException e) {
+			ndto.setUser_rating("평점 준비중입니다.");
+		}
 		System.out.println("123"+ndto);
 		System.out.println(moviedto);
 		model.addAttribute("moviedto", moviedto);
@@ -293,8 +298,12 @@ public class MainController {
 		List<MovieDTO> NowShowingMovielist = movieservice.selectNowshowingMovieList();
 		System.out.println(NowShowingMovielist);
 		for(MovieDTO i : NowShowingMovielist) {
+			try {
 			 i.setUser_rating(movieservice.selectNaverRating(i.getMcode()).getUser_rating(
 			 ));
+			}catch (NullPointerException e) {
+				i.setUser_rating("평점 준비중입니다.");
+			}
 		}
 		model.addAttribute("NowShowingMovielist", NowShowingMovielist);
 		List<MovieDTO> ComingSoonMovieList = movieservice.selectComingSoonMovieList();
@@ -500,7 +509,12 @@ public class MainController {
 		MovieDTO dto = movieservice.selectMovieDTO(mcode);
 		List<FileDTO> Filelist = movieservice.selectFilePath(mcode);
 		ScreenMovieDTO scdto = movieservice.selectScreenMovieList(mcode);
-		NaverRatingDTO ndto = movieservice.selectNaverRating(mcode);
+		NaverRatingDTO ndto = null;
+		try {
+			    ndto = movieservice.selectNaverRating(mcode);
+			}catch (NullPointerException e) {
+				ndto.setUser_rating("평점 준비중입니다.");
+			}
 		model.addAttribute("movie", dto);
 		model.addAttribute("naver_rating", ndto);
 		model.addAttribute("Filepath", Filelist);
@@ -645,12 +659,35 @@ public class MainController {
 		    pageMaker.setTotalCount(movieservice.countNowShowingMovieListTotal());
 		    List<MovieDTO> NowShowingMovieList = movieservice.selectNowShowingMovieList(cri);
 		    for(MovieDTO i : NowShowingMovieList) {
-				 i.setUser_rating(movieservice.selectNaverRating(i.getMcode()).getUser_rating(
-				 ));
+		    	try {
+				 i.setUser_rating(movieservice.selectNaverRating(i.getMcode()).getUser_rating());
+		    	}catch (NullPointerException e) {
+						i.setUser_rating("평점 준비중입니다.");
+					}
 			}
 		    
 		    model.addAttribute("NowShowingMovieList", NowShowingMovieList);
 		    model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("page", "hh/NowShowingMovieList.jsp");
+		return "main_index";
+	}
+	@RequestMapping("/ComingSoonMovieList.do")
+	public String ComingSoonMovieList(Model model,Criteria cri) {
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(movieservice.countComingSoonMovieListTotal());
+		List<MovieDTO> NowShowingMovieList = movieservice.selectComingSoonMovieListList(cri);
+		for(MovieDTO i : NowShowingMovieList) {
+			System.out.println("asd");
+			try {
+			i.setUser_rating(movieservice.selectNaverRating(i.getMcode()).getUser_rating());
+			}catch (NullPointerException e) {
+				i.setUser_rating("평점 준비중입니다.");
+			}
+		}
+		
+		model.addAttribute("NowShowingMovieList", NowShowingMovieList);
+		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("page", "hh/NowShowingMovieList.jsp");
 		return "main_index";
 	}

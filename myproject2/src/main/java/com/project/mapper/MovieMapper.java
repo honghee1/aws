@@ -40,4 +40,6 @@ public interface MovieMapper {
 	void updateNaverRating(NaverRatingDTO ndto);
 	List<MovieDTO> selectNowShowingMovieList(Criteria cri);
 	int countNowShowingMovieListTotal();
+	int countComingSoonMovieListTotal();
+	List<MovieDTO> selectComingSoonMovieListList(Criteria cri);
 }

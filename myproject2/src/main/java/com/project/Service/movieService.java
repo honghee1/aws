@@ -145,6 +145,14 @@ public class movieService {
 	public int countNowShowingMovieListTotal() {
 		return mapper.countNowShowingMovieListTotal();
 	}
+
+	public int countComingSoonMovieListTotal() {
+		return mapper.countComingSoonMovieListTotal();
+	}
+
+	public List<MovieDTO> selectComingSoonMovieListList(Criteria cri) {
+		return mapper.selectComingSoonMovieListList(cri);
+	}
 	
 	
 

@@ -6,7 +6,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="hero-ct">
-						<h1>현재 상영작</h1>
+						<h1>상영 예정작</h1>
 						<ul class="breadcumb">
 							<li class="active"><a href="/main.do">Home</a></li>
 							<li><span class="ion-ios-arrow-right"></span>NowShowingList</li>

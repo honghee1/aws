@@ -140,7 +140,7 @@
 								class="fa fa-angle-down" aria-hidden="true"></i></a>
 						<ul class="dropdown-menu level1">
 								<li><a href="/NowShowingMovieList.do">현재 상영작</a></li>
-								<li><a href="homev2.html">상영 예정작</a></li>
+								<li><a href="/ComingSoonMovieList.do">상영 예정작</a></li>
 								<li><a href="homev3.html">무비차트</a></li>
 							</ul></li>
 						<li class="dropdown first"><a
