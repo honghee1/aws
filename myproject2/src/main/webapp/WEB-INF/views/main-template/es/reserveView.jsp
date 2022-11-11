@@ -203,7 +203,7 @@
     								tag += "<div class='time-title'><span class='time-title-wrapper'>" + r[i].screenName + "</span></div>";
     								tag += "<div class='time-list'><a class='time-list-wrapper' type='button' value='" + r[i].startTime +
     									"'>"+r[i].startTime+"</a><input class='time-list-hidden' type='hidden' name='endTime' value='종료 : " + r[i].endTime + "'>"
-    									+ "<span class='seat-list-wrapper'>" + r[i].remainseat + "/" + r[i].allseat + "석" + "</span>";
+    									+ "<span class='seat-list-wrapper'>" + r[i].remainseat + "/" + r[i].allseat + "석1" + "</span>";
     								tag += "<input type='hidden' name='screencode' value='" + r[i].screenCode + "'>";
     								tag += "<input type='hidden' name='timecode' value='" + r[i].timeCode + "'>";
     								tag += "<input type='hidden' name='mcode' value='" + r[i].mcode + "'></div>";
