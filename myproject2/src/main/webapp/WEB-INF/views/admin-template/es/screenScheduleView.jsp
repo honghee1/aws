@@ -102,7 +102,7 @@
 											</tr>
 											<tr>
 												<td colspan="3">
-													<input type="hidden" name="screenCode" value="${requestScope.screenlist[0].screenCode }">
+													<input type="hidden" name="screenCode" value="${requestScope.screenCode}">
 													<select class="mcode-select form-control select2 w-p100" name="mcode">
 														<c:forEach var="t" items="${requestScope.screenlist }">
 															<option value="${t.mcode },${t.runTime }">${t.title }(${t.mcode })</option>

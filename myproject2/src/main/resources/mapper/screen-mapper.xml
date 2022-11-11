@@ -53,11 +53,11 @@
 	</select>
 	
 	<select id="selectSeatCode" parameterType="String" resultType="String">
-		select seatcode from seattype where seattype = #{seatType}
+		select SEATTAG from seattype where seattype = #{seatType}
 	</select>
 	
 	<insert id="insertScreenSeat" parameterType="map">
-		insert into seat values(SEAT_PK_SEQ.nextval, #{screenCode}, #{seatType}, #{seatNo})
+		insert into seat values((SELECT SeatCode_nextval('SeatCode') FROM DUAL), #{screenCode}, #{seatType}, #{seatNo})
 	</insert>
 	
 	<select id="selectScreenSchedule" parameterType="String" resultType="screen">
@@ -93,4 +93,8 @@
 	<delete id="deleteSeatType" parameterType="String">
 		delete from seattype where seattype = #{seatType}
 	</delete>
+	
+	<update id="updateScreenCode" parameterType="screen">
+		update screen_movie set SCREENCODE = #{screenCode} where MCODE = #{mcode}
+	</update>
 </mapper>

@@ -19,12 +19,12 @@
 					<li class="breadcrumb-item"><a href="admin.do"><i
 							class="fa fa-dashboard"></i>Main</a></li>
 					<li class="breadcrumb-item"><a href="#">영화관 관리</a></li>
-					<li class="breadcrumb-item active"><a href="insertHotelView.do">지점 등록</a></li>
+					<li class="breadcrumb-item active"><a href="cinemaInsertView.do">지점 등록</a></li>
 				</ol>
 			</section>
 			<!-- Main content -->
 			<section class="content">
-			<form action="screenInsert.do" method="post">
+			<form action="/cinemaInsert.do" method="post">
 				<div class="row">
 					<!-- /.col -->
 					<div class="col-xl-8 col-lg-7">

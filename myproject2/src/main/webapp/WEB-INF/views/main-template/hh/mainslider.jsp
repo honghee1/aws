@@ -19,7 +19,7 @@
 									</div>
 									<h1>
 										<a href="/moviesingle.do?mcode=${Movielist.mcode }">${Movielist.title }<br>
-											${Movielist.titleEng } <span>${Movielist.repRlsDate}</span></a>
+											${Movielist.titleEng } </a>
 									</h1>
 									<div class="social-btn">
 										<a href="${Movielist.trailer }" class="parent-btn fancybox-media hvr-grow"><i class="ion-play"></i>Watch

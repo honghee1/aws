@@ -194,7 +194,7 @@
     							if(r[i].screenName.toString() == old){
     								tag += "<div class='time-list'><a class='time-list-wrapper' type='button' data-value='" + r[i].startTime + 
     									"'>"+r[i].startTime+"</a><input class='time-list-hidden' type='hidden' name='endTime' value='종료 : " + r[i].endTime + "'>"
-    									+ "<span class='seat-list-wrapper'>" + r[i].remainseat + "/" + r[i].allseat + "석" + "</span>";
+    									+ "<span class='seat-list-wrapper'>" + r[i].remainseat + "/" + r[i].allseat + "석2" + "</span>";
     								tag += "<input type='hidden' name='screencode' value='" + r[i].screenCode + "'>";
     								tag += "<input type='hidden' name='timecode' value='" + r[i].timeCode + "'>";
     								tag += "<input type='hidden' name='mcode' value='" + r[i].mcode + "'></div>";

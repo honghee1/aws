@@ -64,6 +64,7 @@ public class BookingService {
 		map.put("screenCode", screenCode);
 		map.put("sdate", sdate);
 		map.put("mcode", mcode);
+		System.out.println("map:"+map);
 		return mapper.selectMovieList(map);
 	}
 

@@ -112,5 +112,7 @@ public class ScreenService {
 		return mapper.deleteSeatType(seatType);
 	}
 
-	
+	public void updateScreenCode(ScreenDTO dto) {
+		mapper.updateScreenCode(dto);
+	}
 }

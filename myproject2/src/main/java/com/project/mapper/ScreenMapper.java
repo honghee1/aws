@@ -53,4 +53,6 @@ public interface ScreenMapper {
 
 	int deleteSeatType(String seatType);
 
+	void updateScreenCode(ScreenDTO dto);
+
 }

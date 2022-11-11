@@ -29,8 +29,8 @@
 	</select>
 	
 	<select id="selectQnamypage" parameterType="String" resultType="qna">
-		select rownum as no, qno, qna_title as qnaTitle, qna_date as qnaDate from qna 
-		where user_email = #{userEmail} order by no desc
+		select @rownum:=@rownum+1 as no, qno, qna_title as qnaTitle, qna_date as qnaDate from qna 
+		where user_email ='test' order by no desc
 	</select>
 	
 	<select id="selectQnaDetail" parameterType="int" resultType="qna">
