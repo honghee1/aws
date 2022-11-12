@@ -48,7 +48,6 @@ public class CinemaScreenController {
 		PaggingVO vo = new PaggingVO(count, pageNo, 5, 3);
 		model.addAttribute("pagging", vo);
 		model.addAttribute("pageNo", pageNo);
-		
 		ScreenDTO dto = screenservice.selectCinemaInfo(cinemacode);
 		
 		session.setAttribute("name", dto.getCinemaName());
@@ -192,7 +191,7 @@ public class CinemaScreenController {
 			timelist.get(i).setMovieDate(timelist.get(i).getMovieDate().substring(0, 10));
 		}
 		
-		List<ScreenDTO> screenlist = screenservice.selectScreenMovie(screenCode);
+		List<ScreenDTO> screenlist = screenservice.selectMovieSchedule();
 		System.out.println(screenlist);
 		model.addAttribute("timelist", timelist);
 		model.addAttribute("screenCode", screenCode);
@@ -220,11 +219,9 @@ public class CinemaScreenController {
 	@RequestMapping("/screenSchedulePlus.do")
 	public void screenSchedulePlus(String screenCode,ScreenDTO dto, HttpServletResponse response, HttpServletRequest request) 
 			throws IOException {
-		
 		String arr[] = dto.getMcode().split(",");
 		dto.setMcode(arr[0]);
 		
-		screenservice.updateScreenCode(dto);
 		int result = screenservice.insertScreenSchedule(dto);
 		
 		response.setContentType("text/html;charset=utf-8");

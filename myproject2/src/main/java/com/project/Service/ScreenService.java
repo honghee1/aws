@@ -85,9 +85,6 @@ public class ScreenService {
 		return mapper.selectScreenSchedule(screencode);
 	}
 
-	public List<ScreenDTO> selectScreenMovie(String screencode) {
-		return mapper.selectScreenMovie(screencode);
-	}
 
 	public int updateSchedule(ScreenDTO dto) {
 		return mapper.updateSchedule(dto);
@@ -112,7 +109,8 @@ public class ScreenService {
 		return mapper.deleteSeatType(seatType);
 	}
 
-	public void updateScreenCode(ScreenDTO dto) {
-		mapper.updateScreenCode(dto);
+
+	public List<ScreenDTO> selectMovieSchedule() {
+		return mapper.selectMovieSchedule();
 	}
 }

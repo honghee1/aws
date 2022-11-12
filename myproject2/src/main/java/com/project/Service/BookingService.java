@@ -19,18 +19,19 @@ public class BookingService {
 		this.mapper = mapper;
 	}
 
-	public int insertReservation(String screenCode, String timeCode, String mcode, String[] seatList, String id, int totalPrice) {
+	public Map<String, Object> insertReservation(String screenCode, String timeCode, String mcode, String[] seatList, String id, int totalPrice) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> bookingresult = new HashMap<String, Object>();
+		String bookingCode = mapper.selectBookingcode();
 		map.put("screenCode", screenCode);
 		map.put("timeCode", timeCode);
 		map.put("mcode", mcode);
 		map.put("id", id);
 		map.put("totalPrice", totalPrice);
-		int result = 0;
-		mapper.insertBooking(map);
-		String bookingCode = mapper.selectBookingcode();
+		map.put("bookingCode", bookingCode);
+		int result = mapper.insertBooking(map);
+		int count = 0;
 		System.out.println("Booking bookingCode : " + bookingCode);
-		
 		System.out.println("Booking 테이블 등록 완료");
 			
 		for(int i=4;i<seatList.length;i++) {
@@ -53,15 +54,19 @@ public class BookingService {
 			map.remove("seatCode");
 			map.remove("bookingCode");
 			
-			result++;
+			count++;
+			
 		}
-		
-		return result;
+		bookingresult.put("bookingCode", bookingCode);
+		bookingresult.put("result", result);
+		bookingresult.put("count", count);
+		System.out.println();
+		return bookingresult;
 	}
 
-	public List<BookingDTO> selectMovieList(String screenCode, String sdate, String mcode) {
+	public List<BookingDTO> selectMovieList(String cinemaCode, String sdate, String mcode) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("screenCode", screenCode);
+		map.put("cinemaCode", cinemaCode);
 		map.put("sdate", sdate);
 		map.put("mcode", mcode);
 		System.out.println("map:"+map);

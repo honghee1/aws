@@ -25,12 +25,9 @@ public interface MovieMapper {
 	List<FileDTO> selectFilePath(String mcode);
 	String selectFile(Map<String, Object> map);
 	String selectImageFile(int fno);
-	void insertScreenMovie(ScreenMovieDTO scdto);
 	List<ScreenMovieDTO> selectSYSDATEScreenMovie();
 	void updateMovie(MovieDTO dto);
-	void updateScreenMovie(ScreenMovieDTO scdto);
 	/* void updateScreenMovie(ScreenMovieDTO scdto); */
-	 ScreenMovieDTO selectScreenMovieList(String mcode);
 	List<MovieDTO> NowshowingMovieList();
 	List<MovieDTO> ComingSoonMovieList();
 	int updateFileList(FileDTO fileDTO);
@@ -42,4 +39,8 @@ public interface MovieMapper {
 	int countNowShowingMovieListTotal();
 	int countComingSoonMovieListTotal();
 	List<MovieDTO> selectComingSoonMovieListList(Criteria cri);
+	void updateMovieSchedule(ScreenMovieDTO scdto);
+	void insertMovieSchedule(ScreenMovieDTO scdto);
+	ScreenMovieDTO selectMovieSchedule(String mcode);
+	List<MovieDTO> selectAllMovieSchedule();
 }

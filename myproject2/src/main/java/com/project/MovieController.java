@@ -272,7 +272,7 @@ public class MovieController {
 	public String movieView(String mcode, String update, Model model, HttpSession session) {
 		MovieDTO dto = movieservice.selectMovieDTO(mcode);
 		List<FileDTO> Filelist = movieservice.selectFilePath(mcode);
-		ScreenMovieDTO scdto = movieservice.selectScreenMovieList(mcode);
+		ScreenMovieDTO scdto = movieservice.selectMovieSchedule(mcode);
 		NaverRatingDTO ndto = null;
 		try {
 			    ndto = movieservice.selectNaverRating(mcode);
@@ -319,7 +319,6 @@ public class MovieController {
 	
 	@RequestMapping("/naver.do")
 	public ResponseEntity<String> test(String title,String prodYear,Model model) {
-		System.out.println("123asd");
 		if(prodYear==null) {
 			prodYear="";
 		}

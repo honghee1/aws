@@ -37,7 +37,7 @@ public class movieService {
 		if (scdto.getEnddate() == null) {
 			scdto.setEnddate("");
 		}
-		mapper.insertScreenMovie(scdto);
+		mapper.insertMovieSchedule(scdto);
 		if(ndto.getNaver_mtitle()!=null) {
 			try {
 		mapper.insertNaverRating(ndto);
@@ -100,14 +100,11 @@ public class movieService {
 	public String updateMovie(MovieDTO dto, ScreenMovieDTO scdto,NaverRatingDTO ndto) {
 		String mcode = mapper.selectMovieCode();
 		mapper.updateMovie(dto);
-		mapper.updateScreenMovie(scdto);
+		mapper.updateMovieSchedule(scdto);
 		mapper.updateNaverRating(ndto);
 		return mcode;
 	}
 
-	public ScreenMovieDTO selectScreenMovieList(String mcode) {
-		return mapper.selectScreenMovieList(mcode);
-	}
 
 	public List<MovieDTO> selectNowshowingMovieList() {
 		return mapper.NowshowingMovieList();
@@ -152,6 +149,14 @@ public class movieService {
 
 	public List<MovieDTO> selectComingSoonMovieListList(Criteria cri) {
 		return mapper.selectComingSoonMovieListList(cri);
+	}
+
+	public ScreenMovieDTO selectMovieSchedule(String mcode) {
+		return mapper.selectMovieSchedule(mcode);
+	}
+
+	public List<MovieDTO> selectAllMovieSchedule() {
+		return mapper.selectAllMovieSchedule();
 	}
 	
 	

@@ -55,11 +55,11 @@
 				traditional : true,
 				data : {"seatList" : seatList},
 				dataType : "json",
-				type : 'post',
+				type : 'get',
 				success:function(r){
-					if(r == 1){
-						var d = "timeCode=" + $("input[name='timeCode']").val() + "&price=" + seatList[3]
-								+ "&count=" + $(".clicked").length;
+					console.log(r)
+					if(r.result <= 1){
+					 d = "timeCode=" + r.timeCode + "&price=" + r.totalPrice + "&count=" + r.count + "&bookingCode=" + r.BookingCode;
 						$.ajax({
 							url : "kakaopay.do",
 							data : d,

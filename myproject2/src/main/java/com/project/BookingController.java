@@ -16,9 +16,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,7 +58,7 @@ public class BookingController {
 		String sdate = LocalDate.now().format(formatter);
 		System.out.println(sdate);
 		// 영화 리스트 불러오는 부분
-		List<MovieDTO> movielist = movieservice.selectAllMovieList();
+		List<MovieDTO> movielist = movieservice.selectAllMovieSchedule();
 		
 		// 1번째 리스트 mcode -> html에 최초 화면 제공용
 		String mcode = movielist.get(0).getMcode();
@@ -89,17 +91,17 @@ public class BookingController {
 	}
 	
 	@RequestMapping("/movieListView.do")
-	public ResponseEntity<List<BookingDTO>> MovieListView(String screenCode, String sdate, String mcode, Model model) {
+	public ResponseEntity<List<BookingDTO>> MovieListView(String cinemaCode,String screenCode, String sdate, String mcode, Model model) {
 
 		// sdate 임시 재설정
 		/* sdate = "22/07/02"; */
 		
-		System.out.println("movieListView, screenCode : "+screenCode);
+		System.out.println("movieListView, cinemaCode : "+ cinemaCode);
 		System.out.println("movieListView, sdate : "+sdate);
 		System.out.println("movieListView, mcode : "+mcode);
 				
-		List<BookingDTO> movielist = bookingservice.selectMovieList(screenCode, sdate, mcode);
-		
+		List<BookingDTO> movielist = bookingservice.selectMovieList(cinemaCode, sdate, mcode);
+		System.out.println(movielist);
 		// 좌석 잔여 개수 구하는 부분
 		for(int i=0; i<movielist.size(); i++) {
 			List<String> bookedSeat = bookingservice.selectBookedSeat(movielist.get(i).getTimeCode());
@@ -165,7 +167,7 @@ public class BookingController {
 	}
 	
 	@RequestMapping("/booking.do")
-	public ResponseEntity<Integer> booking(String[] seatList, String id) {
+	public ResponseEntity<String> booking(String[] seatList, String id) {
 		String screenCode = seatList[0];
 		String timeCode = seatList[1];
 		String mcode = seatList[2];
@@ -177,24 +179,35 @@ public class BookingController {
 			data += seatList[i] + ", ";
 		}
 		System.out.println("booking.do, seatList : " + data);
+		System.out.println(screenCode);
+		System.out.println(timeCode);
+		System.out.println(mcode);
+		System.out.println(totalPrice);
 		
 		// 데이터 임시 설정
 		id = "test"; 
 //		totalPrice = 10000;
 		
-		bookingservice.insertReservation(screenCode, timeCode, mcode, seatList, id, totalPrice);
 		
-		return ResponseEntity.ok(1);
+		Map<String, Object> bookingresult = bookingservice.insertReservation(screenCode, timeCode, mcode, seatList, id, totalPrice);
+		bookingresult.get("result");
+		JSONObject bookingdata = new JSONObject();
+		bookingdata.put("BookingCode", bookingresult.get("bookingCode"));
+		bookingdata.put("result", bookingresult.get("result"));
+		bookingdata.put("count", bookingresult.get("count"));
+		bookingdata.put("timeCode", timeCode);
+		bookingdata.put("totalPrice", totalPrice);
+		String bookingresultdata = bookingdata.toString();
+		return ResponseEntity.ok(bookingresultdata);
 	}
 	
 	@RequestMapping("/kakaopay.do")
 	@ResponseBody
-	public String kakaopay(String timeCode, String price, int count){
+	public String kakaopay(String timeCode, String price, int count,String bookingCode){
 		try {
 			BookingDTO dto = bookingservice.selectMovieTime(timeCode);
 			String item_name = "영화 예매 - " + dto.getTitle();
-			
-			
+			System.out.println(bookingCode);
 			URL host = new URL("https://kapi.kakao.com/v1/payment/ready");
 			HttpURLConnection con = (HttpURLConnection) host.openConnection( );
 			con.setRequestMethod("POST");
@@ -205,7 +218,6 @@ public class BookingController {
 			System.out.println("item_name : " + item_name + "count : " + count + "price : " + price);
 			
 			String item = URLEncoder.encode(item_name, "UTF-8");
-			String bookingCode = bookingservice.selectBookingCode();
 			String param = "cid=TC0ONETIME&partner_order_id=order_id"
 					+ "&partner_user_id=user_id&item_name=" + item
 					+ "&quantity=" + String.valueOf(count)
@@ -248,7 +260,7 @@ public class BookingController {
 		System.out.println("approval 진입, bookingCode : " + bookingCode);
 		
 		try {
-			response.getWriter().write("<script>opener.document.location.href='parchaseResult.do?bookingCode="+ "12" +"'; window.close(); </script>");
+			response.getWriter().write("<script>opener.document.location.href='parchaseResult.do?bookingCode="+ bookingCode +"'; window.close(); </script>");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -55,7 +55,7 @@
 					        <div class="theater-part">
 					            <div class="reserve-title">극장</div>
 					             <c:forEach var="c" items="${requestScope.screenlist }">
-									<div class="screen-list"><a class="screen-list-wrapper" data-value="${c.cinemaName }">${c.cinemaName }</a><input type=hidden name="screencode" value="${c.screenCode}"></div>
+									<div class="screen-list"><a class="screen-list-wrapper" data-value="${c.cinemaName }">${c.cinemaName }</a><input type=hidden name="screencode" value="${c.cinemaCode}"></div>
 								</c:forEach>
 					        </div>	
 					        <div class="day-part">
@@ -175,12 +175,12 @@
                 });
                 $(this).addClass("movie-date-wrapper-active");
                 var mcode = $(".movie-list-active").find("input[name='mcode']").val();
-                var screencode = $(".screen-list-active").find("input[name='screencode']").val();
+                var cinemaCode = $(".screen-list-active").find("input[name='cinemaCode']").val();
                 var y = year.toString();
                 if(month.length < 2){
                     month = "0" + month;
                  }
-                 var data = "mcode=" + mcode + "&screenCode=" + screencode + "&sdate=" + y.substring(2, 4) + '/' + month + '/' + $(this).find(".movie-day").text();
+                 var data = "mcode=" + mcode + "&cinemaCode=" + cinemaCode + "&sdate=" + y.substring(2, 4) + '/' + month + '/' + $(this).find(".movie-day").text();
                 console.log(data);
                 
                 $.ajax({
@@ -244,7 +244,7 @@
     				success:function(r){
     					var tag = "<div class='reserve-title'>극장</div>";
     					for(i=0;i<r.length;i++){
-    						tag += "<div class='screen-list'><a class='screen-list-wrapper' data-value='"+r[i].cinemaName+"'>"+r[i].cinemaName+"</a><input type='hidden' name='screencode' value='" + r[i].screenCode + "'></div>";
+    						tag += "<div class='screen-list'><a class='screen-list-wrapper' data-value='"+r[i].cinemaName+"'>"+r[i].cinemaName+"</a><input type='hidden' name='cinemaCode' value='" + r[i].cinemaCode + "'></div>";
     					}
     					$(".theater-part").html(tag);
     				}

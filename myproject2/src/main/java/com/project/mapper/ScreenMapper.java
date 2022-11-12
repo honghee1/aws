@@ -41,7 +41,6 @@ public interface ScreenMapper {
 
 	List<ScreenDTO> selectScreenSchedule(String screencode);
 
-	List<ScreenDTO> selectScreenMovie(String screencode);
 
 	int updateSchedule(ScreenDTO dto);
 
@@ -53,6 +52,7 @@ public interface ScreenMapper {
 
 	int deleteSeatType(String seatType);
 
-	void updateScreenCode(ScreenDTO dto);
+
+	List<ScreenDTO> selectMovieSchedule();
 
 }

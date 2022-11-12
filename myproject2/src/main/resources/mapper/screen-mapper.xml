@@ -4,16 +4,11 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.mapper.ScreenMapper">
 	<select id="selectScreenList" parameterType="map" resultType="screen">
-		select cinemaname, (select screencode from screen_movie where mcode = #{mcode} and <![CDATA[startdate <= #{sdate}]]> and enddate >= #{sdate}) as screencode
-		from cinema c,
-		(select cinemacode from screen s, 
-		(select screencode from screen_movie
-		where mcode = #{mcode} and <![CDATA[startdate <= #{sdate}]]> and enddate >= #{sdate})
-		sm where s.screencode = sm.screencode) ss where c.cinemacode = ss.cinemacode
+		select DISTINCT  c.* from cinema c,(select s.* from screen s,(select time.* from time where MCODE = #{mcode}) sccode where s.screencode = sccode.SCREENCODE) ccode where c.CINEMACODE = ccode.CINEMACODE
 	</select>
 	
 	<select id="adminselectScreenList" parameterType="map" resultType="screen">
-		select @rownum:=@rownum+1 as no,s.* from screen s  where cinemacode = 20221001 limit 6
+		select @rownum:=@rownum+1 as no,s.* from screen s  where cinemacode = #{cinemacode} limit 6
 	</select>
 	
 	<select id="selectAllSeat" parameterType="String" resultType="int">
@@ -67,12 +62,7 @@
 		t.* from time t where screencode = #{screencode}
 	</select>
 	
-	<select id="selectScreenMovie" parameterType="String" resultType="screen">
-      select 
-      (select runtime from moviedb md where md.mcode = sm.mcode) as runtime,
-      (select title from moviedb md where md.mcode = sm.mcode) as title, 
-      sm.* from screen_movie sm where <![CDATA[startdate < sysdate()]]> and enddate > sysdate()
-	</select>
+	
 	
 	<update id="updateSchedule" parameterType="screen">
 		update time set moviedate = #{movieDate}, starttime = #{startTime}, endtime = #{endTime} where timecode = #{timeCode}
@@ -94,7 +84,9 @@
 		delete from seattype where seattype = #{seatType}
 	</delete>
 	
-	<update id="updateScreenCode" parameterType="screen">
-		update screen_movie set SCREENCODE = #{screenCode} where MCODE = #{mcode}
-	</update>
+	
+	<select id="selectMovieSchedule" resultType="screen">
+		SELECT ms.*,md.RUNTIME FROM MOVIE_SCHEDULE ms,moviedb md where ENDDATE > sysdate() and ms.MCODE = md.MCODE
+	</select>
+	
 </mapper>

@@ -4,9 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.mapper.BookingMapper">
 	<select id="selectMovieList" parameterType="map" resultType="booking">
-		select timecode, starttime, endtime, mcode, screencode,
-		(select screenname from screen where screencode = #{screenCode}) 
-		screenname from time t where moviedate = #{sdate} and screencode = #{screenCode} and mcode = #{mcode}
+	select t.*,sccode.SCREENNAME from time t, (select screencode,SCREENNAME from screen where cinemacode = #{cinemaCode}) sccode where t.screencode = sccode.screencode and t.mcode = #{mcode} and MOVIEDATE = #{sdate}
 	</select>
 	<select id="selectSeatType" parameterType="String" resultType="screen">
 		select s.*, (select distinct seattype from seat st where st.screencode = #{screenCode}) as seattype,
@@ -17,7 +15,7 @@
 	</select>
 	
 	<insert id="insertBooking" parameterType="map">
-		insert into booking values((SELECT BOOKING_nextval('select_bookingcode') FROM DUAL), #{id}, #{timeCode}, #{screenCode}, #{mcode}, #{totalPrice}, sysdate())
+		insert into booking values(#{bookingCode}, #{id}, #{timeCode}, #{screenCode}, #{mcode}, #{totalPrice}, sysdate())
 	</insert>
 	
 	<select id="selectSeatcode" parameterType="map" resultType="String">
