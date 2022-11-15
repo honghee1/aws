@@ -69,8 +69,6 @@
 	<script type="text/javascript">
 		var title = '${title }';
 	
-		console.log(title);
-		
 		$("ul[class='active']").removeClass("active");
 		$("li[class='active']").removeClass("active");
 		

@@ -89,9 +89,11 @@ public class CinemaScreenController {
 		int result = screenservice.insertCinema(dto);
 		response.setContentType("text/html;charset=utf-8");
 		
-		// 지점 관리 리스트의 리스트 최신화
-		List<CinemaDTO> Cinemalist = movieservice.selectCinemaList();
-		session.setAttribute("Cinemalist", Cinemalist);
+		/*
+		 * // 지점 관리 리스트의 리스트 최신화 List<CinemaDTO> Cinemalist =
+		 * movieservice.selectCinemaList(); session.setAttribute("Cinemalist",
+		 * Cinemalist);
+		 */
 		
 		if(result == 1)
 			response.getWriter().write(

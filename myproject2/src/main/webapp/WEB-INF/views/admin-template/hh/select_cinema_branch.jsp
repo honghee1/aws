@@ -22,6 +22,26 @@
 		function modalClose() {
 			$("#popup").fadeOut();
 		}
+		
+		 $.ajax({
+			url : 'select_cinema_list.do',
+			type : 'get',
+			success:function(r){
+				var cinemalist = JSON.parse(r);
+				var tag = "";
+				for(var i = 0; i < cinemalist.totalCinemaCount; i++){
+				 	tag += " <div class='box-body costom-box'>";
+					tag +=  "<h6><span class='text-uppercase'>"
+					tag +=  "<a class='cinemaView text-warning' href=cinemaManagementView.do?cinemacode="+cinemalist.items[i].cinemacode+">"+cinemalist.items[i].cinemaname+"</a></span><span class='float-right'>"
+					tag +=  "<a class='btn btn-xs btn-warning delete-btn' href=cinemaDelete.do?cinemacode="+cinemalist.items[i].cinemacode+">삭제</a></span></h6><br>"
+					tag +=  "<div class='option-box'>"
+					tag +=  "<a href=cinemaManagementView.do?cinemacode="+cinemalist.items[i].cinemacode+"><img class='option-img' alt=옵션 이미지 src=images/hellocinema_icon.png></a>"
+					tag +=  "</div>"
+					tag += "</div>"
+				}
+				$(".option-div").html(tag);
+			}
+		}); 
 	});
 </script>
 <style type="text/css">
@@ -159,15 +179,7 @@
 					<div class="body-content">
 						<div class="body-contentbox">
 							<div class="option-div">
-								<c:forEach var="c" items="${sessionScope.Cinemalist }">
-									<div class="box-body costom-box">
-								      <h6><span class="text-uppercase"><a class="cinemaView text-warning" href="cinemaManagementView.do?cinemacode=${c.cinemacode }">${c.cinemaname }</a></span><span class="float-right">
-								      <a class="btn btn-xs btn-warning delete-btn" href="cinemaDelete.do?cinemacode=${c.cinemacode }">삭제</a></span></h6><br>
-								      <div class="option-box">
-								      	<a href="cinemaManagementView.do?cinemacode=${c.cinemacode }"><img class="option-img" alt="옵션 이미지" src="images/hellocinema_icon.png"></a>
-								      </div>
-								    </div>
-								</c:forEach>
+								
 							</div>
 						</div>
 					</div>

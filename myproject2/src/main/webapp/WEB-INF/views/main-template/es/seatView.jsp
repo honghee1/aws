@@ -49,7 +49,6 @@
 				return;
 			}
 			
-			console.log(seatList);
 			$.ajax({
 				url : 'booking.do',
 				traditional : true,

@@ -124,10 +124,8 @@ public class MovieController {
 	}
 	@RequestMapping("/select_movie_openAPI.do")
 	public String openAPI(MovieDTO dto, Model model, HttpSession session, String cinemacode, String name) {
-		List<CinemaDTO> Cinemalist = movieservice.selectCinemaList();
 		session.setAttribute("cinemacode", cinemacode);
 		session.setAttribute("name", name);
-		/* model.addAttribute("Cinemalist", Cinemalist); */
 		model.addAttribute("title", "영화 검색 :: Hello Movie Cinema");
 		model.addAttribute("page", "hh/select_movie_openAPI.jsp");
 		return "admin_index";
@@ -291,11 +289,9 @@ public class MovieController {
 	@RequestMapping("/insert_movie.do")
 	public String insertMovie(HttpSession session, HttpServletResponse response, Model model, MovieDTO mdto,
 			String cinemacode, String name,String genre,String close,String prodYear) {
-		List<CinemaDTO> Cinemalist = movieservice.selectCinemaList();
 		JSONObject userrating = APIExamTranslateNMT(mdto.getTitle(),prodYear);
 		session.setAttribute("cinemacode", cinemacode);
 		session.setAttribute("name", name);
-		model.addAttribute("Cinemalist", Cinemalist);
 		model.addAttribute("movie", mdto);
 		model.addAttribute("userrating", userrating);
 		model.addAttribute("prodYear", prodYear);
@@ -307,10 +303,8 @@ public class MovieController {
 	@RequestMapping("/insertmovie.do")
 	public String insert_Movie(HttpSession session, HttpServletResponse response, Model model, MovieDTO mdto,
 			String cinemacode, String name,String genre,String close) {
-		List<CinemaDTO> Cinemalist = movieservice.selectCinemaList();
 		session.setAttribute("cinemacode", cinemacode);
 		session.setAttribute("name", name);
-		model.addAttribute("Cinemalist", Cinemalist);
 		model.addAttribute("mdto", mdto);
 		model.addAttribute("page", "hh/insert_movie.jsp");
 		model.addAttribute("pagetitle", "영화 등록 페이지");
@@ -337,13 +331,12 @@ public class MovieController {
         String clientSecret = "EPVwdRTl5I"; //애플리케이션 클라이언트 시크릿
         String Movietitle = title;
         String MovieprodYear = prodYear;
-        System.out.println(prodYear+title);
         try {
         	Movietitle = URLEncoder.encode(title, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("검색어 인코딩 실패",e);
         }
-        String apiURL = "https://openapi.naver.com/v1/search/movie.json?query="+ Movietitle+"&yearfrom="+MovieprodYear+"&yearto="+MovieprodYear;    // JSON 결과
+        String apiURL = "https://openapi.naver.com/v1/search/movie.json?query="+Movietitle+"&yearfrom="+MovieprodYear+"&yearto="+MovieprodYear;    // JSON 결과
         Map<String, String> requestHeaders = new HashMap<>();
         requestHeaders.put("X-Naver-Client-Id", clientId);
         requestHeaders.put("X-Naver-Client-Secret", clientSecret);

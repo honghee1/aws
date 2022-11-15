@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.google.gson.JsonArray;
 import com.project.dto.CinemaDTO;
 import com.project.dto.FileDTO;
 import com.project.dto.MovieDTO;
@@ -73,6 +74,7 @@ public class movieService {
 	public List<CinemaDTO> selectCinemaList() {
 		return mapper.selectAllCinema();
 	}
+	
 
 	public List<ScreenDTO> selectScreenList(String cinemacode) {
 		return mapper.selectScreenList(cinemacode);

@@ -32,6 +32,9 @@
   	<select id="selectAllCinema" resultType="cinema">
   		select * from cinema	
   	</select>
+  	<select id="selectAllCinema__" resultType="cinema">
+  		select * from cinema	
+  	</select>
   	<select id="selectScreenList" parameterType="String" resultType="screen">
   		select s.screencode,s.cinemacode,s.screenname from screen s WHERE s.cinemacode = #{cinemacode}
   	</select>

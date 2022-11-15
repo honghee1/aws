@@ -44,11 +44,7 @@
 						<div class="reserve-container">
 					        <div class="movie-part">
 					            <div class="reserve-title">영화</div>
-					            <div class="sort-wrapper">
-					                <div class="sort-rate sort-selected">예매율순</div>
-					                <div class="sort-korean">가나다순</div>
-					            </div>
-					            <c:forEach var="c" items="${requestScope.movielist }">
+						            <c:forEach var="c" items="${requestScope.movielist }">
 									<div class="movie-list"><img class="age-limit" src="/images/19age.png"><a class="movie-list-wrapper" data-value="${c.title }">${c.title }</a><input type="hidden" name="mcode" value="${c.mcode}"></div>
 								</c:forEach>
 					        </div>

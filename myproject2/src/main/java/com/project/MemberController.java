@@ -390,7 +390,7 @@ public class MemberController {
 		model.addAttribute("page", "main_body.jsp");
 		response.setContentType("text/html;charset=utf-8");
 		if(adto != null) {
-			session.setAttribute("login", true);
+			session.setAttribute("adminlogin", true);
 			session.setAttribute("adto", adto);
 			session.setAttribute("adminId", adto.getAdminId());
 			session.setAttribute("grade", adto.getGrade());
@@ -413,7 +413,7 @@ public class MemberController {
 	
 	@RequestMapping("/adminLogout.do")
 	public void adminLogout(HttpSession session, HttpServletResponse response) throws IOException {
-		session.invalidate();
+		session.removeAttribute("adminlogin");
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().write("<script>alert('로그아웃이 정상적으로 처리되었습니다');location.href='/';</script>");
 	}
