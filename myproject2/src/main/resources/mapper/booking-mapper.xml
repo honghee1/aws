@@ -39,6 +39,9 @@
 	<select id="selectAllSeat" parameterType="String" resultType="String">
 		select count(*) from seat where screencode = #{screenCode}
 	</select>
+	<select id="selectTid" parameterType="String" resultType="String">
+		select tid from booking where bookingCode = #{bookingcode}
+	</select>
 	
 	<select id="selectMovieTime" parameterType="String" resultType="booking">
 		select t.*, (select title from moviedb db where t.mcode = db.mcode) as title from time t where timecode = #{timeCode}
@@ -57,4 +60,7 @@
 		from booking bk, booked_seats bs where bk.bookingcode = bs.bookingcode and bk.bookingcode = #{bookingCode}
 	</select>
 	
+	<delete id="deleteBookingData" parameterType="String">
+		delete from booking where bookingCode = #{bookingcode}
+	</delete>
 </mapper>

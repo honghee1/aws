@@ -32,5 +32,8 @@ public interface BookingMapper {
 
 	List<BookingDTO> selectBookingResult(String bookingCode);
 
+	void deleteBookingData(String bookingCode);
+
+
 
 }

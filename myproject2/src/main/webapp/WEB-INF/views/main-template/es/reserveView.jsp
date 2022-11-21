@@ -51,7 +51,7 @@
 					        <div class="theater-part">
 					            <div class="reserve-title">극장</div>
 					             <c:forEach var="c" items="${requestScope.screenlist }">
-									<div class="screen-list"><a class="screen-list-wrapper" data-value="${c.cinemaName }">${c.cinemaName }</a><input type=hidden name="screencode" value="${c.cinemaCode}"></div>
+									<div class="screen-list"><a class="screen-list-wrapper" data-value="${c.cinemaName }">${c.cinemaName }</a><input type=hidden name="screenCode" value="${c.cinemaCode}"></div>
 								</c:forEach>
 					        </div>	
 					        <div class="day-part">
@@ -259,24 +259,24 @@
                 list.classList.remove("screen-list-active");
             })
 				$(this).addClass("screen-list-active");
+        		
         });
         
         
         $(document).on("click",".time-list",function(){
         	
-        	var d = "screenCode=" + $(this).find("input[name='screencode']").val();
+        	var d = "?screenCode=" + $(this).find("input[name='screencode']").val();
         		d += "&timeCode=" + $(this).find("input[name='timecode']").val();
         		d += "&mcode=" + $(this).find("input[name='mcode']").val();
+        		d += "&cinemacode=" + $(".screen-list-active").find("input[name='cinemaCode']").val();
         		console.log(d);
-        	$.ajax({
-				url:"seatCreate.do",
-				data : d,
-				success:function(r){
-					if(r == 1)
-						alert("좌석 선택창으로 이동합니다");
-						location.assign("seatView.do");
-				}
-			});
+        	
+				alert("좌석 선택창으로 이동합니다");
+				
+        	
+        	$("#form").attr('action','seatCreate.do'+d);
+        	 $("#form").append($('<input type="hidden" class="t1" value="'+d+'" name=tag>'));
+        	 $("#form").submit();
         	
         });
         $(document).on("mouseover",".time-list",function(){
@@ -300,5 +300,7 @@
 		});
 				
     </script>
+    <form id='form' method="post">
+	</form>
 </body>
 </html>

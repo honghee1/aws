@@ -112,6 +112,9 @@
    		<select id="selectAllMovieSchedule" resultType="movie">
 	select md.MCODE,md.TITLE from moviedb md,(select ms.MCODE from MOVIE_SCHEDULE ms where ms.ENDDATE > sysdate())ms where ms.MCODE = md.MCODE
 	</select>
+   		<select id="selectMovieTitle" parameterType="Object" resultType="String">
+		select title from moviedb where mcode = #{mcode}
+	</select>
 </mapper>
 
 

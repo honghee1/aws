@@ -44,4 +44,5 @@ public interface MovieMapper {
 	void insertMovieSchedule(ScreenMovieDTO scdto);
 	ScreenMovieDTO selectMovieSchedule(String mcode);
 	List<MovieDTO> selectAllMovieSchedule();
+	String selectMovieTitle(Object mcode);
 }

@@ -15,13 +15,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
 <script type="text/javascript">
 	$(function(){
 		var seatList = new Array();
-		seatList.push($("input[name='screenCode']").val());
+		var seatlist = new Array();
+		/* seatList.push($("input[name='screenCode']").val());
 		seatList.push($("input[name='timeCode']").val());
 		seatList.push($("input[name='mcode']").val());
-		seatList.push($("input[name='price']").val());
+		seatList.push($("input[name='price']").val()); */
 		$(".seat").click(function () { 
 			if(parseInt($(".adult-count").val()) == 0 && parseInt($(".minor-count").val()) == 0){
 				alert("인원수를 지정한 후 좌석을 선택할 수 있습니다");
@@ -30,7 +32,7 @@
 			
 			if($(this).hasClass("clicked")){
 				$(this).removeClass("clicked");
-				seatList.splice(seatList.indexOf($(this).val()), 1);
+				/* seatList.splice(seatList.indexOf($(this).val()), 1); */
 				console.log(seatList);
 			}else{
 				if($(".clicked").length >= (parseInt($(".adult-count").val()) + parseInt($(".minor-count").val()))){
@@ -38,7 +40,7 @@
 					return;
 				}
 				$(this).addClass("clicked");
-				seatList.push($(this).val());
+				seatlist.push($(this).val());
 				console.log(seatList);
 			}
 			$(".remain-count").val(parseInt($(".adult-count").val()) + parseInt($(".minor-count").val()) - $(".clicked").length);
@@ -48,32 +50,47 @@
 				alert("지정한 인원수만큼 좌석을 선택한 후 예매하기 버튼을 눌러주세요");
 				return;
 			}
-			
+			var obj = new Object() ;
+			 var jArray = new Array() ;
+	            
+	            /* for (var i = 0; i < 3; i++)//배열
+	            {
+	                var sObject = new Object() ;
+	                sObject.screenCode = $("input[name='screenCode']").val();
+	                sObject.timeCode = $("input[name='timeCode']").val();
+	                sObject.mcode = $("input[name='mcode']").val();
+	                jArray.push(sObject);
+	                totalcinemacount++;
+	            } */
+	            var sObject = new Object(seatlist);
+	            console.log(sObject);
+	            obj.seatlist = sObject;
+	            obj.mcode =  $("input[name='mcode']").val();
+	            obj.timeCode =  $("input[name='timeCode']").val();
+	            obj.screenCode =  $("input[name='screenCode']").val();
+	            obj.cinemacode =  $("input[name='cinemacode']").val();
+	            obj.adultcount =  $(".adult-count").val();
+	            obj.minorcount =  $(".minor-count").val();
+	            obj.totalprice =  $(".total-price").val().replace(',','');
+	            obj.id = '${userEmail}';
 			$.ajax({
-				url : 'booking.do',
-				traditional : true,
-				data : {"seatList" : seatList},
-				dataType : "json",
-				type : 'get',
-				success:function(r){
-					console.log(r)
-					if(r.result <= 1){
-					 d = "timeCode=" + r.timeCode + "&price=" + r.totalPrice + "&count=" + r.count + "&bookingCode=" + r.BookingCode;
-						$.ajax({
-							url : "kakaopay.do",
-							data : d,
-							dataType : 'json',
-							success:function(data){
-								console.log('kakaopay-Success');
-								var url = data.next_redirect_pc_url;
-								window.open(url, '_blank','width=600px, height=800px');
-							},
-							error:function(data){
-								console.log('kakaopay-Error');
-								alert(data);
-							}
-						});
-					}
+				url :'kakaopay.do',
+ 		       data : JSON.stringify(obj),		   
+ 		       type:'post',
+ 		       dataType:'text',
+ 		       contentType:"application/json;charset=UTF-8",
+				success:function(data){
+					console.log('kakaopay-Success');
+					console.log(data);
+					const obj = JSON.parse(data); 
+					console.log(data)
+					var url = obj.next_redirect_pc_url;
+					window.open(url, '_blank1','width=600px, height=800px');
+					console.log(obj.tid);
+					
+				},error:function(data){
+					console.log('kakaopay-Error');
+					alert(data);
 				}
 			});
 		});

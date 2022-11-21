@@ -160,6 +160,10 @@ public class movieService {
 	public List<MovieDTO> selectAllMovieSchedule() {
 		return mapper.selectAllMovieSchedule();
 	}
+
+	public String selectMovieTitle(Object mcode) {
+		return mapper.selectMovieTitle(mcode);
+	}
 	
 	
 

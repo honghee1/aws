@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.project.dto.BookingDTO;
@@ -95,6 +97,56 @@ public class BookingService {
 
 	public List<BookingDTO> selectBookingResult(String bookingCode) {
 		return mapper.selectBookingResult(bookingCode);
+	}
+
+	public String insertBookingReadyInfo(JSONObject ticketData,String bookingcode) {
+		
+			System.out.println("123asd");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("screenCode",ticketData.get("screenCode"));
+		map.put("timeCode", ticketData.get("timeCode"));
+		map.put("mcode", ticketData.get("mcode"));
+		map.put("id", ticketData.get("id"));
+		map.put("totalPrice", ticketData.get("totalprice"));
+		map.put("bookingCode", bookingcode);
+		System.out.println(map);
+		mapper.insertBooking(map);
+		System.out.println("123asd1231231231");
+		System.out.println("Booking bookingCode : " + bookingcode);
+		System.out.println("Booking 테이블 등록 완료");
+		JSONArray seatlist = ticketData.getJSONArray("seatlist");
+		System.out.println("1a2sd3"+seatlist);
+			for(int i=0;i<seatlist.length();i++) {
+			
+			map.put("seatNo", seatlist.get(i));
+			
+			String seatCode = mapper.selectSeatcode(map);
+			System.out.println("screenCode : " + map.get("screenCode"));
+			System.out.println("Booking seatNo : " + map.get("seatNo"));
+			System.out.println("Booking seatCode : " + seatCode);
+			System.out.println("Booking bookingcode : " + bookingcode);
+			
+			
+			map.put("seatCode", seatCode);
+			map.put("bookingCode", bookingcode);
+			
+			mapper.insertBookedSeat(map); 
+			System.out.println("Booked_Seat 테이블 등록 완료");
+			
+			map.remove("seatNo");
+			map.remove("seatCode");
+			map.remove("bookingCode");
+			
+			
+		}
+		
+			return bookingcode;
+		
+	}
+
+
+	public void deleteBookingData(String bookingCode) {
+		 mapper.deleteBookingData(bookingCode); 
 	}
 
 }

@@ -342,8 +342,6 @@ public class MovieController {
         requestHeaders.put("X-Naver-Client-Secret", clientSecret);
         String responseBody = get(apiURL,requestHeaders);
         JSONObject jObject = new JSONObject(responseBody);
-        JSONArray jsonArr = jObject.getJSONArray("items");
-        System.out.println("123"+jsonArr);
 		return jObject;
 		}else {
 			return null;
