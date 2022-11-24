@@ -41,9 +41,7 @@
 	</update>
 	
 	<select id="selectAllMember" resultType="member">
-		select user_email as userEmail, user_passwd as userPasswd, user_name as userName, 
-		user_nick as userNick, user_tel as userTel, user_address as address, user_point as point, 
-		to_char(user_birth, 'yyyy-mm-dd') as userBirth from member
+		select user_email as userEmail, user_passwd as userPasswd, user_name as userName,user_nick as userNick, user_tel as userTel, user_address as address, user_point as point,date_format(user_birth, '%Y-%m-%d') as userBirth from member
 	</select>
 	
 	<delete id="adminDeleteMember" parameterType="String">
@@ -52,7 +50,7 @@
 	
 	<select id="selectMemberProfile" parameterType="String" resultType="member">
 		select user_email as userEmail, user_passwd as userPasswd, user_name as userName, 
-		user_nick as userNick, user_tel as userTel, user_address as address, user_point as point, to_char(user_birth, 'yyyy-mm-dd') as userBirth from member
+		user_nick as userNick, user_tel as userTel, user_address as address, user_point as point, date_format(user_birth, '%Y-%m-%d') as userBirth from member
 		where user_email = #{userEmail}
 	</select>
 	

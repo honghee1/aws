@@ -40,7 +40,7 @@ public interface MovieMapper {
 	int countNowShowingMovieListTotal();
 	int countComingSoonMovieListTotal();
 	List<MovieDTO> selectComingSoonMovieListList(Criteria cri);
-	void updateMovieSchedule(ScreenMovieDTO scdto);
+	int updateMovieSchedule(ScreenMovieDTO scdto);
 	void insertMovieSchedule(ScreenMovieDTO scdto);
 	ScreenMovieDTO selectMovieSchedule(String mcode);
 	List<MovieDTO> selectAllMovieSchedule();

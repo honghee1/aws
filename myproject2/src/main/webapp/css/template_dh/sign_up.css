@@ -204,3 +204,17 @@ contaiter1>form>select {
     left: 0;
     display: none;
 }
+input:focus { outline: none; }
+
+#dummy{
+	display: flex; 
+	width:0px; 
+	height:0px; 
+	border: 0;
+	padding:0;
+	
+}
+
+
+
+

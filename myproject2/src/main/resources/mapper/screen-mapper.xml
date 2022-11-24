@@ -8,7 +8,7 @@
 	</select>
 	
 	<select id="adminselectScreenList" parameterType="map" resultType="screen">
-		select @rownum:=@rownum+1 as no,s.* from screen s  where cinemacode = #{cinemacode} limit 6
+		select s.* from screen s  where cinemacode = #{cinemacode}  ORDER BY SCREENCODE DESC LIMIT #{pageStart}, #{perPageNum}
 	</select>
 	
 	<select id="selectAllSeat" parameterType="String" resultType="int">
@@ -86,7 +86,7 @@
 	
 	
 	<select id="selectMovieSchedule" resultType="screen">
-		SELECT ms.*,md.RUNTIME FROM MOVIE_SCHEDULE ms,moviedb md where ENDDATE > sysdate() and ms.MCODE = md.MCODE
+		SELECT ms.*,md.RUNTIME,md.TITLE FROM MOVIE_SCHEDULE ms,moviedb md where ENDDATE > sysdate() and ms.MCODE = md.MCODE
 	</select>
 	
 </mapper>

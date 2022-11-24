@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.dto.QnADTO;
 import com.project.mapper.QnAMapper;
+import com.project.vo.Criteria;
 
 @Service
 public class QnAService {
@@ -20,10 +21,12 @@ public class QnAService {
 		return mapper.insertQnA(dto);
 	}
 
-	public List<QnADTO> selectQna(String userEmail, int pageNo) {
+	public List<QnADTO> selectQna(String userEmail, Criteria cri) {
 		HashMap<Object, Object> map = new HashMap<Object, Object>();
 		map.put("userEmail", userEmail);
-		map.put("pageNo", pageNo);
+		map.put("pageStart", cri.getPageStart());
+		map.put("perPageNum", cri.getPerPageNum());
+		System.out.println(map);
 		return mapper.selectQna(map);
 	}
 

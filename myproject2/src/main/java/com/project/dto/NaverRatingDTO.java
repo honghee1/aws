@@ -4,13 +4,13 @@ import org.apache.ibatis.type.Alias;
 
 @Alias("naverRating")
 public class NaverRatingDTO {
-	private String MCODE;
+	private String mcode;
 	private String naver_mtitle;
 	private String pubDate;
 	private String user_rating;
-	public NaverRatingDTO(String mCODE, String naver_mtitle, String pubDate, String user_rating) {
+	public NaverRatingDTO(String mcode, String naver_mtitle, String pubDate, String user_rating) {
 		super();
-		MCODE = mCODE;
+		this.mcode = mcode;
 		this.naver_mtitle = naver_mtitle;
 		this.pubDate = pubDate;
 		this.user_rating = user_rating;
@@ -20,14 +20,14 @@ public class NaverRatingDTO {
 	}
 	@Override
 	public String toString() {
-		return "NaverRatingDTO [MCODE=" + MCODE + ", naver_mtitle=" + naver_mtitle + ", pubDate=" + pubDate
+		return "NaverRatingDTO [mcode=" + mcode + ", naver_mtitle=" + naver_mtitle + ", pubDate=" + pubDate
 				+ ", user_rating=" + user_rating + "]";
 	}
-	public String getMCODE() {
-		return MCODE;
+	public String getmcode() {
+		return mcode;
 	}
-	public void setMCODE(String mCODE) {
-		MCODE = mCODE;
+	public void setmcode(String mcode) {
+		this.mcode = mcode;
 	}
 	public String getNaver_mtitle() {
 		return naver_mtitle;

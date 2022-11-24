@@ -14,8 +14,6 @@
 				<ul class="tab-links">
 					<li class="active"><a href="#tab1-h2">#Now showing</a></li>
 					<li><a href="#tab2-h2">#Coming soon</a></li>
-					<li><a href="#tab3-h2"> #Top rated </a></li>
-					<li><a href="#tab4-h2">#Most reviewed</a></li>
 				</ul>
 				<div class="tab-content">
 
@@ -81,63 +79,9 @@
 					</div>
 					<!-- END | #Coming soon -->
 
-					<!-- BEGIN | #Top rated -->
-					<div id="tab3-h2" class="tab">
-						<div class="row">
-							<div class="slick-multiItem2">
-								<div class="slide-it">
-									<div class="movie-item">
-										<div class="mv-img">
-											<img src="images/uploads/mv-it5.jpg" alt="">
-										</div>
-										<div class="hvr-inner">
-											<a href="moviesingle.html">Read more <i
-												class="ion-android-arrow-dropright"></i></a>
-										</div>
-										<div class="title-in">
-											<h6>
-												<a href="#">Die hard</a>
-											</h6>
-											<p>
-												<i class="ion-android-star"></i><span>7.4</span>/10
-											</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- END | #Top rated  -->
+					
 
-					<!-- BEGIN | #Most reviewed -->
-					<div id="tab4-h2" class="tab">
-						<div class="row">
-							<div class="slick-multiItem2">
-
-								<div class="slide-it">
-									<div class="movie-item">
-										<div class="mv-img">
-											<img src="images/uploads/mv-it8.jpg" alt="">
-										</div>
-										<div class="hvr-inner">
-											<a href="moviesingle.html">Read more <i
-												class="ion-android-arrow-dropright"></i></a>
-										</div>
-										<div class="title-in">
-											<h6>
-												<a href="#">Die hard</a>
-											</h6>
-											<p>
-												<i class="ion-android-star"></i><span>7.4</span>/10
-											</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- END | #Most reviewed -->
-
+					
 				</div>
 			</div>
 			<div class="title-hd">
@@ -146,10 +90,8 @@
 			</div>
 			<div class="tabs">
 				<ul class="tab-links-2">
-					<li class="active"><a href="#tab21-h2">#Popular</a></li>
-					<li><a href="#tab22-h2">#Coming soon</a></li>
-					<li><a href="#tab23-h2"> #Top rated </a></li>
-					<li><a href="#tab24-h2">#Most reviewed</a></li>
+					<li><a href="#tab3-h2"> #Top rated </a></li>
+					<li><a href="#tab4-h2">#Most reviewed</a></li>
 				</ul>
 				<div class="tab-content">
 					<div id="tab21-h2" class="tab active">

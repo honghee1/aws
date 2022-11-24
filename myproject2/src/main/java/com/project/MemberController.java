@@ -22,7 +22,10 @@ import com.project.Service.movieService;
 import com.project.dto.AdminDTO;
 import com.project.dto.CinemaDTO;
 import com.project.dto.MemberDTO;
+import com.project.dto.MovieDTO;
 import com.project.dto.QnADTO;
+import com.project.vo.Criteria;
+import com.project.vo.PageMaker;
 import com.project.vo.PaggingVO;
 
 
@@ -197,7 +200,7 @@ public class MemberController {
 		String address = address1 + "/" + address2 + "/" + address3;
 		dto.setAddress(address);
 		dto.setUserTel(userTel);
-		System.out.println(dto);
+		System.out.println("1a2sd1a2sd1a2s32"+dto);
 		service.updateMember(dto);
 		model.addAttribute("page", "main_body.jsp");
 		return "main_index";
@@ -281,16 +284,19 @@ public class MemberController {
 	}
 	
 	@RequestMapping("memberProfile.do")
-	public String memberProfile(@RequestParam(name = "pageNo", defaultValue = "1") int pageNo, String userEmail, Model model) {
+	public String memberProfile(String userEmail, Model model,Criteria cri) {
 		MemberDTO dto = service.selectMemberProfile(userEmail);
 		String[] arr = dto.getAddress().split("/");
-		System.err.println(userEmail);
-		List<QnADTO> qna = qnaservice.selectQna(userEmail, pageNo);
-		System.out.println(qna.toString());
-		int count = qnaservice.countQna(userEmail);
-		PaggingVO vo = new PaggingVO(count, pageNo, 5 ,5);
+		System.out.println(userEmail);
 		
-		model.addAttribute("pagging", vo);
+		PageMaker pageMaker = new PageMaker();
+	    pageMaker.setCri(cri);
+	    pageMaker.setTotalCount(qnaservice.countQna(userEmail));
+	    List<QnADTO> qna = qnaservice.selectQna(userEmail,cri);
+		
+		
+		
+		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("qna", qna);
 		model.addAttribute("dto", dto);
 		model.addAttribute("address1", arr[0]);
@@ -303,7 +309,7 @@ public class MemberController {
 	
 	@RequestMapping("/memberUpdate.do")
 	public void memberUpdate(MemberDTO dto, String address1, String address2, String address3, HttpServletResponse response) throws IOException {
-		System.out.println(dto.toString());
+		System.out.println("---------------------"+dto.toString());
 		String address = address1 + "/" + address2 + "/" + address3;
 		dto.setAddress(address);
 		int result = service.adminMemberUpdate(dto);
@@ -332,8 +338,10 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/updateQnaResponse.do")
-	public void updateQnaResponse(QnADTO dto, int qno, String qnaTitle, String response, HttpServletResponse script) throws IOException {
+	public void updateQnaResponse(QnADTO dto, int qno, String qnaTitle, String response, String userEmail,HttpServletResponse script) throws IOException {
 		int result = qnaservice.updateQnaResponse(qno, response);
+		System.out.println(dto);
+		System.out.println(userEmail+"a12sd35");
 		script.setContentType("text/html;charset=utf-8");
 		if(result == 1)
 			script.getWriter().write(

@@ -69,7 +69,7 @@ public class MovieController {
 	
 	@RequestMapping("/NowShowingMovieList.do")
 	public String moviegrid(Model model,Criteria cri) {
-		 PageMaker pageMaker = new PageMaker();
+		 	PageMaker pageMaker = new PageMaker();
 		    pageMaker.setCri(cri);
 		    pageMaker.setTotalCount(movieservice.countNowShowingMovieListTotal());
 		    List<MovieDTO> NowShowingMovieList = movieservice.selectNowShowingMovieList(cri);
@@ -162,13 +162,13 @@ public class MovieController {
 			scdto.setEnddate("0000-00-00");
 		}
 		dto.setTrailer(dto.getTrailer().substring(dto.getTrailer().lastIndexOf("/")+1));
+		System.out.println(dto.getTrailer().substring(dto.getTrailer().lastIndexOf("/")+1));
 		if (update != null) {
 			dto.setMcode(update);
 			scdto.setmcode(update);
-			ndto.setMCODE(update);
+			ndto.setmcode(update);
 			movieservice.updateMovie(dto, scdto,ndto);
-			// 파일 업로드
-			// 저장할 경로
+			
 			String root = "/var/lib/tomcat9/webapps/upload/";
 			File userRoot = new File(root);
 			if (!userRoot.exists())
@@ -264,6 +264,86 @@ public class MovieController {
 			}
 			return "close";
 		}
+	}
+	
+	@RequestMapping("/UpdateMovie.do")
+	public String UpdateMovie(Model model, MovieDTO dto, ScreenMovieDTO scdto, MultipartHttpServletRequest request,
+			 int[] newfileindex, int[] oldfile,NaverRatingDTO ndto){
+		if(scdto.getStartdate().length()==0) {
+			scdto.setStartdate("0000-00-00");
+		}
+		if(scdto.getEnddate().length()==0) {
+			scdto.setEnddate("0000-00-00");
+		}
+		dto.setTrailer(dto.getTrailer().substring(dto.getTrailer().lastIndexOf("/")+1));
+		System.out.println(dto);
+		System.out.println(scdto);
+		System.out.println(ndto);
+		movieservice.updateMovie(dto, scdto,ndto);
+		// 파일 업로드
+		// 저장할 경로
+		String root = "/var/lib/tomcat9/webapps/upload/";
+		File userRoot = new File(root);
+		if (!userRoot.exists())
+			userRoot.mkdirs();
+		String mcode = dto.getMcode();
+		List<MultipartFile> fileList = request.getFiles("file");
+		List<MultipartFile> newfileList = request.getFiles("newfile");
+		int i = 1;
+		int nf = 0;
+		if (newfileindex != null) {
+			nf = newfileindex[0];
+		}
+		/*
+		 * for(int ii = 0;ii<=4;ii++) { System.out.println("asd"+oldfile[ii]);
+		 * System.out.println("asd"+newfileindex[i]); }
+		 */
+		for (MultipartFile f : fileList) {
+			/*
+			 * if (f.getOriginalFilename() != "") { i++; continue; }
+			 */
+			String originalFileName = f.getOriginalFilename();
+			if (f.getSize() == 0) {
+				i++;
+				continue;
+			}
+			File uploadFile = new File(root  +"/"+ originalFileName);
+			movieservice.deleteFileList(mcode, i);
+			movieservice.insertFileList(new FileDTO(uploadFile, mcode, i));
+			i++;
+			try {
+				f.transferTo(uploadFile);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		if (newfileindex != null) {
+			int index = 0;
+			for (MultipartFile f : newfileList) {
+				String originalFileName = f.getOriginalFilename();
+				if (f.getSize() == 0)
+					continue;
+				File uploadFile = new File(root +"/"+  originalFileName);
+				movieservice.insertFileList(new FileDTO(uploadFile, mcode, newfileindex[index]));
+				nf++;
+				try {
+					f.transferTo(uploadFile);
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				index++;
+			}
+		}
+		
+			List<MovieDTO> list = movieservice.selectAllMovieList();
+			model.addAttribute("list", list);
+			return "redirect:/select_all_movielist.do";
+		
+		
 	}
 	
 	@RequestMapping("/movieView.do")

@@ -30,7 +30,7 @@ public class movieService {
 		String mcode = mapper.selectMovieCode();
 		dto.setMcode(mcode);
 		scdto.setmcode(mcode);
-		ndto.setMCODE(mcode);
+		ndto.setmcode(mcode);
 		mapper.insertMovie(dto);
 		if (scdto.getStartdate() == null) {
 			scdto.setStartdate("");
@@ -102,7 +102,10 @@ public class movieService {
 	public String updateMovie(MovieDTO dto, ScreenMovieDTO scdto,NaverRatingDTO ndto) {
 		String mcode = mapper.selectMovieCode();
 		mapper.updateMovie(dto);
-		mapper.updateMovieSchedule(scdto);
+		int result = mapper.updateMovieSchedule(scdto);
+		if(result == 0) {
+			mapper.insertMovieSchedule(scdto);
+		}
 		mapper.updateNaverRating(ndto);
 		return mcode;
 	}

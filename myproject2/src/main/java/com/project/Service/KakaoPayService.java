@@ -34,7 +34,10 @@ public class KakaoPayService {
 		con.setDoOutput(true);
 		System.out.println("item_name : " + item_name + "count : " + 1 + "price : " + BookingReadyInfo.get("totalprice"));
 		String item = URLEncoder.encode(item_name, "UTF-8");
-		/*
+		
+		
+		
+		/* aws ec2 서버용
 		 * String param = "cid=TC0ONETIME&partner_order_id=order_id" +
 		 * "&partner_user_id=user_id&item_name=" + item + "&quantity=" +
 		 * String.valueOf(1) + "&total_amount=" + jObject.get("totalprice") +

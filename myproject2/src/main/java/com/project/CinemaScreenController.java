@@ -18,7 +18,10 @@ import com.project.Service.BookingService;
 import com.project.Service.ScreenService;
 import com.project.Service.movieService;
 import com.project.dto.CinemaDTO;
+import com.project.dto.MovieDTO;
 import com.project.dto.ScreenDTO;
+import com.project.vo.Criteria;
+import com.project.vo.PageMaker;
 import com.project.vo.PaggingVO;
 
 @Controller
@@ -35,21 +38,21 @@ public class CinemaScreenController {
 	}
 
 	@RequestMapping("/cinemaManagementView.do")
-	public String cinemaManagementView(@RequestParam(name = "pageNo",defaultValue = "1")int pageNo, Model model, String cinemacode, HttpSession session) {
+	public String cinemaManagementView(Criteria cri, Model model, String cinemacode, HttpSession session) {
 		
-		List<ScreenDTO> list = screenservice.adminselectScreenList(cinemacode, pageNo);
+		PageMaker pageMaker = new PageMaker();
+	    pageMaker.setCri(cri);
+	    pageMaker.setTotalCount(screenservice.selectAllCount(cinemacode));
+		
+		List<ScreenDTO> list = screenservice.adminselectScreenList(cinemacode, cri);
 		for(int i=0;i<list.size();i++) {
 			int n = screenservice.selectAllSeat(list.get(i).getScreenCode());
 			list.get(i).setAllseat(n);
 		}
 		
 		//페이징 처리
-		int count = screenservice.selectAllCount(cinemacode);
-		PaggingVO vo = new PaggingVO(count, pageNo, 5, 3);
-		model.addAttribute("pagging", vo);
-		model.addAttribute("pageNo", pageNo);
 		ScreenDTO dto = screenservice.selectCinemaInfo(cinemacode);
-		
+		 model.addAttribute("pageMaker", pageMaker);
 		session.setAttribute("name", dto.getCinemaName());
 		model.addAttribute("dto", dto);
 		model.addAttribute("list", list);

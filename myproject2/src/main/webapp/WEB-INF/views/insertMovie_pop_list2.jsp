@@ -99,7 +99,7 @@ td, th {
 		</div>
 
 	</div>
-	<form id=insert_movie action=insert_movie.do?close=close method=post>
+	<form id=insert_movie action=insert_movie.do method=post>
 	</form>
 </body>
 </html>

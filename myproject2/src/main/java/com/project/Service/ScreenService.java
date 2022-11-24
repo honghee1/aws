@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.project.dto.CinemaDTO;
 import com.project.dto.ScreenDTO;
 import com.project.mapper.ScreenMapper;
+import com.project.vo.Criteria;
 
 
 @Service
@@ -26,10 +27,11 @@ public class ScreenService {
 		return mapper.selectScreenList(map);
 	}
 
-	public List<ScreenDTO> adminselectScreenList(String cinemacode, int pageNo) {
+	public List<ScreenDTO> adminselectScreenList(String cinemacode, Criteria cri) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("cinemacode", cinemacode);
-		map.put("pageNo", pageNo);
+		map.put("pageStart", cri.getPageStart());
+		map.put("perPageNum", cri.getPerPageNum());
 		return mapper.adminselectScreenList(map);
 	}
 

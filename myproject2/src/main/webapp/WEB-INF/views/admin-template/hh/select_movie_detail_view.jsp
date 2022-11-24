@@ -412,11 +412,12 @@ display: flex;
 </head>
 <body>
 <h2>영화 상세 정보 페이지</h2>
-		<form id="file_form" action="uploadmovie.do" method="post" enctype="multipart/form-data">
+		<form id="file_form" action="UpdateMovie.do" method="post" enctype="multipart/form-data">
 		
 		<div class="search_container">
 		<div class="movie_info_container">
 		<div class="form-group">
+		<input type="hidden" name="mcode" value=${requestScope.movie.mcode }>
 		<input type="text" name="title" id="movie_title_kr" value="${requestScope.movie.title }" class="form-input border-bottom" placeholder="영화 제목(한)">
 		<span class="border-bottom-animation left"></span>
 		</div>
@@ -524,7 +525,8 @@ display: flex;
 		<br>
 		<button type="button" id="plus">+</button> <button type="button" id="minus">-</button>
 		<p><input type="hidden" name="update" value=${requestScope.movie.mcode }></p>
-		<p><button>저장</button></p><p><button>뒤로가기</button></p>
+		<p><button>저장</button></p>
+		<p><button>뒤로가기</button></p>
 		</section>
 		</div>
 	</form>

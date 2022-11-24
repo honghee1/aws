@@ -5,13 +5,13 @@
 <mapper namespace="com.project.mapper.QnAMapper">
 	<insert id="insertQnA" parameterType="qna">
 		insert into qna(qno, qna_title, qna_area, user_email, qna_quiryType, qna_content, qna_date) 
-		values(qno.nextval, #{qnaTitle}, #{qnaArea}, #{userEmail}, #{qnaQuiryType}, #{qnaContent}, sysdate)
+		values((SELECT QNO_nextval('QNO_NEXT.val') FROM DUAL), #{qnaTitle}, #{qnaArea}, #{userEmail}, #{qnaQuiryType}, #{qnaContent}, sysdate())
 	</insert>
 	
 	<select id="selectQna" parameterType="map" resultType="qna">
-		select * from (select ceil(rownum / 5) as pageNo, q.qno, q.qna_title as qnaTitle, q.qna_area as qnaArea, 
+		select p.* from (select q.qno, q.qna_title as qnaTitle, q.qna_area as qnaArea, 
 		q.user_email as userEmail, qq.quirytype as qnaQuiry, q.qna_content as qnaContent, q.response as response, q.qna_date as qnadate from qna q, qnaquirytype qq 
-		where q.qna_quirytype = qq.quiry_no) where pageNo = #{pageNo} and useremail = #{userEmail}
+		where q.qna_quirytype = qq.quiry_no)as p where useremail = #{userEmail}  ORDER BY qno DESC LIMIT #{pageStart}, #{perPageNum}
 	</select>
 	
 	<select id="countQna" parameterType="map" resultType="int">

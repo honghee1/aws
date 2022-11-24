@@ -17,7 +17,7 @@
                 <ul>
                     <li><label for="id">이메일</label></li>
                     <li class="border_bottom">
-                        <input type="text" name="id" id="id" placeholder="아이디를 입력하세요">
+                        <input type="text" name="id" id="id"  placeholder="아이디를 입력하세요">
                         <span class="sub_txt"><select name="email">
                         	<option value="@gmail.com">gmail.com</option>
                         	<option value="@naver.com">naver.com</option>
@@ -33,7 +33,8 @@
                     </ul>
                     <li><label for="pass">비밀번호</label></li>
                     <li class="border_bottom">
-                        <input type="password" name="userPasswd" id="pass" placeholder="비밀번호(8~32자리)">
+                    	<input type="password" id="dummy" style="display: flex; width:0px; height:0px; border: 0;">
+                        <input type="password" name="userPasswd" id="pass" placeholder="비밀번호(8~32자리)" autocomplete="off">
                     </li>
                     <li class="border_bottom">
                         <input type="password" id="pass_chk" placeholder="비밀번호 재입력">
@@ -41,6 +42,7 @@
                     <li class="pass_check"></li>
                     <li><label for="name">이름</label></li>
                     <li class="border_bottom">
+                    <input type="text" name="userName" id="dummy" id="name1" style="display: flex; width:0px; height:0px; border: 0;">
                         <input type="text" name="userName" id="name1" placeholder="이름을 입력하세요">
                     </li>
                     <li><label for="nick">닉네임</label></li>
@@ -180,7 +182,17 @@
             return true;
         }
        
+        function checkbrith(){
+            if($('#brith').val() == "") {
+            	return false;
+            }else if($('#brith').val() != ""){
+            	return true;
+            }
+        }
+        
+        
         window.onload = () => {
+        	console.log($('#brith').val())
             var frm = document.querySelector("#frm");
             var id = document.querySelector("#id");
             var pass = document.querySelector('#pass');
@@ -193,12 +205,18 @@
 
 
             frm.onsubmit = (e) => {
-                if(!idCheck())
+                if(!idCheck()){
                     e.preventDefault();
-                else if(!passCheck())
+                }
+                else if(!passCheck()){
                     e.preventDefault();
-                else if(!checkNick)
+                }
+                else if(!checkNick){
                     e.preventDefault();
+                }else if(!checkbrith()){
+                	alert('생년월일을 입력해주시길바랍니다');
+                    e.preventDefault();
+                }
 
             }
         }
