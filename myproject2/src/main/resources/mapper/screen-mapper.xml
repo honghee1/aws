@@ -67,6 +67,9 @@
 	<update id="updateSchedule" parameterType="screen">
 		update time set moviedate = #{movieDate}, starttime = #{startTime}, endtime = #{endTime} where timecode = #{timeCode}
 	</update>
+	<delete id="deleteSchedule" parameterType="screen">
+		delete from time where timecode = #{timeCode}
+	</delete>
 	
 	<insert id="insertScreenSchedule" parameterType="screen">
 		insert into time values((select TIME_nextval('select_TIMEcode') from dual), #{startTime}, #{endTime}, #{movieDate}, 1, #{screenCode}, #{mcode})

@@ -45,7 +45,7 @@
 		cursor: pointer;
 	}
 	.btn-td{
-		max-width: 52px;
+		max-width: 60px;
 		text-align: center;
 	}
 	.align-date{
@@ -112,7 +112,7 @@
 												<td class="time-td align-date"><input type="date" name="movieDate"></td>
 												<td class="sm-th align-date"><input class="toptimepicker" type="text" name="startTime" placeholder="00:00"></td>
 												<td class="sm-th align-date"><input class="topendpicker" type="text" name="endTime" readonly="readonly" placeholder="00:00"></td>
-												<td class="sm-th align-btn"><a href="screenScheduleUpdateView.do"><button type="button" class="btn-screenScheduleUpdate btn-warning btn-sm text-white">상영작 관리</button></a><button type="submit" class="btn-screenSchedulePlus btn-warning btn-sm text-white">추가하기</button></td>
+												<td class="sm-th align-btn"><button type="submit" class="btn-screenSchedulePlus btn-warning btn-sm text-white">추가하기</button></td>
 											</tr>
 										</thead>
 									</table>
@@ -140,14 +140,15 @@
 												<th></th>
 											</tr>
 											<c:forEach var="s" items="${requestScope.timelist }">
-											<form action="updateSchedule.do" method="post">
+											<form  action="" id="form" method="post">
 											<tr>
 												<td class="input-align">${s.timeCode }<input type="hidden" name="timeCode" value="${s.timeCode }"><input type="hidden" name="screenCode" value="${s.screenCode }"></td>
 												<td>${s.title }<br><small class="text-muted">Movie Code - ${s.mcode }</small> </td>
 												<td class="time-td input-align"><input type="date" name="movieDate" value="${s.movieDate }"></td>
 												<td class="time-td input-align"><input class="timepicker" type="text" name="startTime" value="${s.startTime }"><input type="hidden" name="runTime" value="${s.runTime }" placeholder="00:00"></td>
 												<td class="time-td input-align"><input class="endpicker" type="text" name="endTime" value="${s.endTime }" readonly="readonly" placeholder="00:00"></td>
-												<td class="btn-td"><button type="submit" class="btn-update btn-warning btn-sm text-white">수정하기</button></td>
+												<td class="btn-td"><button type="submit" id="updateScreenSchedule" class="btn-update btn-warning btn-sm text-white">수정하기</button></td>
+												<td class="btn-td"><button type="submit" id="deleteScreenSchedule" class="btn-update btn-warning btn-sm text-white">삭제하기</button></td>
 											</tr>
 											</form>
 											</c:forEach>
@@ -247,6 +248,16 @@
 		$(this).val(resultTime);
 		$(this).parent().next().find("input[name='endTime']").val(endTime);
 	})
+	
+		$('#updateScreenSchedule').click(function(){
+			 $("#form").attr('action','updateSchedule.do');
+			 $("#form").submit();   
+		});
+		$('#deleteScreenSchedule').click(function(){
+			 $("#form").attr('action','deleteSchedule.do');
+			 $("#form").submit();   
+		});
+		
 </script>
 		
 </body>

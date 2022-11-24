@@ -220,6 +220,19 @@ public class CinemaScreenController {
 			response.getWriter().write(
 					"<script>alert('상영 일정 수정에 실패하였습니다.');</script>");
 	}
+	@RequestMapping("/deleteSchedule.do")
+	public void deleteSchedule(ScreenDTO dto, HttpServletResponse response, HttpServletRequest request,String screenCode) 
+			throws IOException {
+		System.out.println(dto);
+		int result = screenservice.deleteSchedule(dto);
+		response.setContentType("text/html;charset=utf-8");
+		if(result == 1)
+			response.getWriter().write(
+					"<script>alert('상영을 삭제하였습니다.');location.href='screenScheduleView.do?screenCode="+dto.getScreenCode()+"';</script>");
+		else
+			response.getWriter().write(
+					"<script>alert('상영 일정 삭제에 실패하였습니다.');</script>");
+	}
 	
 	@RequestMapping("/screenSchedulePlus.do")
 	public void screenSchedulePlus(String screenCode,ScreenDTO dto, HttpServletResponse response, HttpServletRequest request) 

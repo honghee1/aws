@@ -115,4 +115,8 @@ public class ScreenService {
 	public List<ScreenDTO> selectMovieSchedule() {
 		return mapper.selectMovieSchedule();
 	}
+
+	public int deleteSchedule(ScreenDTO dto) {
+		return mapper.deleteSchedule(dto);
+	}
 }

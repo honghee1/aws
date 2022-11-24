@@ -55,4 +55,6 @@ public interface ScreenMapper {
 
 	List<ScreenDTO> selectMovieSchedule();
 
+	int deleteSchedule(ScreenDTO dto);
+
 }

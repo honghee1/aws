@@ -103,8 +103,10 @@ public class movieService {
 		String mcode = mapper.selectMovieCode();
 		mapper.updateMovie(dto);
 		int result = mapper.updateMovieSchedule(scdto);
+		System.out.println(result+"----------------------");
 		if(result == 0) {
 			mapper.insertMovieSchedule(scdto);
+			System.out.println("123asd1a2sd31a321d");
 		}
 		mapper.updateNaverRating(ndto);
 		return mcode;
