@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Service;
 
 import com.project.dto.AdminDTO;
@@ -96,6 +98,11 @@ public class MemberService {
 		map.put("adminId", adminId);
 		map.put("adminPasswd", adminPasswd);
 		return mapper.adminLogin(map);
+	}
+
+	public Map<String, String> insertMemberMap(@Valid MemberDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

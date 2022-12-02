@@ -1,28 +1,58 @@
 package com.project.dto;
 
+import javax.validation.constraints.NotBlank;
+
 import org.apache.ibatis.type.Alias;
 
 @Alias("movie")
 public class MovieDTO {
 	private String mcode;
+	
+	@NotBlank(message = "제목을 입력해주세요.")
 	private String title;
+	
+	@NotBlank(message = "영제목을 입력해주세요.")
 	private String titleEng;
+	
+	@NotBlank(message = "감독을 입력해주세요.")
 	private String directorNm;
 	private String directorEnNm;
+	
+	@NotBlank(message = "한명 이상의 배우를 입력해주세요.")
 	private String actorNm;
 	private String actorEnNm;
+	
+	@NotBlank(message = "제작사를 입력해주세요.")
 	private String company;
+	
+	@NotBlank(message = "국가를 입력해주세요.")
 	private String nation;
+	
+	@NotBlank(message = "하나이상의 장르를 입력해주세요.")
 	private String genre;
+	
+	@NotBlank(message = "관람등급 입력해주세요.")
 	private String rating;
+	
+	@NotBlank(message = "상영시간을 입력해주세요.")
 	private String runtime;
+	
+	@NotBlank(message = "개봉일을 입력해주세요.")
 	private String repRlsDate;
+	
+	@NotBlank(message = "하나이상의 키워드를 입력해주세요.")
 	private String keywords;
+	
+	@NotBlank(message = "줄거리를 입력해주세요.")
 	private String plotText;
+	
 	private String kmdbUrl;
+	
 	private String trailer;
 	
+	@NotBlank(message = "상영시작일을 지정해주세요.")
 	private String startdate;
+	@NotBlank(message = "상영종료일을 지정해주세요.")
 	private String enddate;
 	
 	private String user_rating;

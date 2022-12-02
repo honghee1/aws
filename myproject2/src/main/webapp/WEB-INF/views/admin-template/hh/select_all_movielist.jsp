@@ -109,7 +109,7 @@ td, th {
 								<input  class="filled-in chk-col-yellow" type="checkbox" id="horns" name="user_CheckBox">
 								</td>
 								<td>${Movielist.mcode }</td>
-								<td><a href="movieView.do?mcode=${Movielist.mcode }&update=y">
+								<td><a href="movieView.do?mcode=${Movielist.mcode }">
 										${Movielist.title }</a></td>
 								<td> ${Movielist.startdate}</td>
 								<td> ${Movielist.enddate}</td>

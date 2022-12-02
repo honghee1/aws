@@ -532,5 +532,9 @@ display: flex;
 	</form>
 	<form id='form'  method='post' target=POP>
 	</form>
+	<script>
+	if('${msg}'!="")
+    alert('${msg}');
+	</script>
 </body>
 </html>

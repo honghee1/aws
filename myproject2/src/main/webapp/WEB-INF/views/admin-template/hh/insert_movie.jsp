@@ -544,15 +544,15 @@ display: flex;
 		<div class="search_container">
 		<div class="movie_info_container">
 		<div class="form-group">
-		<input type="text" name="title" id="movie_title_kr" value="${requestScope.movie.title }" class="form-input border-bottom" placeholder="영화 제목(한)">
+		<input type="text" name="title" id="movie_title_kr" value="${requestScope.movie.title }" class="form-input border-bottom" placeholder="영화 제목(한) *필수">
 		<span class="border-bottom-animation left"></span>
 		</div>
 		<div class="form-group">
-		<input type="text" name="titleEng" id="movie_title_eng" value="${requestScope.movie.titleEng }" class="form-input border-bottom" placeholder="영화 제목(영)">
+		<input type="text" name="titleEng" id="movie_title_eng" value="${requestScope.movie.titleEng }" class="form-input border-bottom" placeholder="영화 제목(영) *필수">
 		<span class="border-bottom-animation left"></span>
 		</div>
 		<div class="form-group">
-		<input type="text" name="directorNm" id="directorNm" value="${requestScope.movie.directorNm }"class="form-input border-bottom" placeholder="감독(한)">
+		<input type="text" name="directorNm" id="directorNm" value="${requestScope.movie.directorNm }"class="form-input border-bottom" placeholder="감독(한) *필수">
 		<span class="border-bottom-animation left"></span>
 		</div>
 		<div class="form-group">
@@ -560,7 +560,7 @@ display: flex;
 		<span class="border-bottom-animation left"></span>
 		</div>
 		<div class="form-group" style="width: 83%">
-		<input type="text" name="actorNm" id="actorNm" value="${requestScope.movie.actorNm }" class="form-input border-bottom" placeholder="배우(한)">
+		<input type="text" name="actorNm" id="actorNm" value="${requestScope.movie.actorNm }" class="form-input border-bottom" placeholder="배우(한) *필수">
 		<span class="border-bottom-animation left"></span>
 		</div>
 		<div class="form-group" style="width: 83%">
@@ -568,27 +568,27 @@ display: flex;
 		<span class="border-bottom-animation left"></span>
 		</div>
 		<div class="form-group" style="width: 83%">
-		<input type="text" name="company" id="company" value="${requestScope.movie.company }" class="form-input border-bottom" placeholder="제작사">
+		<input type="text" name="company" id="company" value="${requestScope.movie.company }" class="form-input border-bottom" placeholder="제작사 *필수">
 		<span class="border-bottom-animation left"></span>
 		</div>
 		<div class="form-group" style="width: 83%">
-		<input type="text" name="keywords" id="keywords" value="${requestScope.movie.keywords }"  class="form-input border-bottom" placeholder="키워드">
+		<input type="text" name="keywords" id="keywords" value="${requestScope.movie.keywords }"  class="form-input border-bottom" placeholder="키워드 *필수">
 		<span class="border-bottom-animation left"></span>
 		</div>
 		<div class="form-group">
-		<input type="text"  name="nation" id="nation" value="${requestScope.movie.nation }" class="form-input border-bottom" placeholder="국가">
+		<input type="text"  name="nation" id="nation" value="${requestScope.movie.nation }" class="form-input border-bottom" placeholder="국가 *필수">
 		<span class="border-bottom-animation left"></span>
 		</div>
 		<div class="form-group">
-		<input type="text" name="genre" id="genre" value="${requestScope.movie.genre }" class="form-input border-bottom" placeholder="장르">
+		<input type="text" name="genre" id="genre" value="${requestScope.movie.genre }" class="form-input border-bottom" placeholder="장르 *필수" >
 		<span class="border-bottom-animation left"></span>
 		</div>
 		<div class="form-group">
-		<input type="text" name="runtime" id="runtime" value="${requestScope.movie.runtime }" class="form-input border-bottom" placeholder="상영시간">
+		<input type="text" name="runtime" id="runtime" value="${requestScope.movie.runtime }" class="form-input border-bottom" placeholder="상영시간 *필수">
 		<span class="border-bottom-animation left"></span>
 		</div>
 		<div class="form-group">
-		<input type="text" name="repRlsDate" id="repRlsDate" value="${requestScope.movie.repRlsDate }" class="form-input border-bottom" placeholder="개봉일">
+		<input type="text" name="repRlsDate" id="repRlsDate" value="${requestScope.movie.repRlsDate }" class="form-input border-bottom" placeholder="개봉일 *필수">
 		<span class="border-bottom-animation left"></span>
 		</div>
 		<div class="form-group" style="width: 41%">
@@ -596,15 +596,15 @@ display: flex;
 		<span class="border-bottom-animation left"></span>
 		</div>
 		<div class="form-group">
-		<input type="date" name="startdate" id="startdate" value="${requestScope.scdto.startdate }" class="form-input border-bottom" placeholder="상영 시작 날짜">
+		<input type="date" name="startdate" id="startdate" value="${requestScope.scdto.startdate }" class="form-input border-bottom" placeholder="상영 시작 날짜 *필수">
 		<span class="border-bottom-animation left"></span>
 		</div>
 		<div class="form-group">
-		<input type="date" name="enddate" id="enddate" value="${requestScope.scdto.enddate }" class="form-input border-bottom" placeholder="상영 종료 날짜">
+		<input type="date" name="enddate" id="enddate" value="${requestScope.scdto.enddate }" class="form-input border-bottom" placeholder="상영 종료 날짜 *필수">
 		<span class="border-bottom-animation left"></span>
 		</div>
 		<div class="form-group" style="width: 41%">
-		<input type="text"  name="rating" id="rating" value="${requestScope.movie.rating }" class="form-input border-bottom" placeholder="관람 등급">
+		<input type="text"  name="rating" id="rating" value="${requestScope.movie.rating }" class="form-input border-bottom" placeholder="관람 등급 *필수">
 		<span class="border-bottom-animation left"></span>
 		</div>
 		<div class="form-group" style="width: 41%">
@@ -614,7 +614,7 @@ display: flex;
 		</div>
 		<div class="movie_flot_container">
 		<div class="form-group" >
-		<p>줄거리</p>
+		<p>줄거리 *필수</p>
 		<textarea name="plotText"  id="plotText" rows="15" cols="65" name="plotText"  placeholder="줄거리">${requestScope.movie.plotText }</textarea>
 		</div>
 		<p>네이버 평점 연결</p>
@@ -659,5 +659,10 @@ display: flex;
 	</form>
 	<form id='form'  method='post' target=POP>
 	</form>
+	
+	<script>
+	if('${msg}'!="")
+    alert('${msg}');
+	</script>
 </body>
 </html>

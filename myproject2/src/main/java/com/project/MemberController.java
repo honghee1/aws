@@ -4,13 +4,17 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,11 +26,9 @@ import com.project.Service.movieService;
 import com.project.dto.AdminDTO;
 import com.project.dto.CinemaDTO;
 import com.project.dto.MemberDTO;
-import com.project.dto.MovieDTO;
 import com.project.dto.QnADTO;
 import com.project.vo.Criteria;
 import com.project.vo.PageMaker;
-import com.project.vo.PaggingVO;
 
 
 
@@ -243,14 +245,10 @@ public class MemberController {
 	
 	@RequestMapping("findPasswd.do")
 	public ResponseEntity<List<MemberDTO>> findPasswd(String userEmail, String userName, String userTel) {
-//		System.out.println(userEmail);
-//		System.out.println(userName);
-//		System.out.println(userTel);
 		List<MemberDTO> list = service.selectUserPasswd(userEmail, userName, userTel);
 		if(list.size() > -1) {
 			list = service.selectUserPasswd(userEmail, userName, userTel);
 		}
-//		System.out.println(list.toString());
 		return ResponseEntity.ok(list);
 	}
 	
@@ -390,13 +388,23 @@ public class MemberController {
 		return ResponseEntity.ok(result);
 	}
 	
-	@RequestMapping("adminLogin.do")
-	public void adminMain(String adminId, String adminPasswd, HttpSession session, Model model, HttpServletResponse response) throws IOException {
-		System.out.println("23123123"+adminPasswd);
-		AdminDTO adto = service.adminLogin(adminId, adminPasswd);
-		System.out.println(adto);
-		model.addAttribute("page", "main_body.jsp");
+	@RequestMapping("/adminLogin.do")
+	public void adminMain(@Valid  AdminDTO adto, Errors errors, HttpSession session, Model model, HttpServletResponse response) throws IOException {
 		response.setContentType("text/html;charset=utf-8");
+		System.out.println("2");
+		System.out.println(adto.getAdminId());
+		if(errors.hasErrors()) {
+			 Map<String, String> validatorResult = new HashMap<>();
+			System.out.println("1");
+			session.setAttribute("login", false);
+			 for (FieldError error : errors.getFieldErrors()) {
+		            String validKeyName = String.format("valid_%s", error.getField());
+		            validatorResult.put(validKeyName, error.getDefaultMessage());
+		            response.getWriter().write("<script>alert('"+error.getDefaultMessage()+"');location.href='/';</script>");
+		        }
+		}
+		adto = service.adminLogin(adto.getAdminId(), adto.getAdminPasswd());
+		model.addAttribute("page", "main_body.jsp");
 		if(adto != null) {
 			session.setAttribute("adminlogin", true);
 			session.setAttribute("adto", adto);
@@ -411,11 +419,9 @@ public class MemberController {
 	
 	@RequestMapping("/admin.do")
 	public String admin(String cinemacode, String name, HttpSession session) {
-		List<CinemaDTO> Cinemalist = movieservice.selectCinemaList();
 		session.setAttribute("cinemacode", cinemacode);
 		session.setAttribute("title", "메인 페이지 :: Hello Movie Cinema");
 		session.setAttribute("name", name);
-		session.setAttribute("Cinemalist", Cinemalist);
 		return "admin_index";
 	}
 	

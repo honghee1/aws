@@ -108,7 +108,11 @@ public class movieService {
 			mapper.insertMovieSchedule(scdto);
 			System.out.println("123asd1a2sd31a321d");
 		}
-		mapper.updateNaverRating(ndto);
+		System.out.println(ndto);
+		if(ndto.getNaver_mtitle()!=null) {
+			System.out.println("---*-*-/*-/*-/-*"+ndto);
+			mapper.updateNaverRating(ndto);
+		}
 		return mcode;
 	}
 

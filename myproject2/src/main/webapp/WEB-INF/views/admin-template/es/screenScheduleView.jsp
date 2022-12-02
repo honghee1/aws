@@ -85,7 +85,7 @@
 					<div class="box">
 							<div class="box-body">
 								<div class="table-responsive">
-								<form action="screenSchedulePlus.do" method="post">
+											<form action="screenSchedulePlus.do" method="post">
 									<table id="project-table"
 										class="table table-bordered table-striped display nowrap margin-top-10">
 										<thead>
@@ -110,9 +110,9 @@
 													</select>
 												</td>
 												<td class="time-td align-date"><input type="date" name="movieDate"></td>
-												<td class="sm-th align-date"><input class="toptimepicker" type="text" name="startTime" placeholder="00:00"></td>
+												<td class="sm-th align-date"><input class="toptimepicker" id="startTime" type="text" name="startTime" placeholder="00:00"></td>
 												<td class="sm-th align-date"><input class="topendpicker" type="text" name="endTime" readonly="readonly" placeholder="00:00"></td>
-												<td class="sm-th align-btn"><button type="submit" class="btn-screenSchedulePlus btn-warning btn-sm text-white">추가하기</button></td>
+												<td class="sm-th align-btn"><button  class="btn-screenSchedulePlus btn-warning btn-sm text-white">추가하기</button></td>
 											</tr>
 										</thead>
 									</table>
@@ -140,17 +140,17 @@
 												<th></th>
 											</tr>
 											<c:forEach var="s" items="${requestScope.timelist }">
-											<form  action="" id="form" method="post">
 											<tr>
+											<form  action="" id="form" method="post">
 												<td class="input-align">${s.timeCode }<input type="hidden" name="timeCode" value="${s.timeCode }"><input type="hidden" name="screenCode" value="${s.screenCode }"></td>
 												<td>${s.title }<br><small class="text-muted">Movie Code - ${s.mcode }</small> </td>
-												<td class="time-td input-align"><input type="date" name="movieDate" value="${s.movieDate }"></td>
-												<td class="time-td input-align"><input class="timepicker" type="text" name="startTime" value="${s.startTime }"><input type="hidden" name="runTime" value="${s.runTime }" placeholder="00:00"></td>
+												<td class="time-td input-align"><input type="date" id="movieDate" name="movieDate" value="${s.movieDate }"></td>
+												<td class="time-td input-align"><input class="timepicker" type="text" id="startTime" name="startTime" value="${s.startTime }"><input type="hidden" name="runTime" value="${s.runTime }" placeholder="00:00"></td>
 												<td class="time-td input-align"><input class="endpicker" type="text" name="endTime" value="${s.endTime }" readonly="readonly" placeholder="00:00"></td>
 												<td class="btn-td"><button type="submit" id="updateScreenSchedule" class="btn-update btn-warning btn-sm text-white">수정하기</button></td>
 												<td class="btn-td"><button type="submit" id="deleteScreenSchedule" class="btn-update btn-warning btn-sm text-white">삭제하기</button></td>
-											</tr>
 											</form>
+											</tr>
 											</c:forEach>
 										</thead>
 									</table>
@@ -222,6 +222,7 @@
 		var t = $('.mcode-select option:selected').val().split(",");
 		console.log(t[0]);
 		console.log(t[1]);
+		
 		var startTime = $(this).val().split(":");
 		var runTime = parseInt(startTime[0] * 60) + parseInt(startTime[1]) + parseInt($('.mcode-select option:selected').val().split(",")[1]);
 		var endHour = parseInt(runTime / 60);
@@ -250,8 +251,14 @@
 	})
 	
 		$('#updateScreenSchedule').click(function(){
+			if($("#movieDate").val()!=""){
 			 $("#form").attr('action','updateSchedule.do');
-			 $("#form").submit();   
+			 $("#form").submit();
+			}else if($("#movieDate").val()==""){
+				alert("상영일을 입력해주세요")
+			}else if($(this).closest('tr').children().eq(3).children().val() == '0:undefined'){
+				alert("시작시간을 입력해주세요")
+			}
 		});
 		$('#deleteScreenSchedule').click(function(){
 			 $("#form").attr('action','deleteSchedule.do');
