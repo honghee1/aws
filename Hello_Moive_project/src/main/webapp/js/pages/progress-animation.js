@@ -1,1 +1,0 @@
-$(function(){setInterval(function(){$(".progress").fadeIn("2000").css("right","0");setTimeout(function(){$(".progress").fadeOut("100").css("right","57%")},2000)},5000)});

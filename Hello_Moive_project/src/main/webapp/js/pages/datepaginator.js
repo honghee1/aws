@@ -1,1 +1,0 @@
-$(function(){var a=function(){return{init:function(){$("#paginator1").datepaginator(),$("#paginator2").datepaginator({size:"large"}),$("#paginator3").datepaginator({size:"small"}),$("#paginator4").datepaginator({onSelectedDateChanged:function(b,c){alert("Selected date: "+moment(c).format("Do, MMM YYYY"))}})}}}();jQuery(document).ready(function(){a.init()})});

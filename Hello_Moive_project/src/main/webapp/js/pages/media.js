@@ -1,1 +1,0 @@
-+function(a){a(document).on("click",'.media[data-provide~="selectable"], .media-list[data-provide~="selectable"] .media:not(.media-list-header):not(.media-list-footer)',function(){var b=a(this).find("input");b.prop("checked",!b.prop("checked"));if(b.prop("checked")){a(this).addClass("active")}else{a(this).removeClass("active")}})}(jQuery);
