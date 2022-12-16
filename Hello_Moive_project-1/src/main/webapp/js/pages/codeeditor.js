@@ -1,0 +1,1 @@
+$(function(){var a=ace.edit("editorJS");a.setTheme("ace/theme/monokai");a.getSession().setMode("ace/mode/javascript");var a=ace.edit("editorHTML");a.setTheme("ace/theme/monokai");a.getSession().setMode("ace/mode/html");var a=ace.edit("editorCSS");a.setTheme("ace/theme/monokai");a.getSession().setMode("ace/mode/css")});

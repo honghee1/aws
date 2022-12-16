@@ -3,6 +3,7 @@ package com.project.mapper;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -43,5 +44,9 @@ public interface MemberMapper {
 	int adminDelete(String adminId);
 	// 관리자 로그인
 	AdminDTO adminLogin(HashMap<Object, Object> map);
+	
+	public int insertuser(AdminDTO user) ;
+
+	public Optional<AdminDTO> findByusername(String username);
 	
 }

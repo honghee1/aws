@@ -1,0 +1,268 @@
+@charset "UTF-8";
+	
+.reserve-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    height: 800px;
+    /* border: 1px solid #dddddd; */
+}
+
+.reserve-container>div {
+    border: 1px solid #dddddd;
+}
+
+.reserve-title {
+    border-bottom: 1px solid #dddddd;
+    background-color: rgb(7,24,41);
+    text-align: center;
+    color: #CCE2FF;
+    padding: 5px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.movie-part {
+    width: 284px;
+}
+
+.theater-part {
+    width: 264px;
+}
+
+.day-part {
+    width: 91px;
+}
+
+.time-part {
+    width: 384px;
+}
+
+.sort-wrapper {
+    margin: 10px 6px 6px 10px;
+    /* padding: 3px; */
+    display: flex;
+    border-bottom: 1px solid #dddddd;
+    font-size: 12px;
+}
+
+.sort-wrapper>div {
+    padding: 3px;
+}
+
+.sort-wrapper>div:hover {
+    border-bottom: 1px solid #111111;
+}
+
+.sort-selected {
+    font-weight: bold;
+    border-bottom: 1px solid #111111;
+}
+
+.sort-korean {
+    margin-left: 6px;
+}
+
+.reserve-date {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 770px;
+    overflow: hidden;
+    overflow-x: hidden;
+}
+
+.movie-date-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 2px;
+    color: #abb7c4;
+    background-color: rgb(7,24,41);
+    border-radius: 10px;
+}
+
+.movie-week-of-day {
+    margin-left: 5px;
+    font-size: 10px;
+    width: 12px;
+    height: 22px;
+    line-height: 22px;
+}
+
+.movie-day {
+    text-align: center;
+    width: 34px;
+    height: 22px;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.saturday {
+    color: #31597E;
+    font-weight: bold;
+}
+
+.sunday {
+    color: #AF2D2D;
+    font-weight: bold;
+}
+
+.movie-date-wrapper-active {
+    background-color: rgb(7,24,41);
+    border: 2px solid rgb(220,248,54);
+    border-radius: 10px;
+    
+}
+
+.movie-date-wrapper-active>* {
+    color: rgb(220,248,54);
+
+}
+
+.age-limit{
+	width: 25px;
+	height: 25px;
+}
+
+.movie-list {
+	margin: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border: 2px solid rgb(2,13,24);
+    border-radius: 10px;
+    padding-left: 5px;
+}
+
+.movie-list-active {
+    background-color: rgb(7,24,41);
+    border: 2px solid rgb(220,248,54);
+}
+
+.movie-list-active > a {
+    color: rgb(220,248,54);
+    font-weight: bold;
+}
+.movie-list > a:hover {
+    font-weight: bold ; 
+    color: rgb(220,248,54);
+}
+
+.movie-list-wrapper {
+    padding: 5px 2px;
+    color: #abb7c4;
+    background-color: rgb(2,13,24);
+    border: none;
+    margin-left: 10px;
+}
+
+.screen-list {
+	margin: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border: 2px solid rgb(2,13,24);
+}
+
+.screen-list > a:hover {
+    color: rgb(220,248,54);
+    font-weight: bold;
+}
+
+.screen-list-active {
+    background-color: rgb(7,24,41);
+    border: 2px solid rgb(220,248,54);
+    border-radius: 10px;
+}
+
+.screen-list-wrapper {
+    padding: 5px 2px;
+    color: #abb7c4;
+    background-color: rgb(2,13,24);
+    border: none;
+    margin-left: 10px;
+}
+
+.screen-list-active > a {
+    color: rgb(220,248,54);
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+.time-title{
+    margin: 20px;
+    width: 100%;
+}
+
+.time-title-wrapper{
+	color: #abb7c4;
+    background-color: rgb(2,13,24);
+}
+
+.time-flex{
+	display: flex;
+	flex-flow: row wrap;
+}
+
+.time-list{
+	margin-left: 10px;
+	margin-bottom: 5px;
+	width: calc(calc(100% / 3) - 15px);
+	text-align: center;
+}
+
+.time-list-wrapper{
+	color: #abb7c4;
+    background-color: rgb(2,13,24);
+    margin-left: 5px;
+    border: 1px solid white;
+    padding: 5px;
+    border-radius: 10px;
+}
+.time-list-wrapper:hover{
+	color: #abb7c4;
+	
+}
+.time-list-hidden{
+	color: #abb7c4;
+    background-color: rgb(19,26,53);
+    margin-left: 5px;
+    border: 1px solid white;
+    padding: 5px;
+}
+
+.seat-list-wrapper{
+	color: rgb(220,248,54);
+    background-color: rgb(2,13,24);
+    margin-left: 5px;
+    border: none;
+    padding: 5px;
+    font-size: 10px;
+}
+
+.today-word{
+	color: white;
+}
+.today{
+	margin-top: 20px;
+	color: white;
+	font-size: 70px;
+}
+.box_layer{
+	position:absolute;
+	width:350px;
+	height:150px;
+	overflow:auto;
+	background:#eaeaea;
+	right:0px;
+	top:0px;
+	z-index:999;
+	border:2px solid #0084dc;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	border-radius:10px;
+}
